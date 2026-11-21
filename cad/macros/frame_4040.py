@@ -42,18 +42,28 @@ beams = []                        # (Name, Laenge)
 # ---------- Profil-Querschnitt ----------
 def section_from_step(path):
     """Liest die Hersteller-STEP, schneidet den Querschnitt aus und gibt eine Flaeche
-    in der XY-Ebene (zentriert, z=0) zurueck. Rueckgabe None bei Problemen."""
+    in der XY-Ebene (zentriert, z=0) zurueck. Rueckgabe None bei Problemen (mit Grund in der Konsole)."""
+    import traceback
     try:
+        size = os.path.getsize(path)
+        print("STEP gefunden: %s (%d Bytes)" % (path, size))
+        if size < 1000:
+            print("Datei ist zu klein (Nextcloud-Platzhalter? 'Immer auf diesem Geraet behalten' waehlen).")
+            return None
         shp = Part.read(path)
         bb = shp.BoundBox
+        print("STEP-Abmessungen: %.1f x %.1f x %.1f mm" % (bb.XLength, bb.YLength, bb.ZLength))
         lens = [bb.XLength, bb.YLength, bb.ZLength]
         ax = lens.index(max(lens))
         normal = [Vector(1, 0, 0), Vector(0, 1, 0), Vector(0, 0, 1)][ax]
         mid = [bb.Center.x, bb.Center.y, bb.Center.z][ax]
         wires = shp.slice(normal, mid)
-        faces = sorted((Part.Face(w) for w in wires), key=lambda f: -f.Area)
-        outer = faces[0]
-        face = Part.Face([outer.OuterWire] + [f.OuterWire for f in faces[1:]])
+        print("Schnittkonturen: %d" % len(wires))
+        try:
+            face = Part.makeFace(wires, "Part::FaceMakerBullseye")
+        except Exception:
+            faces = sorted((Part.Face(w) for w in wires), key=lambda f: -f.Area)
+            face = Part.Face([faces[0].OuterWire] + [f.OuterWire for f in faces[1:]])
         if ax == 0:
             face.rotate(Vector(0, 0, 0), Vector(0, 1, 0), -90)
         elif ax == 1:
@@ -61,12 +71,13 @@ def section_from_step(path):
         c = face.BoundBox.Center
         face.translate(Vector(-c.x, -c.y, -face.BoundBox.ZMin))
         if abs(face.Area - AREA_REF) / AREA_REF > 0.05:
-            print("STEP-Querschnitt weicht ab (%.1f mm2), nutze Ersatzprofil." % face.Area)
+            print("STEP-Querschnitt weicht ab (%.1f mm2, Soll %.1f), nutze Ersatzprofil." % (face.Area, AREA_REF))
             return None
         print("STEP-Querschnitt geladen, Flaeche %.1f mm2 (Soll %.1f)." % (face.Area, AREA_REF))
         return face
-    except Exception as e:
-        print("STEP nicht nutzbar (%s), nutze Ersatzprofil." % e)
+    except Exception:
+        print("STEP konnte nicht ausgewertet werden:")
+        print(traceback.format_exc())
         return None
 
 
@@ -85,9 +96,15 @@ def fallback_profile(L):
     return s.cut(Part.makeCylinder(CORE_BORE / 2, L, Vector(0, 0, 0)))
 
 
-SECTION = section_from_step(STEP_FILE) if (USE_STEP and os.path.exists(STEP_FILE)) else None
-if SECTION is None and USE_STEP:
-    print("Hinweis: %s nicht gefunden/nutzbar -> Ersatzprofil." % STEP_FILE)
+if USE_STEP and os.path.exists(STEP_FILE):
+    SECTION = section_from_step(STEP_FILE)
+else:
+    SECTION = None
+    if USE_STEP:
+        print("STEP-Datei NICHT gefunden. Gesucht in:")
+        for d in ASSET_DIRS:
+            print("  ", os.path.join(d, "alux_4040.STEP"))
+print("Profil:", "STEP-Querschnitt" if SECTION is not None else "Ersatzprofil")
 
 
 def profile(L):
