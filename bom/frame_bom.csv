@@ -1,15 +1,22 @@
-Pos;Artikel;Artikelnr_Alux;Menge;Einheit;Bemerkung
-1;Nutprofil 4040 Zuschnitt 520 mm;4040;4;Stk;Toleranz -1/+1 mm
-2;Nutprofil 4040 Zuschnitt 500 mm;4040;4;Stk;Toleranz -1/+1 mm
-3;Nutprofil 4040 Zuschnitt 140 mm;4040;4;Stk;Toleranz -1/+1 mm
-4;Winkel 4040;(Vorschlag);32;Stk;16 Verbindungen x 2
-5;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;64;Stk;2 je Winkel
-6;Schraube M8 (Innensechskant);(passende Laenge waehlen);64;Stk;2 je Winkel
-7;Profilabdeckkappe 4040;(Vorschlag);12;Stk;freie Profilenden, Anzahl pruefen
-8;Nutprofil 2020 (Nut 6) Zuschnitt 140 mm;(Alux 2020 T-Nut pruefen);4;Stk;19-Zoll-Schienen, 2 vorn + 2 hinten
-9;Winkel 2020;2020L-Alu;8;Stk;je Schiene oben + unten an den 4040-Profilen
-10;Schraube ISO 7380 M5x8;ISO 7380-M5x8;16;Stk;2 je Winkel
-11;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);8;Stk;1 je Winkel
-12;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
-13;"Adam Hall 19"" Parts RACK PAN 03 ALU (Rack Panel 3U, Alu 3 mm, flach)";8723;2;Stk;"vorn + hinten; Ausschnitte selbst herstellen; Pulverlack isoliert -> PE-Kontaktstellen blank"
-14;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);8;Satz;4 je Frontplatte
+Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
+1;Nutprofil 4040 Zuschnitt 600.0 mm;Alux 4040;2;Stk;Toleranz -1/+1 mm
+2;Nutprofil 4040 Zuschnitt 520.0 mm;Alux 4040;2;Stk;Toleranz -1/+1 mm
+3;Nutprofil 4040 Zuschnitt 420.0 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
+4;Nutprofil 4040 Zuschnitt 214.4 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
+5;Winkel 4040;(Vorschlag);32;Stk;16 Verbindungen x 2
+6;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;64;Stk;2 je Winkel
+7;Schraube M8 (Innensechskant);(Laenge waehlen);64;Stk;2 je Winkel
+8;Profilabdeckkappe 4040;(Vorschlag);12;Stk;freie Profilenden, Anzahl pruefen
+9;Stellfuss fuer 40er Profil;(Vorschlag);4;Stk;unter den Pfosten
+10;Nutprofil 2020 (Nut 6) Zuschnitt 134.4 mm;(Alux 2020 T-Nut pruefen);4;Stk;19-Zoll-Schienen, 2 vorn + 2 hinten
+11;Winkel 2020;2020L-Alu;8;Stk;je Schiene oben + unten
+12;Schraube ISO 7380 M5x8;ISO 7380-M5x8;16;Stk;2 je Winkel
+13;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);8;Stk;1 je Winkel
+14;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
+15;"Adam Hall 19"" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)";87556;1;Stk;"hinten, 1. HE; Einbautiefe 360-480 mm, Last 25 kg"
+16;"Adam Hall 19"" Parts RACK U PAN 01 D12 TIE BAR";872215;2;Stk;"1 HE, 12 D-Loecher, Zugentlastung; hinten + vorn, 3. HE"
+17;Neutrik powerCON Einbau, blau (IN);(Teilenr. pruefen, z. B. NAC3MPA-1);1;Stk;Netzeingang, D-Format
+18;Neutrik powerCON Einbau, weiss/hellgrau (OUT);(Teilenr. pruefen, z. B. NAC3MPB-1);1;Stk;Netzausgang, D-Format
+19;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
+20;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);21;Stk;unbelegte D-Loecher hinten + vorn
+21;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);16;Satz;4 je D12-Blende, 8 fuer die Schublade
