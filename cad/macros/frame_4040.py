@@ -1,7 +1,10 @@
-# open-ora | cad/macros/frame_4040.py | v2
-# Tischrahmen 500 x 600 x 220 mm aus Alux Nutprofil 4040 (aluxprofil.de, Art.-Nr. 4040)
-# Datenblatt: 40x40, Nut 8 mm (+0,3), Nuttiefe 12 mm, Kernbohrung 6,8 mm,
-#             Flaeche 504,8 mm2, 1,395 kg/m, EN-AW 6063 T66
+# open-ora | cad/macros/frame_4040.py | v5
+# Tischrahmen 600 x 500 mm aus Alux Nutprofil 4040 (aluxprofil.de, Art.-Nr. 4040), vorn/hinten = 600-mm-Seiten
+# Obere Ebene: lange X-Traeger nehmen die komplette Breite ein. Untere Ebene: alles zwischen den Pfosten.
+# Pfosten laufen vom Boden (Fuesse) bis unter den oberen Rahmen. Rack-Raum dazwischen: 3 HE.
+# Rack-Einbauten: Adam Hall Auszugschublade (hinten, 1. HE) und D12-Blenden (hinten/vorn, 3. HE).
+# Datenblatt 4040: 40x40, Nut 8 mm (+0,3), Nuttiefe 12 mm, Kernbohrung 6,8 mm,
+#                  Flaeche 504,8 mm2, 1,395 kg/m, EN-AW 6063 T66
 # Start in FreeCAD: exec(open(r"C:\dev\open-ora\cad\macros\frame_4040.py").read())
 
 import os
@@ -18,12 +21,8 @@ ASSET_DIRS = [
     os.path.join(REPO, "cad", "vendor"),
 ]
 P      = 40                       # Profilmass 4040
-W      = 500                      # Tischbreite  (X)
-D      = 600                      # Tischtiefe   (Y)
-H      = 220                      # Rahmenhoehe  (Z) -> lichte Hoehe innen = H - 2*P = 140
-PLATE  = 12                       # Siebdruckplatte
-ESD_T  = 2                        # ESD-Matte
-ESD_MARGIN = 10                   # Matte liegt 10 mm eingerueckt auf der Platte
+W      = 600                      # Tischbreite  (X) = Vorder-/Rueckseite
+D      = 500                      # Tischtiefe   (Y)
 SLOT, SLOT_DEPTH, LIP, CAVITY_W = 8.0, 12.0, 4.0, 16.0   # Nut (CAVITY_W und LIP geschaetzt)
 CORE_BORE = 6.8
 KG_PER_M  = 1.395
@@ -33,6 +32,45 @@ STEP_FILE = next((os.path.join(d, "alux_4040.STEP") for d in ASSET_DIRS
                   if os.path.exists(os.path.join(d, "alux_4040.STEP"))),
                  os.path.join(ASSET_DIRS[0], "alux_4040.STEP"))
 ANGLES_PER_JOINT = 2              # Winkel 4040 je Verbindung
+# ----- Hoehenaufbau (Z) -----
+U            = 44.45              # 1 HE
+RACK_U       = 3                  # Rack-Raum: 3 HE
+RACK_EXTRA   = 1.05               # Luft im Rack-Raum (Adam-Hall-Blenden sind 44,5 mm hoch)
+RACK_CLEAR   = RACK_U * U + RACK_EXTRA   # lichte Hoehe = 134,4 mm
+FOOT_H       = 40                 # Pfosten ragen so weit unter dem unteren Rahmen heraus (Fuesse)
+Z_LOW0       = FOOT_H             # Unterkante unterer Rahmen
+Z_LOW1       = Z_LOW0 + P         # Oberkante unterer Rahmen = Beginn Rack-Raum
+Z_UP0        = Z_LOW1 + RACK_CLEAR   # Unterkante oberer Rahmen
+H            = Z_UP0 + P         # Oberkante Rahmen = Unterseite Platte
+
+# ----- 19"-Rack (EIA-310): Schienen aus 2020 vorn und hinten -----
+R            = 20                 # Profilmass 2020
+RACK_PITCH   = 465.1              # Abstand der Nutmitten = Lochabstand der 19"-Winkel
+                                  # (lichte Weite zwischen den Schienen dann 445,1 mm)
+HOLE_D       = 6.5                # Befestigungsloecher der Blenden
+
+# ----- Adam Hall 19" Parts (Daten aus Produktseiten/Haendlerangaben, gegen 2D-Zeichnung pruefen) -----
+PANEL_W      = 484.0              # Breite der Blenden und der Schublade
+PANEL_UH     = 44.5               # Hoehe 1 HE laut Hersteller
+D12_T        = 1.5                # RACK U PAN 01 D12 TIE BAR (872215): Stahl 1,5 mm
+D_HOLE       = 24.3               # D-Ausschnitt (Neutrik D-Format, ca. 24 mm)
+D_PITCH      = 36.0               # PLATZHALTER: Lochabstand der 12 D-Loecher aus der 2D-Zeichnung uebernehmen!
+N_D          = 12
+TRAY_T       = 1.6                # RACK TRAY 01 PULLOUT (87556): Stahl 1,6 mm
+TRAY_BODY_W  = 435.0              # Breite des Schubladenkoerpers
+TRAY_BODY_H  = 40.0               # PLATZHALTER
+TRAY_BODY_D  = 470.0              # PLATZHALTER (Einbautiefe laut Hersteller 360-480 mm)
+
+# ----- Belegung (Einheit 1 = unterste; D-Loch-Nr. von links, Blick von aussen) -----
+REAR_TRAY_U  = 1
+REAR_D12_U   = 3
+FRONT_D12_U  = 3
+REAR_D12     = {1: "powerCON_IN_blau", 2: "powerCON_OUT_weiss", 3: "Cat_etherCON"}   # Rest: Blindkappen
+FRONT_D12    = {}                                                                    # vorerst alles Blindkappen
+
+PLATE  = 12                       # Siebdruckplatte
+ESD_T  = 2                        # ESD-Matte
+ESD_MARGIN = 10                   # Matte liegt 10 mm eingerueckt auf der Platte
 # ------------------------------------------------
 
 doc = App.newDocument("OpenORA_Frame")
@@ -122,19 +160,25 @@ def add(name, L, start, axis):
 
 
 # ---------- Rahmen ----------
-zb, zt = P / 2, H - P / 2          # Mittelhoehe untere / obere Ebene
+zl = Z_LOW0 + P / 2                 # Mittelhoehe untere Ebene
+zu = Z_UP0 + P / 2                  # Mittelhoehe obere Ebene
 
-for z, tag in ((zb, "unten"), (zt, "oben")):          # lange Traeger (Y)
-    for x, side in ((P / 2, "links"), (W - P / 2, "rechts")):
-        add("Laengs_%s_%s" % (tag, side), D, (x, 0, z), "Y")
+# Obere Ebene: lange X-Traeger (600 mm) nehmen die komplette Breite ein, Y-Traeger dazwischen
+for y, side in ((P / 2, "vorn"), (D - P / 2, "hinten")):
+    add("X_oben_%s" % side, W, (0, y, zu), "X")
+for x, side in ((P / 2, "links"), (W - P / 2, "rechts")):
+    add("Y_oben_%s" % side, D - 2 * P, (x, P, zu), "Y")
 
-for z, tag in ((zb, "unten"), (zt, "oben")):          # kurze Traeger (X)
-    for y, side in ((P / 2, "vorne"), (D - P / 2, "hinten")):
-        add("Quer_%s_%s" % (tag, side), W - 2 * P, (P, y, z), "X")
+# Untere Ebene: alles zwischen den durchgehenden Pfosten
+for y, side in ((P / 2, "vorn"), (D - P / 2, "hinten")):
+    add("X_unten_%s" % side, W - 2 * P, (P, y, zl), "X")
+for x, side in ((P / 2, "links"), (W - P / 2, "rechts")):
+    add("Y_unten_%s" % side, D - 2 * P, (x, P, zl), "Y")
 
-for x, xs in ((P / 2, "L"), (W - P / 2, "R")):        # Pfosten
+# Pfosten = Fuesse: vom Boden bis unter den oberen Rahmen
+for x, xs in ((P / 2, "L"), (W - P / 2, "R")):
     for y, ys in ((P / 2, "V"), (D - P / 2, "H")):
-        add("Pfosten_%s%s" % (xs, ys), H - 2 * P, (x, y, P), "Z")
+        add("Pfosten_%s%s" % (xs, ys), Z_UP0, (x, y, 0), "Z")
 
 # ---------- Platte, ESD-Matte, Erdungspunkt ----------
 plate = doc.addObject("Part::Box", "Platte")
@@ -145,9 +189,85 @@ esd = doc.addObject("Part::Box", "ESD_Matte")
 esd.Length, esd.Width, esd.Height = W - 2 * ESD_MARGIN, D - 2 * ESD_MARGIN, ESD_T
 esd.Placement = Placement(Vector(ESD_MARGIN, ESD_MARGIN, H + PLATE), Rotation())
 
-# Erdungspunkt: Markierung an der Aussenflaeche von Pfosten_LV (Befestigung spaeter per Nutenstein M8 + Oese)
+# Erdungspunkt: Markierung an der Aussenflaeche von Pfosten_LH (hinten links), Mitte Rack-Raum
 gnd = doc.addObject("Part::Feature", "Erdungspunkt")
-gnd.Shape = Part.makeCylinder(6, 3, Vector(-3, P / 2, H / 2), Vector(1, 0, 0))
+gnd.Shape = Part.makeCylinder(6, 3, Vector(-3, D - P / 2, Z_LOW1 + RACK_CLEAR / 2), Vector(1, 0, 0))
+
+# ---------- 19"-Schienen (2020) ----------
+# Vorn (y=0) und hinten (y=D): je zwei senkrechte 2020-Schienen im Rack-Raum, Nutmitte auf dem 19"-Lochabstand,
+# buendig mit der Rahmenaussenflaeche.
+def profile20(L):
+    """Vereinfachtes 2020 (Nut 6, M5). Nutgeometrie nur angenaehert."""
+    s_ = Part.makeBox(R, R, L, Vector(-R / 2, -R / 2, 0))
+    xo = R / 2
+    opening = Part.makeBox(2.0, 6.2, L + 2, Vector(xo - 1.8, -3.1, -1))
+    cavity = Part.makeBox(4.3, 7.6, L + 2, Vector(xo - 6.1, -3.8, -1))
+    slot = opening.fuse(cavity)
+    for a_ in (0, 90, 180, 270):
+        sl = slot.copy()
+        sl.rotate(Vector(0, 0, 0), Vector(0, 0, 1), a_)
+        s_ = s_.cut(sl)
+    return s_.cut(Part.makeCylinder(2.1, L, Vector(0, 0, 0)))
+
+RAIL_L = RACK_CLEAR
+for side, yc in (("vorn", R / 2), ("hinten", D - R / 2)):
+    for tag, xc in (("L", W / 2 - RACK_PITCH / 2), ("R", W / 2 + RACK_PITCH / 2)):
+        o = doc.addObject("Part::Feature", "Rack_Schiene_%s_%s" % (side, tag))
+        o.Shape = profile20(RAIL_L)
+        o.Placement = Placement(Vector(xc, yc, Z_LOW1), Rotation())
+
+# ---------- Rack-Einbauten ----------
+def u_z0(i):
+    """Unterkante der Rack-Einheit i (1 = unterste)."""
+    return Z_LOW1 + RACK_EXTRA / 2 + (i - 1) * U
+
+def color(o, rgb):
+    try:
+        o.ViewObject.ShapeColor = rgb
+    except Exception:
+        pass
+
+def make_d12(name, side, unit, assign):
+    """RACK U PAN 01 D12 TIE BAR (872215) mit 12 D-Loechern als Platzhalter."""
+    y0 = -D12_T if side == "vorn" else D
+    x0 = (W - PANEL_W) / 2
+    zc = u_z0(unit) + U / 2
+    body = Part.makeBox(PANEL_W, D12_T, PANEL_UH, Vector(x0, y0, zc - PANEL_UH / 2))
+    out = Vector(0, -1, 0) if side == "vorn" else Vector(0, 1, 0)
+    y_face = 0 if side == "vorn" else D + D12_T
+    for xc in (W / 2 - RACK_PITCH / 2, W / 2 + RACK_PITCH / 2):          # Ohrloecher (2 je Seite)
+        for dz in (-15.875, 15.875):
+            body = body.cut(Part.makeCylinder(HOLE_D / 2, D12_T + 2, Vector(xc, y0 - 1, zc + dz), Vector(0, 1, 0)))
+    for i in range(1, N_D + 1):                                          # D-Loecher
+        off = (i - (N_D + 1) / 2.0) * D_PITCH
+        xh = W / 2 + off if side == "vorn" else W / 2 - off
+        body = body.cut(Part.makeCylinder(D_HOLE / 2, D12_T + 2, Vector(xh, y0 - 1, zc), Vector(0, 1, 0)))
+    o = doc.addObject("Part::Feature", name)
+    o.Shape = body
+    color(o, (0.1, 0.1, 0.1))
+    for i in range(1, N_D + 1):                                          # Steckverbinder-Platzhalter
+        off = (i - (N_D + 1) / 2.0) * D_PITCH
+        xh = W / 2 + off if side == "vorn" else W / 2 - off
+        fn = assign.get(i, "Blindkappe")
+        po = doc.addObject("Part::Feature", "%s_%02d_%s" % (name, i, fn))
+        po.Shape = Part.makeCylinder(10.5, 12, Vector(xh, y_face, zc), out)
+        color(po, (0.2, 0.4, 0.9) if "blau" in fn else (0.95, 0.95, 0.95) if "weiss" in fn
+              else (0.85, 0.65, 0.1) if fn != "Blindkappe" else (0.35, 0.35, 0.35))
+
+def make_tray(name, unit):
+    """RACK TRAY 01 PULLOUT (87556) hinten: Frontblende + Koerper-Platzhalter (Maße gegen Zeichnung pruefen)."""
+    x0 = (W - PANEL_W) / 2
+    zc = u_z0(unit) + U / 2
+    front = Part.makeBox(PANEL_W, TRAY_T, PANEL_UH, Vector(x0, D, zc - PANEL_UH / 2))
+    body = Part.makeBox(TRAY_BODY_W, TRAY_BODY_D, TRAY_BODY_H,
+                        Vector((W - TRAY_BODY_W) / 2, D - TRAY_BODY_D, zc - TRAY_BODY_H / 2))
+    o = doc.addObject("Part::Feature", name)
+    o.Shape = front.fuse(body)
+    color(o, (0.15, 0.15, 0.15))
+
+make_tray("Rack_hinten_U%d_Schublade_87556" % REAR_TRAY_U, REAR_TRAY_U)
+make_d12("Rack_hinten_U%d_D12_Netz" % REAR_D12_U, "hinten", REAR_D12_U, REAR_D12)
+make_d12("Rack_vorn_U%d_D12" % FRONT_D12_U, "vorn", FRONT_D12_U, FRONT_D12)
 
 doc.recompute()
 try:
@@ -160,23 +280,41 @@ except Exception:
 # ---------- Stueckliste ----------
 cuts = {}
 for _, L in beams:
-    cuts[L] = cuts.get(L, 0) + 1
+    cuts[round(L, 1)] = cuts.get(round(L, 1), 0) + 1
 total_m = sum(L for _, L in beams) / 1000.0
-joints = len([n for n, _ in beams if n.startswith(("Quer", "Pfosten"))]) * 2   # 2 Enden je Stab
-angles = joints * ANGLES_PER_JOINT
+JOINTS = 16        # 4 Y_oben an X_oben, 4 Pfosten unter X_oben, 4 X_unten und 4 Y_unten an den Pfosten
+angles = JOINTS * ANGLES_PER_JOINT
+n_blind = (N_D - len(REAR_D12)) + (N_D - len(FRONT_D12))
 
-rows = [["Pos", "Artikel", "Artikelnr_Alux", "Menge", "Einheit", "Bemerkung"]]
+rows = [["Pos", "Artikel", "Artikelnr", "Menge", "Einheit", "Bemerkung"]]
 for i, (L, n) in enumerate(sorted(cuts.items(), reverse=True), 1):
-    rows.append([i, "Nutprofil 4040 Zuschnitt %d mm" % L, "4040", n, "Stk", "Toleranz -1/+1 mm"])
+    rows.append([i, "Nutprofil 4040 Zuschnitt %.1f mm" % L, "Alux 4040", n, "Stk", "Toleranz -1/+1 mm"])
+n0 = len(rows)
 rows += [
-    [len(rows), "Winkel 4040", "(Vorschlag)", angles, "Stk", "%d Verbindungen x %d" % (joints, ANGLES_PER_JOINT)],
-    [len(rows) + 1, "Nutenstein einschwenkbar 40-Profil M8", "8-4-M8.40", angles * 2, "Stk", "2 je Winkel"],
-    [len(rows) + 2, "Schraube M8 (Innensechskant)", "(passende Laenge waehlen)", angles * 2, "Stk", "2 je Winkel"],
-    [len(rows) + 3, "Profilabdeckkappe 4040", "(Vorschlag)", 12, "Stk", "freie Profilenden, Anzahl pruefen"],
+    [n0,      "Winkel 4040", "(Vorschlag)", angles, "Stk", "%d Verbindungen x %d" % (JOINTS, ANGLES_PER_JOINT)],
+    [n0 + 1,  "Nutenstein einschwenkbar 40-Profil M8", "8-4-M8.40", angles * 2, "Stk", "2 je Winkel"],
+    [n0 + 2,  "Schraube M8 (Innensechskant)", "(Laenge waehlen)", angles * 2, "Stk", "2 je Winkel"],
+    [n0 + 3,  "Profilabdeckkappe 4040", "(Vorschlag)", 12, "Stk", "freie Profilenden, Anzahl pruefen"],
+    [n0 + 4,  "Stellfuss fuer 40er Profil", "(Vorschlag)", 4, "Stk", "unter den Pfosten"],
+    [n0 + 5,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % RAIL_L, "(Alux 2020 T-Nut pruefen)", 4, "Stk", "19-Zoll-Schienen, 2 vorn + 2 hinten"],
+    [n0 + 6,  "Winkel 2020", "2020L-Alu", 8, "Stk", "je Schiene oben + unten"],
+    [n0 + 7,  "Schraube ISO 7380 M5x8", "ISO 7380-M5x8", 16, "Stk", "2 je Winkel"],
+    [n0 + 8,  "Nutenstein M5 fuer 6-mm-Nut (2020)", "(Vorschlag)", 8, "Stk", "1 je Winkel"],
+    [n0 + 9,  "Nutenstein M5 fuer 8-mm-Nut (4040)", "(Vorschlag)", 8, "Stk", "1 je Winkel"],
+    [n0 + 10, "Adam Hall 19\" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)", "87556", 1, "Stk", "hinten, 1. HE; Einbautiefe 360-480 mm, Last 25 kg"],
+    [n0 + 11, "Adam Hall 19\" Parts RACK U PAN 01 D12 TIE BAR", "872215", 2, "Stk", "1 HE, 12 D-Loecher, Zugentlastung; hinten + vorn, 3. HE"],
+    [n0 + 12, "Neutrik powerCON Einbau, blau (IN)", "(Teilenr. pruefen, z. B. NAC3MPA-1)", 1, "Stk", "Netzeingang, D-Format"],
+    [n0 + 13, "Neutrik powerCON Einbau, weiss/hellgrau (OUT)", "(Teilenr. pruefen, z. B. NAC3MPB-1)", 1, "Stk", "Netzausgang, D-Format"],
+    [n0 + 14, "Netzwerk-Durchfuehrung (Cat), D-Format", "(Teilenr. pruefen, etherCON-Familie)", 1, "Stk", "hinten"],
+    [n0 + 15, "Blindplatte/Abdeckung fuer D-Ausschnitt", "(z. B. Neutrik DBA-BL pruefen)", n_blind, "Stk", "unbelegte D-Loecher hinten + vorn"],
+    [n0 + 16, "Schraube M5 + Nutenstein M5 (6-mm-Nut)", "(Vorschlag)", 16, "Satz", "4 je D12-Blende, 8 fuer die Schublade"],
 ]
 print("\nZuschnitt (Laenge mm: Anzahl):", cuts)
-print("Profil gesamt: %.2f m, ca. %.1f kg" % (total_m, total_m * KG_PER_M))
-print("Verbindungen: %d, Winkel: %d" % (joints, angles))
+print("Profil 4040 gesamt: %.2f m, ca. %.1f kg" % (total_m, total_m * KG_PER_M))
+print("Rack-Raum lichte Hoehe: %.2f mm (%d HE + %.2f), Rahmen-Oberkante: %.2f mm, Platte oben: %.2f mm"
+      % (RACK_CLEAR, RACK_U, RACK_EXTRA, H, H + PLATE + ESD_T))
+print("Verbindungen: %d, Winkel 4040: %d" % (JOINTS, angles))
+print("Schubladen-Einbautiefe (Rueckschiene aussen bis Vorderschiene innen): %.0f mm (Hersteller: 360-480)" % (D - R))
 
 bom_dir = os.path.join(REPO, "bom")
 if os.path.isdir(bom_dir):

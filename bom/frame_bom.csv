@@ -1,8 +1,15 @@
 Pos;Artikel;Artikelnr_Alux;Menge;Einheit;Bemerkung
-1;Nutprofil 4040 Zuschnitt 600 mm;4040;4;Stk;Toleranz -1/+1 mm
-2;Nutprofil 4040 Zuschnitt 420 mm;4040;4;Stk;Toleranz -1/+1 mm
+1;Nutprofil 4040 Zuschnitt 520 mm;4040;4;Stk;Toleranz -1/+1 mm
+2;Nutprofil 4040 Zuschnitt 500 mm;4040;4;Stk;Toleranz -1/+1 mm
 3;Nutprofil 4040 Zuschnitt 140 mm;4040;4;Stk;Toleranz -1/+1 mm
 4;Winkel 4040;(Vorschlag);32;Stk;16 Verbindungen x 2
 5;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;64;Stk;2 je Winkel
 6;Schraube M8 (Innensechskant);(passende Laenge waehlen);64;Stk;2 je Winkel
 7;Profilabdeckkappe 4040;(Vorschlag);12;Stk;freie Profilenden, Anzahl pruefen
+8;Nutprofil 2020 (Nut 6) Zuschnitt 140 mm;(Alux 2020 T-Nut pruefen);4;Stk;19-Zoll-Schienen, 2 vorn + 2 hinten
+9;Winkel 2020;2020L-Alu;8;Stk;je Schiene oben + unten an den 4040-Profilen
+10;Schraube ISO 7380 M5x8;ISO 7380-M5x8;16;Stk;2 je Winkel
+11;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);8;Stk;1 je Winkel
+12;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
+13;"Adam Hall 19"" Parts RACK PAN 03 ALU (Rack Panel 3U, Alu 3 mm, flach)";8723;2;Stk;"vorn + hinten; Ausschnitte selbst herstellen; Pulverlack isoliert -> PE-Kontaktstellen blank"
+14;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);8;Satz;4 je Frontplatte
