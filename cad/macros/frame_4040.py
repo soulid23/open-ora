@@ -2,7 +2,7 @@
 # Tischrahmen 500 x 600 x 220 mm aus Alux Nutprofil 4040 (aluxprofil.de, Art.-Nr. 4040)
 # Datenblatt: 40x40, Nut 8 mm (+0,3), Nuttiefe 12 mm, Kernbohrung 6,8 mm,
 #             Flaeche 504,8 mm2, 1,395 kg/m, EN-AW 6063 T66
-# Start in FreeCAD: exec(open(r"C:\PFAD\open-ora\cad\macros\frame_4040.py").read())
+# Start in FreeCAD: exec(open(r"C:\dev\open-ora\cad\macros\frame_4040.py").read())
 
 import os
 import csv
@@ -11,7 +11,12 @@ import Part
 from FreeCAD import Vector, Rotation, Placement
 
 # ---------------- Parameter (mm) ----------------
-REPO   = r"C:\PFAD\open-ora"      # <- an deinen Repo-Ordner anpassen
+REPO = r"C:\dev\open-ora"
+# Herstellerdateien (nicht im Git-Repo): erster Ordner mit alux_4040.STEP wird benutzt
+ASSET_DIRS = [
+    r"C:\Users\julia\Nextcloud\open-ora-assets",   # <- ggf. an deinen Assets-Ordner anpassen
+    os.path.join(REPO, "cad", "vendor"),
+]
 P      = 40                       # Profilmass 4040
 W      = 500                      # Tischbreite  (X)
 D      = 600                      # Tischtiefe   (Y)
@@ -24,7 +29,9 @@ CORE_BORE = 6.8
 KG_PER_M  = 1.395
 AREA_REF  = 504.8                 # Datenblatt, zur Pruefung des STEP-Querschnitts
 USE_STEP  = True
-STEP_FILE = os.path.join(REPO, "cad", "vendor", "alux_4040.STEP")
+STEP_FILE = next((os.path.join(d, "alux_4040.STEP") for d in ASSET_DIRS
+                  if os.path.exists(os.path.join(d, "alux_4040.STEP"))),
+                 os.path.join(ASSET_DIRS[0], "alux_4040.STEP"))
 ANGLES_PER_JOINT = 2              # Winkel 4040 je Verbindung
 # ------------------------------------------------
 
