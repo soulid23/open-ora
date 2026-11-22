@@ -1,22 +1,25 @@
 Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
-1;Nutprofil 4040 Zuschnitt 600.0 mm;Alux 4040;2;Stk;Toleranz -1/+1 mm
-2;Nutprofil 4040 Zuschnitt 520.0 mm;Alux 4040;2;Stk;Toleranz -1/+1 mm
-3;Nutprofil 4040 Zuschnitt 420.0 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
-4;Nutprofil 4040 Zuschnitt 214.4 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
-5;Winkel 4040;(Vorschlag);32;Stk;16 Verbindungen x 2
-6;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;64;Stk;2 je Winkel
-7;Schraube M8 (Innensechskant);(Laenge waehlen);64;Stk;2 je Winkel
-8;Profilabdeckkappe 4040;(Vorschlag);12;Stk;freie Profilenden, Anzahl pruefen
-9;Stellfuss fuer 40er Profil;(Vorschlag);4;Stk;unter den Pfosten
-10;Nutprofil 2020 (Nut 6) Zuschnitt 134.4 mm;(Alux 2020 T-Nut pruefen);4;Stk;19-Zoll-Schienen, 2 vorn + 2 hinten
-11;Winkel 2020;2020L-Alu;8;Stk;je Schiene oben + unten
+1;Nutprofil 4040 Zuschnitt 1000.0 mm;Alux 4040;2;Stk;Toleranz -1/+1 mm
+2;Nutprofil 4040 Zuschnitt 920.0 mm;Alux 4040;10;Stk;Toleranz -1/+1 mm
+3;Nutprofil 4040 Zuschnitt 680.0 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
+4;Winkel 4040;(Vorschlag);48;Stk;24 Verbindungen x 2
+5;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;96;Stk;2 je Winkel
+6;Schraube M8 (Innensechskant);(Laenge waehlen);96;Stk;2 je Winkel
+7;Profilabdeckkappe 4040;(Vorschlag);16;Stk;freie Profilenden, Anzahl pruefen
+8;Stellfuss fuer 40er Profil;(Vorschlag);4;Stk;unter den Pfosten, Fussplatte nach aussen verbreitert (Kippsicherheit)
+9;Nutprofil 2020 (Nut 6) Zuschnitt 134.4 mm;(Alux 2020 T-Nut pruefen);4;Stk;Rack-Schienen hinten (2) + 2 Tiefenschienen
+10;Nutprofil 2020 (Nut 6) Zuschnitt 900.0 mm;(Alux 2020 T-Nut pruefen);3;Stk;"Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: 900.0, 900.0, 900.0"
+11;Winkel 2020;2020L-Alu;8;Stk;je Rack-/Tiefenschiene oben + unten
 12;Schraube ISO 7380 M5x8;ISO 7380-M5x8;16;Stk;2 je Winkel
 13;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);8;Stk;1 je Winkel
 14;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
-15;"Adam Hall 19"" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)";87556;1;Stk;"hinten, 1. HE; Einbautiefe 360-480 mm, Last 25 kg"
-16;"Adam Hall 19"" Parts RACK U PAN 01 D12 TIE BAR";872215;2;Stk;"1 HE, 12 D-Loecher, Zugentlastung; hinten + vorn, 3. HE"
-17;Neutrik powerCON Einbau, blau (IN);(Teilenr. pruefen, z. B. NAC3MPA-1);1;Stk;Netzeingang, D-Format
-18;Neutrik powerCON Einbau, weiss/hellgrau (OUT);(Teilenr. pruefen, z. B. NAC3MPB-1);1;Stk;Netzausgang, D-Format
-19;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
-20;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);21;Stk;unbelegte D-Loecher hinten + vorn
-21;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);16;Satz;4 je D12-Blende, 8 fuer die Schublade
+15;Diagonal-Anschluss (Gelenk-/Gehrungswinkel fuer 2020 an 4040);(Loesung waehlen);6;Stk;je Ende einer Diagonale
+16;"Adam Hall 19"" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)";87556;1;Stk;"hinten, 1. HE; Einbautiefe 370 mm (Hersteller 360-480), Last 25 kg"
+17;"Adam Hall 19"" Parts RACK U PAN 01 D12 TIE BAR";872215;1;Stk;"1 HE, 12 D-Loecher, Zugentlastung; hinten, 3. HE"
+18;Neutrik powerCON Einbau, blau (IN);(Teilenr. pruefen, z. B. NAC3MPA-1);1;Stk;Netzeingang, D-Format
+19;Neutrik powerCON Einbau, weiss/hellgrau (OUT);(Teilenr. pruefen, z. B. NAC3MPB-1);1;Stk;Netzausgang, D-Format
+20;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
+21;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);9;Stk;unbelegte D-Loecher hinten
+22;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);12;Satz;4 je D12-Blende, 8 fuer die Schublade
+23;Siebdruckplatte 18 mm, 1000 x 1000 mm;(Vorschlag);1;Stk;als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger
+24;ESD-Matte;(Vorschlag);1;Stk;mit 1-MOhm-Widerstand an den Erdungspunkt
