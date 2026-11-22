@@ -29,7 +29,7 @@ Einbautiefe 360 bis 480 mm einstellbar. Die Schublade wird hinten an den hintere
 - **Neutrik**: D-Format mit genormtem 24-mm-Ausschnitt, Plattenstärke 1 bis 3 mm, Befestigung mit M3.
   Zu den Produkten gibt es DXF-Dateien. Blindkappen z. B. Neutrik DBA-BL (Abdeckplatte für D-Ausschnitte).
 - **Pulverlack isoliert.** Die Neutrik-Metallgehäuse sollen über die Blende an PE liegen: Kontaktstellen blank
-  machen oder Zahnscheiben verwenden, Durchgang messen (Elektrofachkraft, siehe `docs/SAFETY.md`).
+  machen oder Zahnscheiben verwenden, Durchgang messen (Elektrofachkraft, siehe `SAFETY.md`).
 - **powerCON OUT** führt Netzspannung. Absicherung, Berührungsschutz und die Frage, ob das Trennen unter Last
   zulässig ist, klärt die Elektrofachkraft anhand des Neutrik-Datenblatts.
 - Die Teilenummern der Neutrik-Einbauteile sind im Makro nur als Beispiele eingetragen und noch zu bestätigen.

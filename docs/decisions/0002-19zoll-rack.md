@@ -21,5 +21,5 @@ zu wenig für 19 Zoll (450 mm).
 ## Folgen
 - Geräte mit mehr als ca. 440 mm Gehäusebreite passen nicht zwischen die Schienen. Für 450 mm lichte Weite
   wäre ein Nutabstand von 470 mm nötig; die Bohrungen der 19-Zoll-Winkel (465,1 mm) lägen dann 2,45 mm neben der Nutmitte.
-- Netzseite nur durch Elektrofachkraft, siehe `docs/SAFETY.md`.
+- Netzseite nur durch Elektrofachkraft, siehe `SAFETY.md`.
 - Offen: genaues 2020-Profil (Alux-Artikel mit 6-mm-Nut prüfen) und Ausschnittliste je Platte.

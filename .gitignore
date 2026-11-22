@@ -10,5 +10,3 @@ __pycache__/
 .pio/
 cad/build/
 *.FCStd
-*.FCStd
-cad/build/
