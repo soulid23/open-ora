@@ -74,6 +74,13 @@ TRAY_BODY_D  = TRAY_MOUNT_D       # Schubladenkoerper-Platzhalter
 
 # ----- Belegung (Einheit 1 = unterste; D-Loch-Nr. von links, Blick von aussen) -----
 REAR_TRAY_U  = 1
+CLAD         = True               # Forex-Fuellplatten in die 8-mm-Nut der 4040-Profile (Rackband, Seiten + hinten)
+FOREX_T      = 5.0                # Forex classic 5 mm; Alux-Einfassprofil 8-12.40 nimmt 4-6 mm
+SLOT_INS     = 8.0                # Einschubtiefe der Platte in die Nut (Nuttiefe ca. 12 mm, Rest fuer Einfassprofil/Spiel)
+RACK_WIN_W   = 486.0              # Ausschnitt hinten: Blenden 484 mm + 1 mm Luft je Seite
+LOGO_TEXT    = "open-ora"
+LOGO_FONTS   = [r"C:\Windows\Fonts\bahnschrift.ttf", r"C:\Windows\Fonts\Lato-Black.ttf", r"C:\Windows\Fonts\ariblk.ttf"]
+LOGO_DEPTH   = 0.8                # Gravurtiefe (mm) in der Aussenseite der Platte
 REAR_D12_U   = 3
 FRONT_D12_U  = 3
 REAR_D12     = {1: "powerCON_IN_blau", 2: "powerCON_OUT_weiss", 3: "Cat_etherCON"}   # Rest: Blindkappen
@@ -245,6 +252,16 @@ for tag, xc in (("L", W / 2 - RACK_PITCH / 2), ("R", W / 2 + RACK_PITCH / 2)):
     o.Shape = profile20(RAIL_L)
     o.Placement = Placement(Vector(xc, MID_Y, Z_LOW1), Rotation())
 
+# Rack-Zarge: je Seite zwei waagerechte 2020-Profile (oben, unten) zwischen hinterer Rack-Schiene und Tiefenschiene.
+# Sie liegen auf der Schienenachse und laufen an der Schubladenkante vorbei (Schublade 435 mm breit, Profil bei x = 257..277).
+ZARGE_Y0 = MID_Y + R / 2
+ZARGE_L = (D - R) - ZARGE_Y0
+for tag, xc in (("L", W / 2 - RACK_PITCH / 2), ("R", W / 2 + RACK_PITCH / 2)):
+    for lvl, zc_ in (("unten", Z_LOW1 + R / 2), ("oben", Z_UP0 - R / 2)):
+        o = doc.addObject("Part::Feature", "Rack_Zarge_%s_%s" % (tag, lvl))
+        o.Shape = profile20(ZARGE_L)
+        o.Placement = Placement(Vector(xc, ZARGE_Y0, zc_), Rotation(Vector(1, 0, 0), -90))
+
 # ---------- Diagonalen (2020, im Feld zwischen Bodenstreben und unterem Rahmen) ----------
 DIAG_TRIM = 45.0                  # Abstand der Profilenden zu den Feldecken (Platz fuer Anschlusswinkel)
 diags = []
@@ -319,6 +336,86 @@ make_d12("Rack_hinten_U%d_D12_Netz" % REAR_D12_U, "hinten", REAR_D12_U, REAR_D12
 if FRONT_RACK:
     make_d12("Rack_vorn_U%d_D12" % FRONT_D12_U, "vorn", FRONT_D12_U, FRONT_D12)
 
+# ---------- Forex-Fuellplatten in der 8-mm-Nut (Rackband; Sitzseite vorn bleibt offen) ----------
+# Die Platten liegen in der Mittelebene der Profile (Nut sitzt mittig) und greifen SLOT_INS mm in die Nut ein.
+# Montage: Platte vor dem letzten Profil einschieben, danach Einfassprofil (Alux 8-12.40) in die Nut druecken.
+CLAD_H = RACK_CLEAR + 2 * SLOT_INS       # Plattenhoehe (Oeffnung zwischen unterem und oberem Rahmen + Eingriff)
+clad_parts, logo_state = [], {"font": None}
+
+def logo_shape(width_max, height_max):
+    """Schriftzug als Flaeche in der XY-Ebene (Ursprung Mitte), passend in width_max x height_max."""
+    import Draft
+    for ff in LOGO_FONTS:
+        if not os.path.exists(ff):
+            continue
+        try:
+            ss = Draft.make_shapestring(LOGO_TEXT, ff, 100.0, 0.0)
+            doc.recompute()
+            sh = ss.Shape.copy()
+            doc.removeObject(ss.Name)
+            bb = sh.BoundBox
+            k = min(width_max / bb.XLength, height_max / bb.YLength)
+            sh.scale(k)
+            bb = sh.BoundBox
+            sh.translate(Vector(-(bb.XMin + bb.XMax) / 2, -(bb.YMin + bb.YMax) / 2, 0))
+            logo_state["font"] = os.path.basename(ff)
+            return sh
+        except Exception as e:
+            print("Schriftzug mit %s nicht moeglich: %s" % (ff, e))
+    return None
+
+def forex_panel(name, box_origin, box_size, face, centre):
+    """Platte als Box; Schriftzug auf der Aussenseite eingraviert.
+    face: 'links' | 'rechts' | 'hinten' (Blickrichtung des Betrachters von aussen)."""
+    sh = Part.makeBox(box_size[0], box_size[1], box_size[2], Vector(*box_origin))
+    if face in ("links", "rechts"):     # obere Ecken freischneiden: dort liegt der durchgehende X-Traeger des oberen Rahmens
+        y0_, y1_ = box_origin[1], box_origin[1] + box_size[1]
+        for ya, yb in ((y0_, P), (D - P, y1_)):
+            sh = sh.cut(Part.makeBox(box_size[0] + 2, yb - ya, 20, Vector(box_origin[0] - 1, ya, Z_UP0)))
+    # Text-Achsen (Rechts, Hoch, Normale nach aussen) je Seite
+    axes = {"links":  (Vector(0, -1, 0), Vector(0, 0, 1), Vector(-1, 0, 0)),
+            "rechts": (Vector(0, 1, 0),  Vector(0, 0, 1), Vector(1, 0, 0)),
+            "hinten": (Vector(-1, 0, 0), Vector(0, 0, 1), Vector(0, 1, 0))}[face]
+    along = box_size[1] if face in ("links", "rechts") else box_size[0]
+    txt = logo_shape(0.80 * along, 0.34 * box_size[2])
+    if txt is not None:
+        xt, yt, zt = axes
+        m = App.Matrix(xt.x, yt.x, zt.x, centre.x,
+                       xt.y, yt.y, zt.y, centre.y,
+                       xt.z, yt.z, zt.z, centre.z,
+                       0, 0, 0, 1)
+        t = txt.copy()
+        t.transformShape(m)
+        cutter = Part.Compound([f.extrude(zt * -LOGO_DEPTH) for f in t.Faces])
+        sh = sh.cut(cutter)
+    o = doc.addObject("Part::Feature", name)
+    o.Shape = sh
+    color(o, (0.93, 0.93, 0.93))
+    clad_parts.append((name, box_size))
+    return o
+
+if CLAD:
+    y_lo, y_hi = P - SLOT_INS, D - P + SLOT_INS        # zwischen den Pfosten (vorn/hinten) plus Eingriff
+    z_lo = Z_LOW1 - SLOT_INS
+    for face, xm in (("links", P / 2), ("rechts", W - P / 2)):
+        ox = xm - FOREX_T / 2
+        out_x = ox if face == "links" else ox + FOREX_T
+        forex_panel("Forex_Seite_%s" % face, (ox, y_lo, z_lo), (FOREX_T, y_hi - y_lo, CLAD_H), face,
+                    Vector(out_x, (y_lo + y_hi) / 2, z_lo + CLAD_H / 2))
+    # Rueckseite: zwei Stuecke neben dem Rack-Fenster (zwischen Pfosten und Rack-Schiene)
+    ym = D - P / 2
+    oy = ym - FOREX_T / 2
+    x_left = (P - SLOT_INS, (W - RACK_WIN_W) / 2)
+    x_right = ((W + RACK_WIN_W) / 2, W - P + SLOT_INS)
+    xa, xb = x_left      # linkes Stueck traegt den Schriftzug (rechts nur Blindplatte, kein zweiter Schriftzug)
+    forex_panel("Forex_Rueck_links", (xa, oy, z_lo), (xb - xa, FOREX_T, CLAD_H), "hinten",
+                Vector((xa + xb) / 2, oy + FOREX_T, z_lo + CLAD_H / 2))
+    xa, xb = x_right
+    o = doc.addObject("Part::Feature", "Forex_Rueck_rechts")
+    o.Shape = Part.makeBox(xb - xa, FOREX_T, CLAD_H, Vector(xa, oy, z_lo))
+    color(o, (0.93, 0.93, 0.93))
+    clad_parts.append(("Forex_Rueck_rechts", (xb - xa, FOREX_T, CLAD_H)))
+
 doc.recompute()
 try:
     import FreeCADGui as Gui
@@ -336,6 +433,8 @@ JOINTS = 26 if FRONT_RACK else 24   # 4 Y_oben + 4 Pfosten (oben), untere Rahmen
 N_RAILS = 6 if FRONT_RACK else 4    # Rack-Schienen (vorn+hinten bzw. nur hinten) + 2 Tiefenschienen
 N_D12 = 2 if FRONT_RACK else 1
 angles = JOINTS * ANGLES_PER_JOINT
+N_ZARGE = 4
+ANG20 = N_RAILS * 2 + N_ZARGE * 2      # Winkel 2020: Schienen oben/unten + je 2 Enden der Zargen
 n_blind = (N_D - len(REAR_D12)) + ((N_D - len(FRONT_D12)) if FRONT_RACK else 0)
 
 rows = [["Pos", "Artikel", "Artikelnr", "Menge", "Einheit", "Bemerkung"]]
@@ -349,10 +448,11 @@ rows += [
     [n0 + 3,  "Profilabdeckkappe 4040", "(Vorschlag)", 16, "Stk", "freie Profilenden, Anzahl pruefen"],
     [n0 + 4,  "Stellfuss fuer 40er Profil", "(Vorschlag)", 4, "Stk", "unter den Pfosten, Fussplatte nach aussen verbreitert (Kippsicherheit)"],
     [n0 + 5,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % RAIL_L, "(Alux 2020 T-Nut pruefen)", N_RAILS, "Stk", "Rack-Schienen hinten (2)%s + 2 Tiefenschienen" % (" + vorn (2)" if FRONT_RACK else "")],
+    [n0 + 21, "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % ZARGE_L, "(Alux 2020 T-Nut pruefen)", N_ZARGE, "Stk", "Rack-Zarge: oben und unten, links und rechts, zwischen Rack-Schiene und Tiefenschiene"],
     [n0 + 6,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % diags[0], "(Alux 2020 T-Nut pruefen)", 3, "Stk", "Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: %s" % ", ".join("%.1f" % d for d in diags)],
-    [n0 + 7,  "Winkel 2020", "2020L-Alu", N_RAILS * 2, "Stk", "je Rack-/Tiefenschiene oben + unten"],
-    [n0 + 8,  "Schraube ISO 7380 M5x8", "ISO 7380-M5x8", N_RAILS * 4, "Stk", "2 je Winkel"],
-    [n0 + 9,  "Nutenstein M5 fuer 6-mm-Nut (2020)", "(Vorschlag)", N_RAILS * 2, "Stk", "1 je Winkel"],
+    [n0 + 7,  "Winkel 2020", "2020L-Alu", ANG20, "Stk", "je Rack-/Tiefenschiene oben + unten, je Zargenende"],
+    [n0 + 8,  "Schraube ISO 7380 M5x8", "ISO 7380-M5x8", ANG20 * 2, "Stk", "2 je Winkel"],
+    [n0 + 9,  "Nutenstein M5 fuer 6-mm-Nut (2020)", "(Vorschlag)", ANG20, "Stk", "1 je Winkel"],
     [n0 + 10, "Nutenstein M5 fuer 8-mm-Nut (4040)", "(Vorschlag)", N_RAILS * 2, "Stk", "1 je Winkel"],
     [n0 + 11, "Diagonal-Anschluss (Gelenk-/Gehrungswinkel fuer 2020 an 4040)", "(Loesung waehlen)", 6, "Stk", "je Ende einer Diagonale"],
     [n0 + 12, "Adam Hall 19\" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)", "87556", 1, "Stk", "hinten, 1. HE; Einbautiefe %.0f mm (Hersteller 360-480), Last 25 kg" % TRAY_MOUNT_D],
@@ -365,6 +465,19 @@ rows += [
     [n0 + 19, "Siebdruckplatte %d mm, %d x %d mm" % (PLATE, W, D), "(Vorschlag)", 1, "Stk", "als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger"],
     [n0 + 20, "ESD-Matte", "(Vorschlag)", 1, "Stk", "mit 1-MOhm-Widerstand an den Erdungspunkt"],
 ]
+if CLAD:
+    _sz = {}
+    for _n, _sz3 in clad_parts:
+        _dims = sorted(_sz3, reverse=True)[:2]
+        _sz.setdefault((round(_dims[0], 1), round(_dims[1], 1)), []).append(_n)
+    _edge_m = sum(2 * (sorted(z3, reverse=True)[0] + sorted(z3, reverse=True)[1]) for _, z3 in clad_parts) / 1000.0
+    for (_a, _b), _names in _sz.items():
+        rows.append([0, "Forex classic %.0f mm, Zuschnitt %.1f x %.1f mm" % (FOREX_T, _a, _b), "(Vorschlag)", len(_names), "Stk", "Fuellplatte in 8-mm-Nut: %s" % ", ".join(_names)])
+    rows += [
+        [0, "Einfassprofil / Abdeckprofil 8 mm, 1000 mm (Alux)", "8-12.40", int(_edge_m) + 2, "Stk", "fuer Plattenstaerke 4-6 mm; ca. %.1f m Plattenkante, davon in die Nut zu pressen; Forex nicht ausdruecklich gelistet, bei Alux nachfragen" % _edge_m],
+    ]
+for _i, _r in enumerate(rows[1:], 1):
+    _r[0] = _i
 print("\nZuschnitt (Laenge mm: Anzahl):", cuts)
 print("Profil 4040 gesamt: %.2f m, ca. %.1f kg" % (total_m, total_m * KG_PER_M))
 print("Rack-Raum lichte Hoehe: %.2f mm (%d HE + %.2f), Rahmen-Oberkante: %.2f mm, Platte oben: %.2f mm"
@@ -372,6 +485,7 @@ print("Rack-Raum lichte Hoehe: %.2f mm (%d HE + %.2f), Rahmen-Oberkante: %.2f mm
 print("Verbindungen: %d, Winkel 4040: %d" % (JOINTS, angles))
 print("Tischhoehe (Oberkante ESD): %.1f mm (Soll %d) | Pfostenlaenge %.1f | Beinlaenge unter dem Rack-Boden %.1f mm" % (H + PLATE + ESD_T, DESK_H, Z_UP0, FOOT_H))
 print("Schubladen-Einbautiefe (Aussenflaeche hinten bis Tiefenschiene): %.0f mm (Hersteller: 360-480)" % TRAY_MOUNT_D)
+print("Rack-Zargen: %d x %.1f mm | Forex %.0f mm in der Nut: %s, Plattenhoehe %.1f mm | Schriftart: %s" % (N_ZARGE, ZARGE_L, FOREX_T, "an" if CLAD else "aus", CLAD_H, logo_state["font"]))
 print("Diagonalen (Zuschnitt mm):", ", ".join("%.1f" % d for d in diags))
 print("Sitzseite vorn: %s | Beinraumtiefe ab Tischkante: %.0f mm (bis Vorderkante Mittelträger), Beinraumbreite %d mm, Hoehe unter der Platte: %.1f mm"
       % ("frei" if not FRONT_RACK else "durch Rack belegt", MID_Y - P / 2, W - 2 * P, Z_UP0))

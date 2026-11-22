@@ -1,0 +1,18 @@
+﻿Pos;Artikel;Zuschnitt/Variante;Menge;Reserve (+);Zu bestellen;Hinweis / vor Bestellung pruefen
+1;Nutprofil 4040 (Alux, Art. 4040);1000 mm;2;0;2;Zuschnitt +-1 mm, Enden sauber entgratet und rechtwinklig
+2;Nutprofil 4040 (Alux, Art. 4040);920 mm;10;0;10;gleiche Laenge fuer alle 10 Stueck, sonst wackelt der Tisch
+3;Nutprofil 4040 (Alux, Art. 4040);680 mm;4;0;4;"Pfosten; Fussgewinde im Profil oder Stellfuss mit Nutenstein klaeren"
+4;Winkel 4040 (Verbinder, Nut 8);-;48;4;52;"24 Verbindungen x 2; Winkel passend zur Alux-Nut 8 waehlen"
+5;Nutenstein M8 einschwenkbar, Profil 40;-;96;10;106;2 je Winkel
+6;Zylinderschraube M8 Innensechskant;Laenge nach Winkel;96;10;106;Laenge laut Winkeldatenblatt
+7;Abdeckkappe 4040;-;16;4;20;freie Profilenden
+8;Stellfuss fuer 40er Profil;M8/M10, Fussplatte gross;4;0;4;unter den Pfosten, Fussplatte nach aussen verbreitern
+9;Nutprofil 2020;134.4 mm;4;0;4;"2 Rack-Schienen hinten + 2 Tiefenschienen; Nutbreite 6 oder 8 mm bei Alux pruefen"
+10;Nutprofil 2020;900 mm;3;0;3;"Diagonalen hinten/links/rechts; Laenge nach Anschlussloesung ggf. anpassen"
+11;Nutprofil 2020;350 mm;4;0;4;"Rack-Zarge oben/unten, links/rechts, zwischen Rack-Schiene und Tiefenschiene; Nutbreite bei Alux pruefen"
+12;Winkel 2020;-;16;2;10;Rack- und Tiefenschienen
+13;Schraube M5x8 (ISO 7380);-;32;4;20;2 je Winkel
+14;Nutenstein M5 fuer Nut 6 (2020);-;16;4;12;falls Alux 2020 mit Nut 6
+15;Nutenstein M5 fuer Nut 8 (4040);-;8;4;12;Schienen an den 4040-Rahmen
+16;Diagonal-Anschluss 2020 an 4040;(Loesung offen);6;0;6;"Gelenk- oder Gehrungswinkel; erst nach Entscheidung bestellen"
+17;Einfassprofil / Abdeckprofil 8 mm, 1000 mm;Art. 8-12.40;7;1;8;"Klemmt die Forex-Platten (4-6 mm) in der Nut; ca. 5,8 m Plattenkante. Forex bei Alux nicht ausdruecklich gelistet, vor Bestellung nachfragen"

@@ -8,18 +8,22 @@ Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
 7;Profilabdeckkappe 4040;(Vorschlag);16;Stk;freie Profilenden, Anzahl pruefen
 8;Stellfuss fuer 40er Profil;(Vorschlag);4;Stk;unter den Pfosten, Fussplatte nach aussen verbreitert (Kippsicherheit)
 9;Nutprofil 2020 (Nut 6) Zuschnitt 134.4 mm;(Alux 2020 T-Nut pruefen);4;Stk;Rack-Schienen hinten (2) + 2 Tiefenschienen
-10;Nutprofil 2020 (Nut 6) Zuschnitt 900.0 mm;(Alux 2020 T-Nut pruefen);3;Stk;"Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: 900.0, 900.0, 900.0"
-11;Winkel 2020;2020L-Alu;8;Stk;je Rack-/Tiefenschiene oben + unten
-12;Schraube ISO 7380 M5x8;ISO 7380-M5x8;16;Stk;2 je Winkel
-13;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);8;Stk;1 je Winkel
-14;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
-15;Diagonal-Anschluss (Gelenk-/Gehrungswinkel fuer 2020 an 4040);(Loesung waehlen);6;Stk;je Ende einer Diagonale
-16;"Adam Hall 19"" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)";87556;1;Stk;"hinten, 1. HE; Einbautiefe 370 mm (Hersteller 360-480), Last 25 kg"
-17;"Adam Hall 19"" Parts RACK U PAN 01 D12 TIE BAR";872215;1;Stk;"1 HE, 12 D-Loecher, Zugentlastung; hinten, 3. HE"
-18;Neutrik powerCON Einbau, blau (IN);(Teilenr. pruefen, z. B. NAC3MPA-1);1;Stk;Netzeingang, D-Format
-19;Neutrik powerCON Einbau, weiss/hellgrau (OUT);(Teilenr. pruefen, z. B. NAC3MPB-1);1;Stk;Netzausgang, D-Format
-20;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
-21;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);9;Stk;unbelegte D-Loecher hinten
-22;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);12;Satz;4 je D12-Blende, 8 fuer die Schublade
-23;Siebdruckplatte 18 mm, 1000 x 1000 mm;(Vorschlag);1;Stk;als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger
-24;ESD-Matte;(Vorschlag);1;Stk;mit 1-MOhm-Widerstand an den Erdungspunkt
+10;Nutprofil 2020 (Nut 6) Zuschnitt 350.0 mm;(Alux 2020 T-Nut pruefen);4;Stk;Rack-Zarge: oben und unten, links und rechts, zwischen Rack-Schiene und Tiefenschiene
+11;Nutprofil 2020 (Nut 6) Zuschnitt 900.0 mm;(Alux 2020 T-Nut pruefen);3;Stk;"Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: 900.0, 900.0, 900.0"
+12;Winkel 2020;2020L-Alu;16;Stk;je Rack-/Tiefenschiene oben + unten, je Zargenende
+13;Schraube ISO 7380 M5x8;ISO 7380-M5x8;32;Stk;2 je Winkel
+14;Nutenstein M5 fuer 6-mm-Nut (2020);(Vorschlag);16;Stk;1 je Winkel
+15;Nutenstein M5 fuer 8-mm-Nut (4040);(Vorschlag);8;Stk;1 je Winkel
+16;Diagonal-Anschluss (Gelenk-/Gehrungswinkel fuer 2020 an 4040);(Loesung waehlen);6;Stk;je Ende einer Diagonale
+17;"Adam Hall 19"" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)";87556;1;Stk;"hinten, 1. HE; Einbautiefe 370 mm (Hersteller 360-480), Last 25 kg"
+18;"Adam Hall 19"" Parts RACK U PAN 01 D12 TIE BAR";872215;1;Stk;"1 HE, 12 D-Loecher, Zugentlastung; hinten, 3. HE"
+19;Neutrik powerCON Einbau, blau (IN);(Teilenr. pruefen, z. B. NAC3MPA-1);1;Stk;Netzeingang, D-Format
+20;Neutrik powerCON Einbau, weiss/hellgrau (OUT);(Teilenr. pruefen, z. B. NAC3MPB-1);1;Stk;Netzausgang, D-Format
+21;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
+22;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);9;Stk;unbelegte D-Loecher hinten
+23;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);12;Satz;4 je D12-Blende, 8 fuer die Schublade
+24;Siebdruckplatte 18 mm, 1000 x 1000 mm;(Vorschlag);1;Stk;als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger
+25;ESD-Matte;(Vorschlag);1;Stk;mit 1-MOhm-Widerstand an den Erdungspunkt
+26;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);2;Stk;Fuellplatte in 8-mm-Nut: Forex_Seite_links, Forex_Seite_rechts
+27;Forex classic 5 mm, Zuschnitt 225.0 x 150.4 mm;(Vorschlag);2;Stk;Fuellplatte in 8-mm-Nut: Forex_Rueck_links, Forex_Rueck_rechts
+28;Einfassprofil / Abdeckprofil 8 mm, 1000 mm (Alux);8-12.40;7;Stk;"fuer Plattenstaerke 4-6 mm; ca. 5.8 m Plattenkante, davon in die Nut zu pressen; Forex nicht ausdruecklich gelistet, bei Alux nachfragen"
