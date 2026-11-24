@@ -1,8 +1,8 @@
-# open-ora | cad/macros/frame_4040.py | v6
+# open-ora | cad/macros/frame_4040.py | v6 (Branding: Wortmarke open-ora mit Zeichen als o + open-ora.de auf den Forex-Platten)
 # Tisch 1000 x 1000 mm aus Alux Nutprofil 4040 (aluxprofil.de, Art.-Nr. 4040), vorn/hinten = Y=0 / Y=D.
 # Tischhoehe DESK_H (Oberkante ESD-Matte) ist Parameter; die Pfosten/Fuesse ergeben sich daraus.
 # Obere Ebene: lange X-Traeger nehmen die komplette Breite ein. Untere Ebene (Rack-Boden): zwischen den Pfosten.
-# Standfestigkeit: Bodenstreben hinten + seitlich, je eine Diagonale (2020) hinten + seitlich, Mittelträger.
+# Standfestigkeit: Bodenstreben hinten + seitlich, Eckstreben 45 Grad (4040) unter dem unteren Rahmen (oder 2020-Diagonalen), Mittelträger.
 # Rack-Raum 3 HE; Schublade (hinten, 1. HE) haengt an den hinteren Schienen und den Tiefenschienen (Mittelträger).
 # Sitzplatz: Vorderseite (Y=0) bleibt unter der Platte frei (FRONT_RACK = False): kein unterer Traeger, keine Rack-Schienen.
 # Berechnung der Steifigkeit: cad/analysis/frame_stiffness.py
@@ -74,18 +74,31 @@ TRAY_BODY_D  = TRAY_MOUNT_D       # Schubladenkoerper-Platzhalter
 
 # ----- Belegung (Einheit 1 = unterste; D-Loch-Nr. von links, Blick von aussen) -----
 REAR_TRAY_U  = 1
+BRACING      = "knee"           # "knee": Eckstreben 4040 mit Alux 4040-45 | "diag": 2020-Diagonalen mit Knotenblechen
 CLAD         = True               # Forex-Fuellplatten in die 8-mm-Nut der 4040-Profile (Rackband, Seiten + hinten)
 FOREX_T      = 5.0                # Forex classic 5 mm; Alux-Einfassprofil 8-12.40 nimmt 4-6 mm
 SLOT_INS     = 8.0                # Einschubtiefe der Platte in die Nut (Nuttiefe ca. 12 mm, Rest fuer Einfassprofil/Spiel)
 RACK_WIN_W   = 486.0              # Ausschnitt hinten: Blenden 484 mm + 1 mm Luft je Seite
-LOGO_TEXT    = "open-ora"
-LOGO_FONTS   = [r"C:\Windows\Fonts\bahnschrift.ttf", r"C:\Windows\Fonts\Lato-Black.ttf", r"C:\Windows\Fonts\ariblk.ttf"]
-LOGO_DEPTH   = 0.8                # Gravurtiefe (mm) in der Aussenseite der Platte
+# ----- Branding der Forex-Platten (Logo "Offenes O", docs/branding) -----
+LOGO_MODE    = "druck"            # "druck": Platte dunkel, Logo als Druckschicht (Sponsor Lehmann) | "gravur": Logo eingraviert
+LOGO_LAYOUT  = os.path.join(REPO, "docs", "branding", "forex_layout.json")   # Logo-Umrisse in mm je Plattentyp (aus docs/branding/tools/gen_forex.py)
+LOGO_DEPTH   = 0.8                # Gravurtiefe (mm) in der Aussenseite der Platte (nur "gravur")
+PRINT_T      = 0.1                # Dicke der Druckschicht im Modell (nur zur Darstellung, "druck")
+COL_INK      = (0.086, 0.094, 0.106)   # #16181B
+COL_LIGHT    = (0.957, 0.949, 0.933)   # #F4F2EE
+COL_ACCENT   = (0.910, 0.455, 0.231)   # #E8743B
+COL_TAG      = (0.788, 0.776, 0.753)   # #C9C6C0 (Unterzeile)
 REAR_D12_U   = 3
 FRONT_D12_U  = 3
 REAR_D12     = {1: "powerCON_IN_blau", 2: "powerCON_OUT_weiss", 3: "Cat_etherCON"}   # Rest: Blindkappen
 FRONT_D12    = {}                                                                    # vorerst alles Blindkappen
 
+# ----- Fuesse: Alux Gelenkstellfuss 80 mm, M8x50 (Art. 80-M8x50), direkt in den M8-Gewindekern des 4040-Pfostens -----
+FOOT_STACK   = 50.0               # PLATZHALTER: Bauhoehe Fuss unter dem Pfosten (Mittelstellung), aus STEP "80mm stelvoet ... M8x50 spindel" uebernehmen
+FOOT_D       = 80.0               # Durchmesser der Gummiauflage
+FOOT_PAD_H   = 12.0               # PLATZHALTER: Hoehe der Gummiauflage
+FOOT_NECK_D  = 24.0               # PLATZHALTER: Durchmesser Gelenkkopf
+FOOT_TRAVEL  = 15.0               # Verstellweg nach oben und unten ab Mittelstellung (Gewindelaenge 50 mm, ANNAHME)
 ESD_MARGIN = 10                   # Matte liegt 10 mm eingerueckt auf der Platte
 # ------------------------------------------------
 
@@ -161,6 +174,12 @@ else:
 print("Profil:", "STEP-Querschnitt" if SECTION is not None else "Ersatzprofil")
 
 
+def color(o, rgb):
+    try:
+        o.ViewObject.ShapeColor = rgb
+    except Exception:
+        pass
+
 def profile(L):
     return SECTION.extrude(Vector(0, 0, L)) if SECTION is not None else fallback_profile(L)
 
@@ -206,7 +225,17 @@ for x, side in ((P / 2, "links"), (W - P / 2, "rechts")):
 # Pfosten = Fuesse: vom Boden bis unter den oberen Rahmen
 for x, xs in ((P / 2, "L"), (W - P / 2, "R")):
     for y, ys in ((P / 2, "V"), (D - P / 2, "H")):
-        add("Pfosten_%s%s" % (xs, ys), Z_UP0, (x, y, 0), "Z")
+        add("Pfosten_%s%s" % (xs, ys), Z_UP0 - FOOT_STACK, (x, y, FOOT_STACK), "Z")
+
+# Gelenkstellfuesse (Platzhalter-Geometrie), mittig unter dem Pfosten
+for x, xs in ((P / 2, "L"), (W - P / 2, "R")):
+    for y, ys in ((P / 2, "V"), (D - P / 2, "H")):
+        fo = doc.addObject("Part::Feature", "Fuss_%s%s" % (xs, ys))
+        pad = Part.makeCylinder(FOOT_D / 2, FOOT_PAD_H, Vector(x, y, 0))
+        neck = Part.makeCylinder(FOOT_NECK_D / 2, 8, Vector(x, y, FOOT_PAD_H))
+        spindle = Part.makeCylinder(4, FOOT_STACK - FOOT_PAD_H - 4, Vector(x, y, FOOT_PAD_H + 4))
+        fo.Shape = pad.fuse(neck).fuse(spindle)
+        color(fo, (0.1, 0.1, 0.1))
 
 # ---------- Platte, ESD-Matte, Erdungspunkt ----------
 plate = doc.addObject("Part::Box", "Platte")
@@ -263,8 +292,12 @@ for tag, xc in (("L", W / 2 - RACK_PITCH / 2), ("R", W / 2 + RACK_PITCH / 2)):
         o.Placement = Placement(Vector(xc, ZARGE_Y0, zc_), Rotation(Vector(1, 0, 0), -90))
 
 # ---------- Diagonalen (2020, im Feld zwischen Bodenstreben und unterem Rahmen) ----------
-DIAG_TRIM = 45.0                  # Abstand der Profilenden zu den Feldecken (Platz fuer Anschlusswinkel)
+DIAG_TRIM = 30.0                  # Abstand der Diagonalenenden zur Innenecke (Platz auf dem Knotenblech)
+GUSSET_T  = 4.0                   # Knotenblech Alu 4 mm, liegt auf der Innenflaeche der 4040-Profile
+GUSSET_G  = 130.0                 # Kantenlaenge des quadratischen Knotenblechs (liegt ueber beiden Profilen der Ecke)
 diags = []
+gussets = []
+
 def diag20(name, p0, p1):
     d = p1 - p0
     full = d.Length
@@ -276,22 +309,114 @@ def diag20(name, p0, p1):
     o.Placement = Placement(start, Rotation(Vector(0, 0, 1), d))
     diags.append(L)
 
-zb0 = BRACE_Z0 + P               # Oberkante Bodenstrebe
-yb = D - P / 2
-diag20("Diagonale_hinten", Vector(P, yb, zb0), Vector(W - P, yb, Z_LOW0))
-diag20("Diagonale_links", Vector(P / 2, P, zb0), Vector(P / 2, D - P, Z_LOW0))
-diag20("Diagonale_rechts", Vector(W - P / 2, D - P, zb0), Vector(W - P / 2, P, Z_LOW0))
+def gusset(name, plane, face, corner, sh, sv):
+    """Knotenblech in einer Innenecke. plane 'x' (Seitenwand, Flaeche bei x=face) oder 'y' (Rueckwand, Flaeche bei y=face).
+    corner = (h, z): Innenecke in der Wandebene (h = y bzw. x). sh/sv = +1/-1: Richtung, in die das Blech vom Eckpunkt aus in den freien Raum reicht.
+    Das Blech liegt nach innen (zur Tischmitte) auf der Profilflaeche und wird in die Nut beider Profile geschraubt (M8)."""
+    # Das Blech liegt auf den Flaechen BEIDER Profile der Ecke: es beginnt 10 mm vor der Nutmitte des Profils,
+    # das die Ecke bildet (Nutmitte = 20 mm hinter der Innenecke), und reicht G mm in den Raum hinein.
+    h0 = corner[0] - (P / 2 + 10) if sh > 0 else corner[0] + (P / 2 + 10) - GUSSET_G
+    z0 = corner[1] - (P / 2 + 10) if sv > 0 else corner[1] + (P / 2 + 10) - GUSSET_G
+    if plane == "y":     # Rueckwand: Flaeche y = D - P, nach innen = -y
+        box = Part.makeBox(GUSSET_G, GUSSET_T, GUSSET_G, Vector(h0, face - GUSSET_T, z0))
+    else:                # Seitenwand: Flaeche x = P (links, nach innen +x) bzw. W - P (rechts, nach innen -x)
+        x0 = face if face < W / 2 else face - GUSSET_T
+        box = Part.makeBox(GUSSET_T, GUSSET_G, GUSSET_G, Vector(x0, h0, z0))
+    # Dort, wo ein quer anschliessendes Profil im Weg ist, bekommt das Blech eine Ausklinkung
+    for f in doc.Objects:
+        if f.Name.startswith(("Pfosten", "X_", "Y_")) and f.Shape.BoundBox.intersect(box.BoundBox):
+            box = box.cut(f.Shape)
+    o = doc.addObject("Part::Feature", name)
+    o.Shape = box
+    color(o, (0.75, 0.75, 0.78))
+    gussets.append(name)
+
+if BRACING == "diag":
+    zb0 = BRACE_Z0 + P               # Oberkante Bodenstrebe
+    OFF = GUSSET_T + R / 2           # Diagonale liegt auf dem Knotenblech, nach innen versetzt
+    yi, xl, xr = D - P, P, W - P     # Innenflaechen: Rueckwand, linke und rechte Seitenwand
+
+    # Rueckwand: von unten links nach oben rechts
+    diag20("Diagonale_hinten", Vector(xl, yi - OFF, zb0), Vector(xr, yi - OFF, Z_LOW0))
+    gusset("Knotenblech_hinten_unten", "y", yi, (xl, zb0), +1, +1)
+    gusset("Knotenblech_hinten_oben", "y", yi, (xr, Z_LOW0), -1, -1)
+    # linke Seitenwand: von vorn unten nach hinten oben
+    diag20("Diagonale_links", Vector(xl + OFF, P, zb0), Vector(xl + OFF, yi, Z_LOW0))
+    gusset("Knotenblech_links_unten", "x", xl, (P, zb0), +1, +1)
+    gusset("Knotenblech_links_oben", "x", xl, (yi, Z_LOW0), -1, -1)
+    # rechte Seitenwand: von hinten unten nach vorn oben
+    diag20("Diagonale_rechts", Vector(xr - OFF, yi, zb0), Vector(xr - OFF, P, Z_LOW0))
+    gusset("Knotenblech_rechts_unten", "x", xr, (yi, zb0), -1, +1)
+    gusset("Knotenblech_rechts_oben", "x", xr, (P, Z_LOW0), +1, -1)
+
+
+# ---------- Eckstreben 45 Grad (4040) mit Alux-Winkelverbinder 4040-45 ----------
+# Je Wand (links, rechts, hinten) und je Pfosten eine Strebe unter dem unteren Rahmen: Pfosten und Traeger werden im 45-Grad-Dreieck
+# verbunden. Die Streben liegen in der Profilebene (Wanddicke 40 mm) und ragen nicht in den Beinraum.
+KNEE_A    = 250.0                 # Schenkel: Abstand der Befestigungspunkte von der Innenecke (Pfosten- bzw. Traegerflaeche)
+KNEE_TRIM = 35.0                  # PLATZHALTER: Abstand Strebenende - Befestigungspunkt (Hoehe des Verbinders 4040-45, aus STEP uebernehmen)
+KNEE_W    = 40.0                  # PLATZHALTER: Verbinderbreite (Richtung quer zur Wandebene)
+knees = []
+connectors = []
+
+def knee_brace(wall, hp, sh, tag):
+    """wall: 'links' | 'rechts' | 'hinten'; hp: Lage der Pfostenflaeche in der Wandebene; sh: Richtung (+1/-1) vom Pfosten weg."""
+    base = {"links": (0.0, "x"), "rechts": (W - P, "x"), "hinten": (D - P, "y")}[wall]
+    def to3(h, z):
+        return Vector(base[0], h, z) if base[1] == "x" else Vector(h, base[0], z)
+    nrm = Vector(1, 0, 0) if base[1] == "x" else Vector(0, 1, 0)
+    zb = Z_LOW0                                   # Unterseite des unteren Traegers
+    f_post = (hp, zb - KNEE_A)                    # Befestigungspunkt auf der Pfostenflaeche
+    f_beam = (hp + sh * KNEE_A, zb)               # Befestigungspunkt unter dem Traeger
+    dv = (f_beam[0] - f_post[0], f_beam[1] - f_post[1])
+    ln = (dv[0] ** 2 + dv[1] ** 2) ** 0.5
+    d = (dv[0] / ln, dv[1] / ln)
+    n = (-d[1], d[0])                             # Normale in der Wandebene
+    e1 = (f_post[0] + d[0] * KNEE_TRIM, f_post[1] + d[1] * KNEE_TRIM)
+    e2 = (f_beam[0] - d[0] * KNEE_TRIM, f_beam[1] - d[1] * KNEE_TRIM)
+    L = ((e2[0] - e1[0]) ** 2 + (e2[1] - e1[1]) ** 2) ** 0.5
+    # Strebe: 4040, 90-Grad-Enden, Achse von e1 nach e2
+    p1, p2 = to3(*e1) + nrm * (P / 2), to3(*e2) + nrm * (P / 2)
+    ax = p2 - p1
+    ax.normalize()
+    o = doc.addObject("Part::Feature", "Eckstrebe_%s_%s" % (wall, tag))
+    o.Shape = profile(L)
+    o.Placement = Placement(p1, Rotation(Vector(0, 0, 1), ax))
+    beams.append((o.Name, L))
+    knees.append(L)
+    # Verbinder-Platzhalter: Keil zwischen Strebenende und Profilflaeche, 40 mm breit
+    def wedge(name, end, to_face):
+        pts2 = []
+        for sgn in (+1, -1):
+            v = (end[0] + sgn * n[0] * P / 2, end[1] + sgn * n[1] * P / 2)
+            pts2.append(v)
+        for v in list(reversed(pts2)):
+            pts2.append(to_face(v))
+        pts = [to3(*q) for q in pts2]
+        pts.append(pts[0])
+        face = Part.Face(Part.makePolygon(pts))
+        sol = face.extrude(nrm * KNEE_W)
+        po = doc.addObject("Part::Feature", name)
+        po.Shape = sol
+        color(po, (0.55, 0.55, 0.6))
+        connectors.append(name)
+    wedge("Verbinder45_%s_%s_Pfosten" % (wall, tag), e1,
+          lambda v: (hp, v[1] - (v[0] - hp) * d[1] / d[0]))          # entlang -d zurueck auf die Pfostenflaeche
+    wedge("Verbinder45_%s_%s_Traeger" % (wall, tag), e2,
+          lambda v: (v[0] + (zb - v[1]) * d[0] / d[1], zb))          # entlang +d vor auf die Traegerunterseite
+
+if BRACING == "knee":
+    knee_brace("links", P, +1, "vorn")
+    knee_brace("links", D - P, -1, "hinten")
+    knee_brace("rechts", P, +1, "vorn")
+    knee_brace("rechts", D - P, -1, "hinten")
+    knee_brace("hinten", P, +1, "links")
+    knee_brace("hinten", W - P, -1, "rechts")
 
 # ---------- Rack-Einbauten ----------
 def u_z0(i):
     """Unterkante der Rack-Einheit i (1 = unterste)."""
     return Z_LOW1 + RACK_EXTRA / 2 + (i - 1) * U
-
-def color(o, rgb):
-    try:
-        o.ViewObject.ShapeColor = rgb
-    except Exception:
-        pass
 
 def make_d12(name, side, unit, assign):
     """RACK U PAN 01 D12 TIE BAR (872215) mit 12 D-Loechern als Platzhalter."""
@@ -342,30 +467,39 @@ if FRONT_RACK:
 CLAD_H = RACK_CLEAR + 2 * SLOT_INS       # Plattenhoehe (Oeffnung zwischen unterem und oberem Rahmen + Eingriff)
 clad_parts, logo_state = [], {"font": None}
 
-def logo_shape(width_max, height_max):
-    """Schriftzug als Flaeche in der XY-Ebene (Ursprung Mitte), passend in width_max x height_max."""
-    import Draft
-    for ff in LOGO_FONTS:
-        if not os.path.exists(ff):
-            continue
+# --- Logo-Geometrie: fertige Umrisse (Space Grotesk + Zeichen) aus docs/branding/forex_layout.json ---
+_layout_cache = {}
+LAYER_OF = {"ink": "hell", "url": "hell", "tag": "grau", "accent": "akzent"}
+LAYER_COL = {"hell": COL_LIGHT, "grau": COL_TAG, "akzent": COL_ACCENT}
+
+def logo_layout(face, full_w, full_h):
+    """Logo-Flaechen in der XY-Ebene, Ursprung Plattenmitte, mm. Gleiche Daten wie die Druckvorlagen forex-*.svg."""
+    import json
+    if not _layout_cache:
+        if not os.path.exists(LOGO_LAYOUT):
+            print("Logo-Layout fehlt: %s" % LOGO_LAYOUT)
+            return []
+        with open(LOGO_LAYOUT, encoding="utf-8") as f:
+            _layout_cache.update(json.load(f))
+        logo_state["font"] = "Space Grotesk (Umrisse aus forex_layout.json)"
+    lay = _layout_cache["seite" if face in ("links", "rechts") else "hinten"]
+    k = min(full_w / lay["w"], full_h / lay["h"])
+    if abs(k - 1) > 1e-3:
+        print("Hinweis: Platte %.1f x %.1f weicht vom Layout %.1f x %.1f ab, Logo skaliert (%.3f)" % (full_w, full_h, lay["w"], lay["h"], k))
+    out = []
+    for f in lay["faces"]:
+        wires = []
+        for loop in f["loops"]:
+            pts = [Vector((x - lay["w"] / 2) * k, (y - lay["h"] / 2) * k, 0) for x, y in loop]
+            wires.append(Part.makePolygon(pts + [pts[0]]))
         try:
-            ss = Draft.make_shapestring(LOGO_TEXT, ff, 100.0, 0.0)
-            doc.recompute()
-            sh = ss.Shape.copy()
-            doc.removeObject(ss.Name)
-            bb = sh.BoundBox
-            k = min(width_max / bb.XLength, height_max / bb.YLength)
-            sh.scale(k)
-            bb = sh.BoundBox
-            sh.translate(Vector(-(bb.XMin + bb.XMax) / 2, -(bb.YMin + bb.YMax) / 2, 0))
-            logo_state["font"] = os.path.basename(ff)
-            return sh
+            out.append((Part.makeFace(wires, "Part::FaceMakerBullseye"), LAYER_OF.get(f["color"], "hell")))
         except Exception as e:
-            print("Schriftzug mit %s nicht moeglich: %s" % (ff, e))
-    return None
+            print("Logo-Flaeche uebersprungen: %s" % e)
+    return out
 
 def forex_panel(name, box_origin, box_size, face, centre):
-    """Platte als Box; Schriftzug auf der Aussenseite eingraviert.
+    """Platte als Box; Logo auf der Aussenseite (bedruckt oder graviert).
     face: 'links' | 'rechts' | 'hinten' (Blickrichtung des Betrachters von aussen)."""
     sh = Part.makeBox(box_size[0], box_size[1], box_size[2], Vector(*box_origin))
     if face in ("links", "rechts"):     # obere Ecken freischneiden: dort liegt der durchgehende X-Traeger des oberen Rahmens
@@ -377,20 +511,33 @@ def forex_panel(name, box_origin, box_size, face, centre):
             "rechts": (Vector(0, 1, 0),  Vector(0, 0, 1), Vector(1, 0, 0)),
             "hinten": (Vector(-1, 0, 0), Vector(0, 0, 1), Vector(0, 1, 0))}[face]
     along = box_size[1] if face in ("links", "rechts") else box_size[0]
-    txt = logo_shape(0.80 * along, 0.34 * box_size[2])
-    if txt is not None:
-        xt, yt, zt = axes
-        m = App.Matrix(xt.x, yt.x, zt.x, centre.x,
-                       xt.y, yt.y, zt.y, centre.y,
-                       xt.z, yt.z, zt.z, centre.z,
-                       0, 0, 0, 1)
-        t = txt.copy()
+    xt, yt, zt = axes
+    m = App.Matrix(xt.x, yt.x, zt.x, centre.x,
+                   xt.y, yt.y, zt.y, centre.y,
+                   xt.z, yt.z, zt.z, centre.z,
+                   0, 0, 0, 1)
+    items = logo_layout(face, along, box_size[2])
+    layers = {}
+    for f, col in items:
+        t = f.copy()
         t.transformShape(m)
-        cutter = Part.Compound([f.extrude(zt * -LOGO_DEPTH) for f in t.Faces])
+        layers.setdefault(col, []).append(t)
+    if LOGO_MODE == "gravur" and layers:
+        cutter = Part.Compound([f.extrude(zt * -LOGO_DEPTH) for fs in layers.values() for f in fs])
         sh = sh.cut(cutter)
     o = doc.addObject("Part::Feature", name)
     o.Shape = sh
-    color(o, (0.93, 0.93, 0.93))
+    color(o, COL_INK if LOGO_MODE == "druck" else (0.93, 0.93, 0.93))
+    if LOGO_MODE == "druck":
+        for col, fs in layers.items():
+            p = doc.addObject("Part::Feature", "%s_Druck_%s" % (name, col))
+            p.Shape = Part.Compound([f.extrude(zt * PRINT_T) for f in fs])
+            color(p, LAYER_COL[col])
+            try:                        # Kanten in Druckfarbe, sonst wirken die Buchstaben schwarz umrandet
+                p.ViewObject.LineColor = LAYER_COL[col]
+                p.ViewObject.PointColor = LAYER_COL[col]
+            except Exception:
+                pass
     clad_parts.append((name, box_size))
     return o
 
@@ -402,19 +549,13 @@ if CLAD:
         out_x = ox if face == "links" else ox + FOREX_T
         forex_panel("Forex_Seite_%s" % face, (ox, y_lo, z_lo), (FOREX_T, y_hi - y_lo, CLAD_H), face,
                     Vector(out_x, (y_lo + y_hi) / 2, z_lo + CLAD_H / 2))
-    # Rueckseite: zwei Stuecke neben dem Rack-Fenster (zwischen Pfosten und Rack-Schiene)
+    # Rueckseite: zwei Stuecke neben dem Rack-Fenster (zwischen Pfosten und Rack-Schiene), beide mit Logo
     ym = D - P / 2
     oy = ym - FOREX_T / 2
-    x_left = (P - SLOT_INS, (W - RACK_WIN_W) / 2)
-    x_right = ((W + RACK_WIN_W) / 2, W - P + SLOT_INS)
-    xa, xb = x_left      # linkes Stueck traegt den Schriftzug (rechts nur Blindplatte, kein zweiter Schriftzug)
-    forex_panel("Forex_Rueck_links", (xa, oy, z_lo), (xb - xa, FOREX_T, CLAD_H), "hinten",
-                Vector((xa + xb) / 2, oy + FOREX_T, z_lo + CLAD_H / 2))
-    xa, xb = x_right
-    o = doc.addObject("Part::Feature", "Forex_Rueck_rechts")
-    o.Shape = Part.makeBox(xb - xa, FOREX_T, CLAD_H, Vector(xa, oy, z_lo))
-    color(o, (0.93, 0.93, 0.93))
-    clad_parts.append(("Forex_Rueck_rechts", (xb - xa, FOREX_T, CLAD_H)))
+    for nm, (xa, xb) in (("Forex_Rueck_links", (P - SLOT_INS, (W - RACK_WIN_W) / 2)),
+                         ("Forex_Rueck_rechts", ((W + RACK_WIN_W) / 2, W - P + SLOT_INS))):
+        forex_panel(nm, (xa, oy, z_lo), (xb - xa, FOREX_T, CLAD_H), "hinten",
+                    Vector((xa + xb) / 2, oy + FOREX_T, z_lo + CLAD_H / 2))
 
 doc.recompute()
 try:
@@ -446,15 +587,14 @@ rows += [
     [n0 + 1,  "Nutenstein einschwenkbar 40-Profil M8", "8-4-M8.40", angles * 2, "Stk", "2 je Winkel"],
     [n0 + 2,  "Schraube M8 (Innensechskant)", "(Laenge waehlen)", angles * 2, "Stk", "2 je Winkel"],
     [n0 + 3,  "Profilabdeckkappe 4040", "(Vorschlag)", 16, "Stk", "freie Profilenden, Anzahl pruefen"],
-    [n0 + 4,  "Stellfuss fuer 40er Profil", "(Vorschlag)", 4, "Stk", "unter den Pfosten, Fussplatte nach aussen verbreitert (Kippsicherheit)"],
+    [n0 + 4,  "Alux Gelenkstellfuss 80 mm, Gewinde M8x50", "80-M8x50", 4, "Stk", "Gummi-Gelenkfuss, Gewinde in den Profilkern des Pfostens; Verstellweg ca. +-%.0f mm (ANNAHME), STEP der Produktseite" % FOOT_TRAVEL],
+    [n0 + 27, "Gewinde M8 in den Profilkern der Pfosten schneiden", "Handgewindebohrer M8", 4, "Stk", "Kernloch 6,8 mm laut Profil; mind. 25 mm tief, Gewinde von unten; Werkzeug, kein Kaufteil"],
     [n0 + 5,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % RAIL_L, "(Alux 2020 T-Nut pruefen)", N_RAILS, "Stk", "Rack-Schienen hinten (2)%s + 2 Tiefenschienen" % (" + vorn (2)" if FRONT_RACK else "")],
     [n0 + 21, "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % ZARGE_L, "(Alux 2020 T-Nut pruefen)", N_ZARGE, "Stk", "Rack-Zarge: oben und unten, links und rechts, zwischen Rack-Schiene und Tiefenschiene"],
-    [n0 + 6,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % diags[0], "(Alux 2020 T-Nut pruefen)", 3, "Stk", "Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: %s" % ", ".join("%.1f" % d for d in diags)],
     [n0 + 7,  "Winkel 2020", "2020L-Alu", ANG20, "Stk", "je Rack-/Tiefenschiene oben + unten, je Zargenende"],
     [n0 + 8,  "Schraube ISO 7380 M5x8", "ISO 7380-M5x8", ANG20 * 2, "Stk", "2 je Winkel"],
     [n0 + 9,  "Nutenstein M5 fuer 6-mm-Nut (2020)", "(Vorschlag)", ANG20, "Stk", "1 je Winkel"],
     [n0 + 10, "Nutenstein M5 fuer 8-mm-Nut (4040)", "(Vorschlag)", N_RAILS * 2, "Stk", "1 je Winkel"],
-    [n0 + 11, "Diagonal-Anschluss (Gelenk-/Gehrungswinkel fuer 2020 an 4040)", "(Loesung waehlen)", 6, "Stk", "je Ende einer Diagonale"],
     [n0 + 12, "Adam Hall 19\" Parts RACK TRAY 01 PULLOUT (1 HE, Auszug)", "87556", 1, "Stk", "hinten, 1. HE; Einbautiefe %.0f mm (Hersteller 360-480), Last 25 kg" % TRAY_MOUNT_D],
     [n0 + 13, "Adam Hall 19\" Parts RACK U PAN 01 D12 TIE BAR", "872215", N_D12, "Stk", "1 HE, 12 D-Loecher, Zugentlastung; hinten%s, 3. HE" % (" + vorn" if FRONT_RACK else "")],
     [n0 + 14, "Neutrik powerCON Einbau, blau (IN)", "(Teilenr. pruefen, z. B. NAC3MPA-1)", 1, "Stk", "Netzeingang, D-Format"],
@@ -465,6 +605,20 @@ rows += [
     [n0 + 19, "Siebdruckplatte %d mm, %d x %d mm" % (PLATE, W, D), "(Vorschlag)", 1, "Stk", "als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger"],
     [n0 + 20, "ESD-Matte", "(Vorschlag)", 1, "Stk", "mit 1-MOhm-Widerstand an den Erdungspunkt"],
 ]
+if BRACING == "diag":
+    rows += [
+        [n0 + 6,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % diags[0], "(Alux 2020 T-Nut pruefen)", 3, "Stk", "Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: %s" % ", ".join("%.1f" % d for d in diags)],
+        [n0 + 11, "Knotenblech Alu %.0f mm, %d x %d mm" % (GUSSET_T, GUSSET_G, GUSSET_G), "(Zuschnitt)", len(gussets), "Stk", "je Diagonalenende; Bohrungen M8 (2 je Profil) und M5 (2 fuer die 2020-Diagonale), Innenseite der Rahmenprofile"],
+        [n0 + 25, "Schraube M8 + Nutenstein M8 (40er Profil)", "(Vorschlag)", len(gussets) * 4, "Satz", "4 je Knotenblech (2 je 4040-Profil)"],
+        [n0 + 26, "Schraube M5 + Nutenstein M5 (2020, Nut 6)", "(Vorschlag)", len(gussets) * 2, "Satz", "2 je Knotenblech in die Diagonale"],
+    ]
+else:
+    rows += [
+        [0, "Alux Winkelverbinder 45 Grad, Profil 40x40", "4040-45", len(connectors), "Stk", "2 je Eckstrebe (%d Streben a %.1f mm aus 4040, 90-Grad-Enden); Mass des Verbinders ist Platzhalter (STEP 4040-45 einsetzen)" % (len(knees), knees[0])],
+        [0, "Linsenkopfschraube ISO 7380 M8x16", "ISO 7380 M8x16", len(connectors) * 2, "Stk", "ANNAHME je Verbinder 2 (Variante Stirnflaeche-Nut wie bei 4080-45), Seite 4040-45 pruefen"],
+        [0, "Linsenkopfschraube ISO 7380 M8x25", "ISO 7380 M8x25", len(connectors) * 2, "Stk", "ANNAHME, siehe oben"],
+        [0, "Nutenstein einschwenkbar 40-Profil M8", "8-4-M8.40", len(connectors) * 2, "Stk", "ANNAHME, siehe oben"],
+    ]
 if CLAD:
     _sz = {}
     for _n, _sz3 in clad_parts:
@@ -472,7 +626,7 @@ if CLAD:
         _sz.setdefault((round(_dims[0], 1), round(_dims[1], 1)), []).append(_n)
     _edge_m = sum(2 * (sorted(z3, reverse=True)[0] + sorted(z3, reverse=True)[1]) for _, z3 in clad_parts) / 1000.0
     for (_a, _b), _names in _sz.items():
-        rows.append([0, "Forex classic %.0f mm, Zuschnitt %.1f x %.1f mm" % (FOREX_T, _a, _b), "(Vorschlag)", len(_names), "Stk", "Fuellplatte in 8-mm-Nut: %s" % ", ".join(_names)])
+        rows.append([0, "Forex classic %.0f mm, Zuschnitt %.1f x %.1f mm" % (FOREX_T, _a, _b), "(Vorschlag)", len(_names), "Stk", "Fuellplatte in 8-mm-Nut: %s; %s" % (", ".join(_names), "bedruckt, Druckdaten docs/branding/forex-*.svg" if LOGO_MODE == "druck" else "Logo graviert")])
     rows += [
         [0, "Einfassprofil / Abdeckprofil 8 mm, 1000 mm (Alux)", "8-12.40", int(_edge_m) + 2, "Stk", "fuer Plattenstaerke 4-6 mm; ca. %.1f m Plattenkante, davon in die Nut zu pressen; Forex nicht ausdruecklich gelistet, bei Alux nachfragen" % _edge_m],
     ]
@@ -485,8 +639,8 @@ print("Rack-Raum lichte Hoehe: %.2f mm (%d HE + %.2f), Rahmen-Oberkante: %.2f mm
 print("Verbindungen: %d, Winkel 4040: %d" % (JOINTS, angles))
 print("Tischhoehe (Oberkante ESD): %.1f mm (Soll %d) | Pfostenlaenge %.1f | Beinlaenge unter dem Rack-Boden %.1f mm" % (H + PLATE + ESD_T, DESK_H, Z_UP0, FOOT_H))
 print("Schubladen-Einbautiefe (Aussenflaeche hinten bis Tiefenschiene): %.0f mm (Hersteller: 360-480)" % TRAY_MOUNT_D)
-print("Rack-Zargen: %d x %.1f mm | Forex %.0f mm in der Nut: %s, Plattenhoehe %.1f mm | Schriftart: %s" % (N_ZARGE, ZARGE_L, FOREX_T, "an" if CLAD else "aus", CLAD_H, logo_state["font"]))
-print("Diagonalen (Zuschnitt mm):", ", ".join("%.1f" % d for d in diags))
+print("Rack-Zargen: %d x %.1f mm | Forex %.0f mm in der Nut: %s, Plattenhoehe %.1f mm | Logo: %s, Schriftart: %s" % (N_ZARGE, ZARGE_L, FOREX_T, "an" if CLAD else "aus", CLAD_H, LOGO_MODE, logo_state["font"]))
+print("Aussteifung: %s | Diagonalen: %s | Eckstreben: %d x %s mm" % (BRACING, ", ".join("%.1f" % d for d in diags) or "-", len(knees), ", ".join("%.1f" % k for k in knees[:1]) or "-"))
 print("Sitzseite vorn: %s | Beinraumtiefe ab Tischkante: %.0f mm (bis Vorderkante Mittelträger), Beinraumbreite %d mm, Hoehe unter der Platte: %.1f mm"
       % ("frei" if not FRONT_RACK else "durch Rack belegt", MID_Y - P / 2, W - 2 * P, Z_UP0))
 
