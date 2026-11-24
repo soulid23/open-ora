@@ -1,0 +1,34 @@
+# open-ora.de – .htaccess
+
+RewriteEngine On
+
+# 1. Alles auf HTTPS umleiten
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://www.open-ora.de%{REQUEST_URI} [L,R=301]
+
+# 2. Ohne www auf www umleiten (https://www.open-ora.de)
+RewriteCond %{HTTP_HOST} ^open-ora\.de$ [NC]
+RewriteRule ^ https://www.open-ora.de%{REQUEST_URI} [L,R=301]
+
+<IfModule mod_headers.c>
+  # Browser merken sich HTTPS (zuerst 1 Jahr, ohne Subdomains/Preload)
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Schriften mit richtigem Typ ausliefern
+AddType font/ttf .ttf
+AddType font/woff2 .woff2
+
+# Caching: Schriften lange, HTML kurz
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Kein Verzeichnislisting
+Options -Indexes
