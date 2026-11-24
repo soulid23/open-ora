@@ -42,7 +42,6 @@ Die Werte hängen stark von der Steifigkeit der Winkelverbinder ab (im Skript vo
 ## Offene Punkte
 - **Messen**: seitlich mit 100 N belasten und die Verschiebung messen, danach Ausschwingen oder Schwingungsmessung. Dann Rechnung anpassen.
 - **Sitzseite**: siehe Nachtrag unten. Probesitzen mit Stuhl und Knien unter der Platte, danach `DESK_H` ggf. anpassen.
-- Anschluss der Diagonalen an die 4040-Profile (Gelenk- oder Gehrungswinkel) ist noch zu wählen.
 - Siebdruckplatte 18 mm: tatsächliches Gewicht und E-Modul beim Hersteller prüfen.
 - Stellfüße mit verbreiterter Fußplatte auswählen.
 
@@ -59,3 +58,20 @@ Der Tisch wird sitzend benutzt. Deshalb entfallen vorn der untere Querträger, d
 - **Schriftzug** "open-ora" (Bahnschrift, 0,8 mm tief graviert, außen): einmal links, rechts und hinten (hinten auf dem linken Stück). Im Makro über `LOGO_TEXT`, `LOGO_FONTS`, `LOGO_DEPTH` einstellbar. Vorher war die Verkleidung 3 mm außen aufgesetzt (v7), das entfällt.
 - Forex ist nicht leitfähig und hält keine hohen Temperaturen aus (erweicht bei ca. 70 bis 80 °C). Es ist eine Abdeckung, kein Berührschutz für Netzteile. Netzseitige Teile bleiben Sache der Elektrofachkraft, siehe SAFETY.md. Lüftung der Netzteile nach Einbau prüfen.
 - Das Makro meldet 48 Objekte ohne Kollisionen (Bild: `docs/images/frame_v8.png`). Nuttiefe von 12 mm ist geschätzt, gegen den STEP-Schnitt prüfen. Die Steifigkeitsrechnung ist nicht aktualisiert; Zargen und Platten bringen eher Steifigkeit dazu und sind dort nicht angesetzt.
+
+## Nachtrag: Diagonalen angeschlossen (v9)
+Die drei 2020-Diagonalen schwebten bisher frei. Jetzt sitzt jede Diagonale an beiden Enden auf einem Knotenblech (Alu 4 mm, 130 x 130 mm) auf der Innenseite der Rahmenprofile. Das Blech liegt über beiden Profilen der Ecke und wird mit je zwei M8-Schrauben und Nutensteinen pro 4040-Profil befestigt, die Diagonale mit zwei M5-Schrauben. Wo ein Quer-Profil im Weg ist, ist das Blech ausgeklinkt. Die Diagonalen sind dafür 930 mm lang (vorher 900 mm) und nach innen versetzt (Blechdicke plus halbe Profilbreite). 6 Bleche, Makro ohne Kollisionen, Kontakt Diagonale/Blech 0 mm. Die Bohrbilder und die Festigkeit der Bleche sind noch nicht ausgelegt. Bei der Steifigkeitsrechnung werden die Diagonalen weiter als gelenkig angeschlossene Stäbe angesetzt.
+
+## Nachtrag: Eckstreben 45 Grad statt Diagonalen (v10)
+Alux führt den Winkelverbinder 4040-45 (Art. 4040-45, 3,39 EUR netto, STEP `4040-45.STEP` auf der Produktseite). Die 2020-Diagonalen (ca. 22 Grad) und die Knotenbleche entfallen, `BRACING = "knee"` im Makro (`"diag"` bringt die alte Lösung zurück).
+- Je Wand (links, rechts, hinten) und je Pfosten eine Strebe aus 4040 unter dem unteren Rahmen: 6 Streben à 283,6 mm mit 90-Grad-Enden, 12 Verbinder, Schenkel 250 mm. Die Streben liegen in der Profilebene und ragen nicht in den Beinraum.
+- **Platzhalter**: Verbinderhöhe (`KNEE_TRIM = 35 mm`) und -breite (40 mm) sind angenommen. Sobald das STEP des 4040-45 vorliegt, werden die Werte eingesetzt, die Strebenlänge ändert sich damit. Auch die Schrauben (je Verbinder 2x M8x16, 2x M8x25, 2 Nutensteine) sind aus der Seite des 4080-45 übernommen, nicht geprüft.
+- Makro: 63 Objekte, keine Kollisionen, alle Teile berühren sich. 15,62 m Profil 4040 (ca. 21,8 kg).
+- Steifigkeit **nicht neu gerechnet**. Die Eckstreben machen die Ecken am unteren Rahmen deutlich steifer als der Winkel allein. Als grobe Einordnung liegt der Tisch dann zwischen den Spalten "steif" und "starr" der Tabelle oben, nicht in der Spalte "weich". Für belastbare Zahlen müssen die Streben in `frame_stiffness.py` als Stäbe ergänzt werden.
+
+## Nachtrag: Füße (v11)
+- **Gewählt**: Alux Gelenkstellfuß 80 mm, M8x50 (Art. 80-M8x50, 3,49 EUR netto, PA6 glasfaserverstärkt mit Gummiauflage, STEP auf der Produktseite). Der Gelenkkopf gleicht Bodenunebenheiten aus, die Ø80-Auflage verteilt die Last und dämpft.
+- **Befestigung**: M8-Gewinde (ca. 25 mm tief, von unten) in den Kernkanal des 4040-Pfostens schneiden (Kernloch 6,8 mm laut Profil). Der Fuß schraubt direkt ein, es entfällt Plattenmaterial. Die Pfosten werden um die Fußbauhöhe kürzer (630 statt 680 mm), die Tischhöhe bleibt 740 mm.
+- **Platzhalter**: Fußbauhöhe 50 mm (Mittelstellung), Auflagehöhe 12 mm und Verstellweg +-15 mm sind angenommen. Das STEP `80mm stelvoet + K13.5 M8x50 spindel.STEP` von der Produktseite liefert die echten Maße. Die Belastbarkeit nennt Alux nicht; bei ca. 80 bis 100 kg Tischgewicht und 4 Füßen sind es etwa 25 kg je Fuß, vor der Bestellung nachfragen.
+- **Alternative**: Montageplatten-Set 80 mm (Art. Feet-set 80, 34,99 EUR netto für 4 Füße, 5-mm-Stahlplatten, die seitlich in die Nut des Pfostens geschraubt werden; Füße stehen dann etwas außerhalb des Pfostens, das hilft bei der Kippsicherheit). Maße der Platten stehen nicht auf der Seite.
+- Makro: 67 Objekte, keine Kollisionen, Höhe 740 mm.
