@@ -72,7 +72,8 @@ Jede Stelle am Rahmen, an der ein Modul sitzt oder sitzen soll. „reserviert“
 | Rack hinten, HE 2 | Z6 | frei (z. B. Netzwerk-Switch, Tischverbund) | 1 | frei |
 | Rack hinten, HE 3 | Z6 | Blende 872215: powerCON IN/OUT, etherCON, 9 freie D-Ausschnitte | 1 | vorgeschlagen (ADR 0003) |
 | Pfosten außen (alle 4) | Z4 | Tischverbund-Verbinder | 1 oder 2 | offen, siehe Abschnitt 4 |
-| Oberer Rahmen, Mitte | Z1 | Mittelträger der Wechselplatte (abnehmbar) | 1 | offen (offene Frage 12) |
+| Obere Holme, Innennut | Z1 | bis zu 8 vorab eingelegte, verschiebbare Nutensteine je Holm für bis zu 4 Streben | 1 | Vorgabe (ADR 0009) |
+| Oberer Rahmen, Mitte | Z1 | Mittelträger der Wechselplatte (abnehmbar, an den vorab eingelegten Nutensteinen) | 1 | offen (offene Frage 12) |
 | Raum über der Platte unter der Sensorschiene | Z1 | Drucker Max4 (Oberkante z 1352) gegen Kameras (Unterkante ca. z 1358): nur ca. 6 mm | 1 | Hinweis: Drucker nicht unter der Sensorschiene |
 
 ## 4. Tischverbund (A10)
@@ -96,14 +97,18 @@ läuft über das Rack (Z6) und die Pfosten (Z4).
 
 ### Daten
 - Netzwerk: etherCON-Durchführung vorhanden; je Tisch ein kleiner Switch (Rack HE 2) oder durchgeschleift.
-- Verbund-Bus: **RS485 oder CAN** (ADR 0009; RS232 wäre nur Punkt-zu-Punkt). Auswahl, Steckverbinder, Terminierung
-  am Kettenende und Adressierung der Tische offen.
+- Verbund-Bus: **RS485 oder CAN** über **RJ45** (ADR 0009, Nachtrag; RS232 wäre nur Punkt-zu-Punkt). Bus- und
+  Ethernet-Buchsen unverwechselbar (Lage, Farbe, Beschriftung), Belegung festlegen (CAN z. B. nach CiA 303-1).
+  Offen: Auswahl RS485/CAN, Terminierung am Kettenende, Adressierung der Tische.
 - Steckverbinder in den freien D-Ausschnitten der hinteren Blende (Neutrik D-Format, nur Kleinspannung).
 
 ## 5. Wechselplatte (A11)
 - Varianten: **Siebdruck 18 mm** (Werkbank, Drucker, Lager) und **ESD-ableitfähig** (Elektronik). Weitere möglich.
-- Wird auf den oberen Rahmen aufgelegt und **verriegelt** (schnell lösbar, mehrere Punkte), weil die Platte als Scheibe
-  zur Quersteifigkeit beiträgt (ADR 0006, ADR 0009).
+- Wird auf den oberen Rahmen aufgelegt und befestigt, weil die Platte als Scheibe zur Quersteifigkeit beiträgt
+  (ADR 0006, ADR 0009). **Zwei Systeme**: (1) dauerhaft und günstig verschraubt (Senkkopfschrauben in Nutensteine,
+  volle Scheibenwirkung), (2) Schnellspannsystem, werkzeuglos (Scheibenwirkung nachzuweisen).
+- **Vorab eingelegte Nutensteine**: beim Zusammenbau bis zu 8 verschiebbare Nutensteine je oberem Holm (Innennut),
+  damit später bis zu 4 Streben (Mittelträger, Querstreben) ohne Zerlegen befestigt werden können.
 - **Mittelträger**: Tisch V1 hat keinen mittleren Querträger; für Drucker und Werkbank ist ein Mittelträger nötig,
   am besten abnehmbar als Teil des Plattenmoduls (grobe Durchbiegung ohne Mittelträger ca. 9 mm bei 500 N, ADR 0009).
 - **ESD-Platte**: Erdungsanschluss am Tisch (Druckknopf o. Ä.), über 1 MΩ an PE; Ableitwiderstand nach jedem Wechsel prüfen.

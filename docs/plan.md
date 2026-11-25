@@ -53,7 +53,8 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 - [ ] tisch: Lastannahmen je Anwendung festlegen (Auslegung Drucker: QIDI Max4, 40 bis 46,5 kg; offene Frage 8)
 - [ ] tisch: Belegungsplan bestätigen, Konflikte lösen (offene Fragen 5 und 11)
 - [x] tisch: Grundsätze der Modul-Schnittstelle festlegen (ADR 0009)
-- [ ] tisch: Wechselplatte mit Verriegelung und abnehmbarem Mittelträger auslegen (offene Frage 12)
+- [ ] tisch: Wechselplatte auslegen: verschraubte Variante, Schnellspannsystem, abnehmbarer Mittelträger (offene Frage 12)
+- [ ] tisch: Makro `frame_4040.py`: 8 vorab eingelegte Nutensteine je oberem Holm vorsehen, in Stückliste aufnehmen
 - [ ] tisch: Unterbau-Module: Regalböden und 19"-Rack-Modul für Schubladen (offene Frage 13)
 - [ ] tisch: Tischverbund klären: Pfosten-Verbinder, Strom durchschleifen, RS485 oder CAN (offene Frage 10)
 - [ ] tisch: Module im CAD gegen die Zonen prüfen (Platzhalter Drucker, Fach-Modul, Nachbartisch)

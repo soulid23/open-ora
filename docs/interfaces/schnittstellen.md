@@ -25,7 +25,8 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Nutzlast Tischplatte gesamt (inkl. Wechsel- und Stoßlast) | offen | kg, N | 0008, 0009 | Tisch, Sicherheit | offen |
 | Nutzlast Unterbau (1 bis 2 Regalböden, 19"-Schubladen) | offen | kg | 0009 | Tisch | offen |
 | Modul-Befestigung am Rahmen | leicht: Außennuten der Holme (Nut 8, Nutensteine M8); schwer: Pfosten oder vorab montierte Zusatzprofile; Raster und Last je Punkt offen | - | 0009, module.md | alle Module | vorgeschlagen |
-| Datenbus Tischverbund | RS485 oder CAN (Auswahl offen), dazu Ethernet | - | 0009 | Elektronik, alle Tische | vorgeschlagen |
+| Datenbus Tischverbund | RS485 oder CAN (Auswahl offen) über RJ45, unverwechselbar zu Ethernet; dazu Ethernet | - | 0009 | Elektronik, alle Tische | vorgeschlagen |
+| Befestigung Wechselplatte | (1) verschraubt, Senkkopf in Nutensteine; (2) Schnellspannsystem; je oberem Holm bis zu 8 vorab eingelegte Nutensteine | - | 0009 | Tisch | vorgeschlagen |
 | Tastkraft Prober (Auslegung Halter) | max. 2 | N | Annahme 0007 | Arm 1, Arm 2 | offen |
 | Träger-Kupplung | 3 Kugeln / 3 Nuten, Ø 60 mm, Verriegelung selbsthemmend | - | 0007 | Arm 1, Träger | vorgeschlagen |
 
