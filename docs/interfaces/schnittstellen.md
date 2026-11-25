@@ -15,6 +15,10 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Arm 1: Nutzlast | max. 1,0 (Mittel 0,5) | kg | Vorgabe | Arm 1 | angenommen |
 | Arm 1: Kippmoment am Fuß | ca. 26 | Nm | 0007 (Rechnung) | Tisch | vorgeschlagen |
 | Arm 1: Säulenhöhe über Matte | ca. 400 | mm | 0007 | Sensorik (Portal) | vorgeschlagen |
+| Lichtrahmen: Stützen am Tisch | 4 × 4040 außen (x -40..0 / 1000..1040), y 600..640 und 920..960, z 505,6..1460; je 2 Verbinder an Y_oben_* und Y_unten_*, kein Bodenkontakt | mm | light_frame.py v2 (Vorgabe Nutzer 2026-11-25) | Tisch, Arm 1, Sensorik | vorgeschlagen |
+| Lichtrahmen: Oberkante / Unterkante Ausleger | 1500 / 1460 | mm über Boden | light_frame.py v2 | Sensorik, Sicherheit (Kopffreiheit) | vorgeschlagen |
+| LED-Panel: Lage und Höhe | 595 x 595, Mitte x 500 / y 450, Unterkante z 1423 (683 über Matte) | mm | light_frame.py v2 | Sensorik, Arm 1 | vorgeschlagen |
+| Sensorschiene: Lage | 2020 quer, y 440..460, z 1393..1413; Kamera-Unterkante ca. z 1358 | mm | light_frame.py v2 | Sensorik, Arm 1, Arm 2 | vorgeschlagen |
 | Präsentationspunkt P0 | x = 500, y = 450, Zone ±100 | mm | 0007 | Arm 1, Arm 2, Sensorik | vorgeschlagen |
 | Platinenhöhe in der Zone | 30 bis 230 über Matte | mm | 0007 | Arm 2, Sensorik | vorgeschlagen |
 | Nutzlast Tischplatte (3D-Drucker o. Ä., inkl. Wechsellast) | offen | kg, N | 0008 | Tisch, Sicherheit | offen |

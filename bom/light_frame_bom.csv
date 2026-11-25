@@ -1,0 +1,29 @@
+Teil;Material/Beschreibung;Länge mm / Anzahl
+LR_Stuetze_hinten_L;Alux 4040;954.4
+LR_Stuetze_mitte_L;Alux 4040;954.4
+LR_Ausleger_L;Alux 4040;860.0
+LR_Stuetze_hinten_R;Alux 4040;954.4
+LR_Stuetze_mitte_R;Alux 4040;954.4
+LR_Ausleger_R;Alux 4040;860.0
+LR_Traverse_hinten;Alux 4040;1000.0
+LR_Traverse_vorn;Alux 4040;1000.0
+LR_Traverse_Panel_hinten;Alux 4040;1000.0
+LR_LED_Panel_595;LED-Panel 595x595, ~40 W, CRI>=90, 4000-5000 K, flimmerfrei;595
+LR_Abhaenger_vorn_1;Abhänger Panel (Druckteil/Flachwinkel);0
+LR_Abhaenger_hinten_1;Abhänger Panel (Druckteil/Flachwinkel);0
+LR_Abhaenger_vorn_2;Abhänger Panel (Druckteil/Flachwinkel);0
+LR_Abhaenger_hinten_2;Abhänger Panel (Druckteil/Flachwinkel);0
+LR_Sensorschiene;Alux 2020;1000.0
+LR_Sensorhalter_L;Halter Sensorschiene (Druckteil/Winkel);0
+LR_Sensorhalter_R;Halter Sensorschiene (Druckteil/Winkel);0
+LR_Kamera_oben_Mitte;Hauptkamera Draufsicht (z.B. RPi HQ/Cam 3);0
+LR_Waermebild;Wärmebildkamera (z.B. MLX90640);0
+LR_ToF_Tiefe;ToF/Tiefensensor;0
+LR_Reserve_1;Reserveplatz Sensor;0
+LR_Reserve_2;Reserveplatz Sensor;0
+LR_Kamera_vorn_schraeg;Kamera schräg vorn (Seitenansicht Bauteile);0
+LR_LED_Treiber;LED-Treiber (Konstantstrom, dimmbar, flimmerfrei);0
+Verbinder Stütze-Tisch;Flachverbinder/Nutenstein M8 an Seitenholm oben + mitte, 2 je Stütze;8
+Verbinder Stütze-Ausleger;Winkel 4040 + Nutensteine;8
+Verbinder Traverse-Ausleger;Winkel 4040 + Nutensteine;12
+Endkappen 4040;Ausleger vorn/hinten;4
