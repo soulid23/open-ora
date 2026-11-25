@@ -1,0 +1,8 @@
+Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
+1;Deckplatte Alu 12 mm, 180 x 240 mm;(Zuschnitt/Fraesteil);1;Stk;"liegt 2 mm ueber der ESD-Matte; Bohrungen Lagergehaeuse, J1-Riemen, Wangen"
+2;Wange hinten Alu 10 mm, 180 x 142 mm mit Lasche am Pfosten;(Zuschnitt/Laser);1;Stk;aussen an X_oben_hinten + Pfosten_RH
+3;Wange rechts Alu 10 mm, 170 x 142 mm mit Lasche am Pfosten;(Zuschnitt/Laser);1;Stk;aussen an Y_oben_rechts + Pfosten_RH
+4;Zylinderschraube ISO 4762 M8x20;ISO 4762-M8x20;7;Stk;waagerecht durch die Wangen in die aeusseren Nuten
+5;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;7;Stk;wie Rahmen
+6;Scheibe ISO 7089 8;ISO 7089-8;7;Stk;
+7;Zylinderschraube ISO 4762 M6x20 + Gewinde M6 in den Wangen;ISO 4762-M6x20;6;Stk;Deckplatte mit den Wangen verschrauben

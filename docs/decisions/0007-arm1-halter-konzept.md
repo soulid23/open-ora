@@ -21,6 +21,28 @@ Kippmoment und Gewicht gehen damit direkt in Rahmen und Bein, nicht in die Siebd
 bekommen dort einen Eckausschnitt von 170 × 170 mm. Der J1-Motor hängt unter dem Gehäuse geschützt in der Rahmenecke.
 Ein Zusatzträger unter der Platte ist nicht nötig. Der Prober kommt gespiegelt nach hinten links (offen, Baustelle Arm 2).
 
+### Nachtrag 2026-11-24: Fuß als Modul, von außen verschraubt (Makro v2)
+Bezug ist jetzt Tisch Version 1 (`cad/frame/OpenORA_Frame22.FCStd`), das Makro kopiert den Tisch aus dieser Datei.
+Vorgabe: Arm an den beiden oberen Profilen befestigen, **von außen, damit er als Modul abnehmbar ist**.
+Damit entfällt der Eckausschnitt: Platte und ESD-Matte bleiben ganz, die Platte bleibt eine ungestörte Scheibe.
+- **Zwei Wangen** Alu 10 mm außen an X_oben_hinten (hinten) und Y_oben_rechts (rechts), jeweils mit einer Lasche,
+  die am Pfosten_RH bis z = 600 herunterreicht.
+- **Deckplatte** Alu 12 mm, 180 × 240 mm (x 830..1010, y 830..1070), liegt 2 mm über der ESD-Matte und verbindet die
+  Wangen. Darauf das runde J1-Lagergehäuse Ø 120 mm (bis z = 810). J1-Achse unverändert bei x = 920, y = 920.
+- **7 × M8 mit Nutensteinen**, alle waagerecht von außen: hinten in die Außennut von X_oben_hinten (x = 850, 885, 985,
+  z = 700), rechts in die Außennut von Y_oben_rechts (y = 850, 885), je eine in die beiden Außennuten von Pfosten_RH
+  (z = 640). Zum Abnehmen nur diese 7 Schrauben lösen; die Nutensteine bleiben im Profil (einschwenkbar).
+- Der J1-Motor hängt hinter dem Tisch unter dem überstehenden Teil der Deckplatte, Riemen ca. 115 mm zur J1-Achse.
+- Kippmoment 26 Nm: grob 90 N je Schraube. Die Laschen am Pfosten geben einen zweiten Hebelarm nach unten
+  (Abstand der Schraubenreihen 60 mm).
+- Alternative im Makro: `MOUNT = "innen"` (Grundplatte im Eckausschnitt, Wangen innen, 3 Schrauben senkrecht + 4 waagerecht).
+- Stückliste: `bom/arm1_fuss_bom.csv` (vom Makro, je nach `MOUNT`). Bilder: `docs/images/arm1_konzept_v2.png`,
+  `arm1_fuss_v2.png` (von außen), `arm1_fuss_v2_innen.png`. Keine Kollision mit Tisch V1.
+- Offen: **Licht- und Sensorrahmen**: dessen rechte hintere Stütze (x 1000..1040, y 920..960) säße an derselben Stelle wie die
+  rechte Wange. Entweder die Stütze nach vorn versetzen oder die Stütze an die Wange schrauben (gemeinsames Eckmodul).
+  Die Wangen decken oben ca. 10 mm der Forex-Platten ab. Nutenstein-Maße aus dem Alux-Datenblatt, Bohrbild mit Lagerwahl.
+  J1 so begrenzen, dass Oberarm und J2 nicht über die rechte Tischkante schwenken.
+
 ## Vorschlag
 **SCARA mit Hubsäule und 3-Achs-Handgelenk.** Alle Antriebe, die Schwerkraft tragen, sind selbsthemmend.
 
@@ -53,7 +75,7 @@ Ein Zusatzträger unter der Platte ist nicht nötig. Der Prober kommt gespiegelt
   über 80 mm nur ca. 0,03 mm. Deshalb braucht der Träger Stützstifte.
 - Arbeitsraum: Präsentationspunkt P0 (500, 450), Zone ±100 mm. In P0 steht das Handgelenk bei 70 % der Armreichweite
   (600 mm), in der fernen Zonenecke (400, 350) bei 94 %, das ist die Grenze. Platinenoberseite 30 bis 230 mm über der Matte.
-- FreeCAD (`cad/macros/arm_holder.py`): vier Posen ohne Kollision mit dem Tisch (P0 waagerecht mit beiden Ellbogenseiten,
+- FreeCAD (`cad/macros/arm_holder.py`, v1 auf Tisch v8): vier Posen ohne Kollision mit dem Tisch (P0 waagerecht mit beiden Ellbogenseiten,
   Ecke (400, 350) 45° gekippt, Ecke (600, 550) gewendet). Selbstkollisionen des Arms prüft das Makro noch nicht.
 
 ## Sicherheit (siehe SAFETY.md)

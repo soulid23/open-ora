@@ -9,7 +9,8 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Tischfläche | 1000 x 1000 | mm | 0006 | Tisch, Arm 1, Arm 2 | angenommen |
 | Oberkante ESD-Matte | 740 | mm über Boden | 0006 | alle | angenommen |
 | Arm 1: J1-Achse (Fuß) | x = 920, y = 920, hinten rechts auf dem Aluframe | mm | 0007 (Vorgabe) | Tisch, Arm 2, Sensorik | angenommen |
-| Arm 1: Eckausschnitt Platte + Matte | 170 x 170, Ecke hinten rechts | mm | 0007 | Tisch | vorgeschlagen |
+| Arm 1: Fuß am Rahmen | Modul von außen: 2 Wangen 10 mm an X_oben_hinten / Y_oben_rechts / Pfosten_RH, Deckplatte 12 mm 2 mm über der Matte, 7 × M8 + Nutensteine | - | 0007 Nachtrag | Tisch, Lichtrahmen | vorgeschlagen |
+| Arm 1: Eckausschnitt Platte + Matte | entfällt bei Außenmodul (nur bei `MOUNT = "innen"`: 170 x 170) | mm | 0007 Nachtrag | Tisch | vorgeschlagen |
 | Arm 1: Masse ohne Nutzlast | ca. 6,5 | kg | 0007 (Rechnung) | Tisch | vorgeschlagen |
 | Arm 1: Nutzlast | max. 1,0 (Mittel 0,5) | kg | Vorgabe | Arm 1 | angenommen |
 | Arm 1: Kippmoment am Fuß | ca. 26 | Nm | 0007 (Rechnung) | Tisch | vorgeschlagen |
