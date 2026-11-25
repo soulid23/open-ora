@@ -1,6 +1,11 @@
 # 0004: Rahmenaufbau, Pfosten als Füße
 
-Status: angenommen
+Status: angenommen als Bauprinzip (obere Ebene über die volle Breite, Pfosten als Füße), **Maße ersetzt durch
+`0006-tisch-1x1-verstrebung.md`**.
+
+> **Stand heute (ADR 0006, Tisch Version 1):** 1000 x 1000 mm, Oberkante ESD-Matte 740 mm, Pfosten 630 mm mit
+> eingeschraubten Gelenkstellfüßen, Zuschnitte 4040: 2 x 1000, 10 x 920, 4 x 630, 6 x 283,6 mm (siehe `bom/frame_bom.csv`).
+> Die Maße unten gehören zum früheren Tisch 600 x 500 mm.
 
 ## Entscheidung
 - **Obere Ebene**: Die langen X-Träger (600 mm) liegen vorn und hinten über die komplette Breite,

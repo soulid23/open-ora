@@ -18,8 +18,9 @@ und lässt den Netzteil des Aufbaus von einer Fachkraft anschließen und prüfen
 
 ## Grundregeln für den Aufbau
 
-- **Trennung**: Netzspannung nur auf der Rückseite (feste Anschlüsse), nie an der vorderen Schnittstellenplatte.
-  Die Vorderseite führt ausschließlich Kleinspannung (SELV).
+- **Trennung**: Netzspannung nur auf der Rückseite (feste Anschlüsse im Rack hinten), nie an der Schnittstelle,
+  an der gearbeitet wird. Das Prüf- und Tastinterface führt ausschließlich Kleinspannung (SELV); sein Ort ist noch offen
+  (seit ADR 0006 ist vorn der Sitzplatz, das vordere Rack entfällt).
 - **Schutzleiter**: Alle berührbaren leitenden Teile liegen auf PE. Die ESD-Matte wird über einen
   1-MΩ-Widerstand (ESD-gerecht) mit dem Erdungspunkt verbunden.
 - **Absicherung**: Netzseitig Sicherung und Fehlerstrom-Schutzeinrichtung (RCD) laut Elektrofachkraft.
@@ -37,7 +38,7 @@ und lässt den Netzteil des Aufbaus von einer Fachkraft anschließen und prüfen
   nur dann sicher mit PE verbunden, wenn die Kontaktstellen blank sind oder Zahnscheiben verwendet werden.
   Durchgang nach dem Einbau messen.
 - **Steckverbinder nach Bemessungsdaten einsetzen.** XLR-Einbauteile der Neutrik D-Serie sind laut Datenblatt
-  für Spannungen unter 50 V ausgelegt, sie sind nur für die Kleinspannungsseite (vorn) vorgesehen.
+  für Spannungen unter 50 V ausgelegt, sie sind nur für die Kleinspannungsseite (Prüfinterface) vorgesehen.
   Netzspannung führen ausschließlich dafür freigegebene Steckverbinder (z. B. powerCON-Familie), hinten.
 - **Verwechslung ausschließen**: Netzsteckverbinder und Kleinspannungssteckverbinder nie vom selben Typ,
   nie auf derselben Platte.

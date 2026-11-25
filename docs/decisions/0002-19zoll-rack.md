@@ -1,6 +1,10 @@
 # 0002: 19-Zoll-Rack auf den langen Seiten
 
-Status: angenommen
+Status: angenommen, **teilweise ersetzt durch `0006-tisch-1x1-verstrebung.md`**.
+
+> **Stand heute (ADR 0006):** Der Tisch ist 1000 x 1000 mm groß und 740 mm hoch. Das 19"-Rack (3 HE) gibt es nur
+> noch **hinten**; vorn ist der Sitzplatz frei (`FRONT_RACK = False`). Maße und Aufteilung unten gelten für den
+> früheren Tisch 600 x 500 mm und sind nur noch als Herleitung der Rack-Schienen (2020, Nutabstand 465,1 mm) gültig.
 
 ## Kontext
 Der Tisch (600 x 500 x 220 mm, Alux 4040) bekommt vorn und hinten Schnittstellen:

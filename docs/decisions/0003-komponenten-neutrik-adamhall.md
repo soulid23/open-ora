@@ -1,6 +1,8 @@
 # 0003: Rack-Einbauten von Adam Hall und Neutrik
 
-Status: angenommen (Teilenummern und Maße vor Bestellung gegen Datenblatt/2D-Zeichnung prüfen)
+Status: angenommen (Teilenummern und Maße vor Bestellung gegen Datenblatt/2D-Zeichnung prüfen).
+**Vorn entfällt seit `0006-tisch-1x1-verstrebung.md`** (Sitzplatz vorn frei): Es gibt nur noch die hintere D12-Blende
+und die Schublade hinten. Die vordere Blende unten ist überholt; wo das Prüf-/Tastinterface hinkommt, ist offen.
 
 ## Entscheidung
 

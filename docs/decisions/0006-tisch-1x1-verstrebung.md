@@ -55,7 +55,7 @@ Der Tisch wird sitzend benutzt. Deshalb entfallen vorn der untere Querträger, d
 ## Nachtrag: Rack-Zarge und Forex-Verkleidung
 - **Rack-Zarge**: je Seite zwei waagerechte 2020-Profile (oben, unten), 350 mm lang, zwischen hinterer Rack-Schiene und Tiefenschiene, auf der Schienenachse. Die Schublade (435 mm breit) läuft daran vorbei. 4 Profile, 8 Winkel.
 - **Forex classic 5 mm in der Nut (Stand v8)**: Die Platten stecken in der 8-mm-Nut der 4040-Profile (Mittelebene, 8 mm Eingriff) und werden mit dem Alux-Einfassprofil 8-12.40 (Plattenstärke 4 bis 6 mm) geklemmt. Das Einfassprofil nennt Plexiglas, Polycarbonat und Dibond; Forex steht dort nicht, bei Alux nachfragen. Es sind vier Platten: Seiten links/rechts 936 x 150,4 mm und hinten links/rechts 225 x 150,4 mm (rechts vom Rack-Fenster ebenso). Vorn bleibt offen (Kniefreiheit). Montage: Platte vor dem letzten Profil einschieben, dann Einfassprofil eindrücken.
-- **Schriftzug** "open-ora" (Bahnschrift, 0,8 mm tief graviert, außen): einmal links, rechts und hinten (hinten auf dem linken Stück). Im Makro über `LOGO_TEXT`, `LOGO_FONTS`, `LOGO_DEPTH` einstellbar. Vorher war die Verkleidung 3 mm außen aufgesetzt (v7), das entfällt.
+- **Schriftzug** (überholt, siehe Nachtrag Version 1) "open-ora" (Bahnschrift, 0,8 mm tief graviert, außen): einmal links, rechts und hinten (hinten auf dem linken Stück). Im Makro über `LOGO_TEXT`, `LOGO_FONTS`, `LOGO_DEPTH` einstellbar. Vorher war die Verkleidung 3 mm außen aufgesetzt (v7), das entfällt.
 - Forex ist nicht leitfähig und hält keine hohen Temperaturen aus (erweicht bei ca. 70 bis 80 °C). Es ist eine Abdeckung, kein Berührschutz für Netzteile. Netzseitige Teile bleiben Sache der Elektrofachkraft, siehe SAFETY.md. Lüftung der Netzteile nach Einbau prüfen.
 - Das Makro meldet 48 Objekte ohne Kollisionen (Bild: `docs/images/frame_v8.png`). Nuttiefe von 12 mm ist geschätzt, gegen den STEP-Schnitt prüfen. Die Steifigkeitsrechnung ist nicht aktualisiert; Zargen und Platten bringen eher Steifigkeit dazu und sind dort nicht angesetzt.
 
@@ -75,3 +75,15 @@ Alux führt den Winkelverbinder 4040-45 (Art. 4040-45, 3,39 EUR netto, STEP `404
 - **Platzhalter**: Fußbauhöhe 50 mm (Mittelstellung), Auflagehöhe 12 mm und Verstellweg +-15 mm sind angenommen. Das STEP `80mm stelvoet + K13.5 M8x50 spindel.STEP` von der Produktseite liefert die echten Maße. Die Belastbarkeit nennt Alux nicht; bei ca. 80 bis 100 kg Tischgewicht und 4 Füßen sind es etwa 25 kg je Fuß, vor der Bestellung nachfragen.
 - **Alternative**: Montageplatten-Set 80 mm (Art. Feet-set 80, 34,99 EUR netto für 4 Füße, 5-mm-Stahlplatten, die seitlich in die Nut des Pfostens geschraubt werden; Füße stehen dann etwas außerhalb des Pfostens, das hilft bei der Kippsicherheit). Maße der Platten stehen nicht auf der Seite.
 - Makro: 67 Objekte, keine Kollisionen, Höhe 740 mm.
+
+## Nachtrag: Tisch Version 1 (2026-11-24)
+- **Version 1 ist final**: `cad/frame/OpenORA_Frame22.FCStd` (nicht im Repo, `.gitignore`), Bild `docs/images/open-oratischV1.png`
+  (auch auf www.open-ora.de). Grundlage ist das Makro `cad/macros/frame_4040.py` mit Eckstreben (`BRACING = "knee"`),
+  Gelenkstellfüßen, Rack-Zargen und Forex-Verkleidung.
+- **Branding statt Schriftzug**: Auf den Forex-Platten sitzt das Logo (Wortmarke mit Zeichen und Unterzeile) und open-ora.de,
+  gebaut aus `docs/branding/forex_layout.json` (gleiche Daten wie die Druckvorlagen `docs/branding/forex-*.svg`).
+  Schalter `LOGO_MODE = "druck"` (Standard) oder `"gravur"`. Die Bahnschrift-Gravur oben ist überholt.
+- **Arm 1**: Der Fuß wird als Modul von außen an X_oben_hinten, Y_oben_rechts und Pfosten_RH geschraubt (ADR 0007, Nachtrag);
+  Platte und ESD-Matte bleiben ohne Eckausschnitt, die Plattenscheibe bleibt ungestört.
+- Weiter offen: Steifigkeit mit Eckstreben, Zargen und Forex neu rechnen; Ort des Prüf-/Tastinterface; echte Maße
+  aus den STEP-Dateien (Verbinder 4040-45, Füße).

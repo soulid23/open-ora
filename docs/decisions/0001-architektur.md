@@ -1,6 +1,7 @@
 # 0001: Systemarchitektur
 
-Status: angenommen
+Status: angenommen. Rechnerrollen ergänzt durch `0005-rechnerrollen.md` (KI-Training und Sprachmodell auf dem Desktop,
+der Laptop nur für die Echtzeit-Erkennung am Tisch).
 
 - Laptop (RTX 3070): Bildverarbeitung und KI
 - Raspberry Pi: Kameras, Bahnplanung, Brücke zum Laptop
