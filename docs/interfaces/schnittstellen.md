@@ -17,12 +17,16 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Arm 1: Säulenhöhe über Matte | ca. 400 | mm | 0007 | Sensorik (Portal) | vorgeschlagen |
 | Präsentationspunkt P0 | x = 500, y = 450, Zone ±100 | mm | 0007 | Arm 1, Arm 2, Sensorik | vorgeschlagen |
 | Platinenhöhe in der Zone | 30 bis 230 über Matte | mm | 0007 | Arm 2, Sensorik | vorgeschlagen |
+| Nutzlast Tischplatte (3D-Drucker o. Ä., inkl. Wechsellast) | offen | kg, N | 0008 | Tisch, Sicherheit | offen |
+| Nutzlast Unterbau-Fach (Trockeneinheiten) | offen | kg | 0008 | Tisch | offen |
+| Modul-Befestigung am Rahmen | Nutprofil 4040, Nut 8, Nutensteine M8; Raster und Last je Punkt offen | - | 0008 | alle Module | offen |
 | Tastkraft Prober (Auslegung Halter) | max. 2 | N | Annahme 0007 | Arm 1, Arm 2 | offen |
 | Träger-Kupplung | 3 Kugeln / 3 Nuten, Ø 60 mm, Verriegelung selbsthemmend | - | 0007 | Arm 1, Träger | vorgeschlagen |
 
 ## Elektrik
 | Parameter | Wert | Einheit | Quelle/Entscheidung | betrifft | Stand |
 |---|---|---|---|---|---|
+| ESD: Ableitwiderstand Arbeitsfläche gegen Erde | < 1 · 10⁹ (Norm), Matte über 1 MΩ an PE | Ω | DIN EN IEC 61340-5-1, SAFETY.md | Tisch, Sicherheit | vorgeschlagen |
 
 ## Daten und Protokolle
 | Parameter | Wert | Einheit | Quelle/Entscheidung | betrifft | Stand |
