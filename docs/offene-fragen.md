@@ -9,5 +9,7 @@
 | 5 | Hintere rechte Stütze des Lichtrahmens (x 1000..1040, y 920..960, seit v2 z 505,6..1460, an Y_oben/Y_unten rechts) sitzt an der Stelle der rechten Wange des Arm-1-Fußes: Stütze versetzen oder gemeinsames Eckmodul. Betrifft erst Version 2 (ADR 0008) | Tisch, Arm 1, Sensorik | offen |
 | 6 | Ort des Prüf-/Tastinterface (vorn entfällt das Rack): seitliches Rack außerhalb der Knieräume oder auf der Platte | Tisch, Elektronik, Sicherheit | offen |
 | 7 | Welche Normen und Richtlinien gelten für Version 1 (Selbstbau) und später für Bausätze/Geräte? Abgleich der Normenlandkarte mit einer Fachstelle | Sicherheit, alle | offen |
-| 8 | Lastannahmen für andere Anwendungen: 3D-Drucker auf der Platte (Masse, Wechsellast, Schwingung), Trockeneinheiten im Unterbau (Masse, Wärme, Lage) | Tisch, Sicherheit | offen |
-| 9 | Modul-Schnittstelle des Tisches: Raster der Befestigungspunkte, zulässige Last je Punkt, Kabelführung, Erdung der Module | Tisch, alle Module | offen |
+| 8 | Lastannahmen für andere Anwendungen (Anwendungsliste in `docs/interfaces/module.md`): 3D-Drucker, Werkbank, Trockeneinheiten, Schubladen/Schrank (Masse, Wechsel- und Stoßlast, Schwingung, Wärme) | Tisch, Sicherheit | offen |
+| 9 | Modul-Schnittstelle des Tisches: Zonen, Belegungsplan, Raster der Befestigungspunkte, zulässige Last je Punkt, Kabelführung, Erdung der Module (Entwurf `docs/interfaces/module.md`) | Tisch, alle Module | offen |
+| 10 | Tischverbund: mehrere Tische physisch (Pfosten-Verbinder), elektrisch (powerCON durchschleifen, Absicherung, PE, ESD-Potenzial) und datentechnisch (Netzwerk, seriell: RS232, RS485 oder CAN) verbinden | Tisch, Stromversorgung, Elektronik, Sicherheit | offen |
+| 11 | Lichtrahmen-Stützen sitzen außen an den Seiten (x -40..0 / 1000..1040): Tische mit Lichtrahmen lassen sich so nicht direkt nebeneinander koppeln. Verbund nur Rücken an Rücken, gemeinsame Stütze oder Stütze als Verbindungsstück? | Tisch, Sensorik | offen |

@@ -49,7 +49,11 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 ### M2: Tisch bestellbereit (Soll: offen)
 - [x] tisch: Anschluss Arm 1 klären (Außenmodul statt Eckausschnitt, ADR 0007 Nachtrag)
 - [ ] tisch: offene Punkte nach „blockiert Bestellung ja/nein“ sortieren
-- [ ] tisch: Lastannahmen für 3D-Drucker oben und Trockeneinheiten unten festlegen (offene Frage 8)
+- [x] tisch: Anwendungsliste, Zonen und Belegungsplan als Entwurf anlegen (`docs/interfaces/module.md`)
+- [ ] tisch: Lastannahmen je Anwendung festlegen (Anwendungsliste, offene Frage 8)
+- [ ] tisch: Belegungsplan bestätigen, Konflikte lösen (offene Fragen 5 und 11)
+- [ ] tisch: Tischverbund klären: Pfosten-Verbinder, Strom durchschleifen, Datenleitungen (offene Frage 10)
+- [ ] tisch: Module im CAD gegen die Zonen prüfen (Platzhalter Drucker, Fach-Modul, Nachbartisch)
 - [ ] tisch: Unterbau-Fach als Modul vorsehen (Knieraum oder Fach), ohne den Grundrahmen zu ändern
 - [ ] tisch: Ort des Prüf-/Tastinterface festlegen (offene Frage 6)
 - [ ] tisch: Alternative Bezugsquelle für Profil und Rack-Einschübe in die Stückliste
