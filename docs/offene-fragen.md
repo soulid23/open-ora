@@ -13,3 +13,5 @@
 | 9 | Modul-Schnittstelle des Tisches: Zonen, Belegungsplan, Raster der Befestigungspunkte, zulässige Last je Punkt, Kabelführung, Erdung der Module (Entwurf `docs/interfaces/module.md`) | Tisch, alle Module | offen |
 | 10 | Tischverbund: mehrere Tische physisch (Pfosten-Verbinder), elektrisch (powerCON durchschleifen, Absicherung, PE, ESD-Potenzial) und datentechnisch (Netzwerk, seriell: RS232, RS485 oder CAN) verbinden | Tisch, Stromversorgung, Elektronik, Sicherheit | offen |
 | 11 | Lichtrahmen-Stützen sitzen außen an den Seiten (x -40..0 / 1000..1040): Tische mit Lichtrahmen lassen sich so nicht direkt nebeneinander koppeln. Verbund nur Rücken an Rücken, gemeinsame Stütze oder Stütze als Verbindungsstück? | Tisch, Sensorik | offen |
+| 12 | Wechselplatte: Verriegelung am Rahmen (Scheibenwirkung), abnehmbarer Mittelträger, Plattenstärke für Max4 (40 kg) und Werkbank; Erdungsanschluss der ESD-Platte | Tisch, Sicherheit | offen |
+| 13 | Unterbau-Rack-Modul mit 19"-Schubladen: Lage (vorn statt Knieraum, seitlich), Höhe in HE, Kippen bei ausgezogenen Schubladen | Tisch, Sicherheit | offen |

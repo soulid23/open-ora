@@ -21,9 +21,11 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Sensorschiene: Lage | 2020 quer, y 440..460, z 1393..1413; Kamera-Unterkante ca. z 1358 | mm | light_frame.py v2 | Sensorik, Arm 1, Arm 2 | vorgeschlagen |
 | Präsentationspunkt P0 | x = 500, y = 450, Zone ±100 | mm | 0007 | Arm 1, Arm 2, Sensorik | vorgeschlagen |
 | Platinenhöhe in der Zone | 30 bis 230 über Matte | mm | 0007 | Arm 2, Sensorik | vorgeschlagen |
-| Nutzlast Tischplatte (3D-Drucker o. Ä., inkl. Wechsellast) | offen | kg, N | 0008 | Tisch, Sicherheit | offen |
-| Nutzlast Unterbau-Fach (Trockeneinheiten) | offen | kg | 0008 | Tisch | offen |
-| Modul-Befestigung am Rahmen | Nutprofil 4040, Nut 8, Nutensteine M8; Raster und Last je Punkt offen | - | 0008 | alle Module | offen |
+| Auslegung Drucker auf der Platte | QIDI Max4: 558 × 578 × 612 mm, 40 kg (Combo 46,5 kg), Kopf bis 30 000 mm/s² | mm, kg | 0009 (Hersteller) | Tisch, Sicherheit, Sensorik | angenommen |
+| Nutzlast Tischplatte gesamt (inkl. Wechsel- und Stoßlast) | offen | kg, N | 0008, 0009 | Tisch, Sicherheit | offen |
+| Nutzlast Unterbau (1 bis 2 Regalböden, 19"-Schubladen) | offen | kg | 0009 | Tisch | offen |
+| Modul-Befestigung am Rahmen | leicht: Außennuten der Holme (Nut 8, Nutensteine M8); schwer: Pfosten oder vorab montierte Zusatzprofile; Raster und Last je Punkt offen | - | 0009, module.md | alle Module | vorgeschlagen |
+| Datenbus Tischverbund | RS485 oder CAN (Auswahl offen), dazu Ethernet | - | 0009 | Elektronik, alle Tische | vorgeschlagen |
 | Tastkraft Prober (Auslegung Halter) | max. 2 | N | Annahme 0007 | Arm 1, Arm 2 | offen |
 | Träger-Kupplung | 3 Kugeln / 3 Nuten, Ø 60 mm, Verriegelung selbsthemmend | - | 0007 | Arm 1, Träger | vorgeschlagen |
 

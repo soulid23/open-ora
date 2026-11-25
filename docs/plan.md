@@ -50,9 +50,12 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 - [x] tisch: Anschluss Arm 1 klären (Außenmodul statt Eckausschnitt, ADR 0007 Nachtrag)
 - [ ] tisch: offene Punkte nach „blockiert Bestellung ja/nein“ sortieren
 - [x] tisch: Anwendungsliste, Zonen und Belegungsplan als Entwurf anlegen (`docs/interfaces/module.md`)
-- [ ] tisch: Lastannahmen je Anwendung festlegen (Anwendungsliste, offene Frage 8)
+- [ ] tisch: Lastannahmen je Anwendung festlegen (Auslegung Drucker: QIDI Max4, 40 bis 46,5 kg; offene Frage 8)
 - [ ] tisch: Belegungsplan bestätigen, Konflikte lösen (offene Fragen 5 und 11)
-- [ ] tisch: Tischverbund klären: Pfosten-Verbinder, Strom durchschleifen, Datenleitungen (offene Frage 10)
+- [x] tisch: Grundsätze der Modul-Schnittstelle festlegen (ADR 0009)
+- [ ] tisch: Wechselplatte mit Verriegelung und abnehmbarem Mittelträger auslegen (offene Frage 12)
+- [ ] tisch: Unterbau-Module: Regalböden und 19"-Rack-Modul für Schubladen (offene Frage 13)
+- [ ] tisch: Tischverbund klären: Pfosten-Verbinder, Strom durchschleifen, RS485 oder CAN (offene Frage 10)
 - [ ] tisch: Module im CAD gegen die Zonen prüfen (Platzhalter Drucker, Fach-Modul, Nachbartisch)
 - [ ] tisch: Unterbau-Fach als Modul vorsehen (Knieraum oder Fach), ohne den Grundrahmen zu ändern
 - [ ] tisch: Ort des Prüf-/Tastinterface festlegen (offene Frage 6)
