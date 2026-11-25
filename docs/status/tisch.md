@@ -34,5 +34,7 @@ zwei Arme, den Licht- und Sensorrahmen und ein 19"-Rack für Netz, Netzwerk und 
 
 ## Abhängigkeiten zu anderen Baustellen
 - **Arm 1 (Halter)**: Fuß als Außenmodul an der Ecke hinten rechts (ADR 0007, Nachtrag), ca. 6,5 kg + 1 kg Nutzlast.
-- **Sensorik/KI**: Licht- und Sensorrahmen mit vier Stützen außen am Tisch.
+- **Sensorik/KI**: Licht- und Sensorrahmen (`light_frame.py` v2): vier Stützen außen, je 2 Verbinder an Y_oben_* und
+  Y_unten_* (y 600..640 und 920..960), kein Bodenkontakt; verdecken Teile des Logo-Drucks auf den Seitenplatten (akzeptiert).
+  Lasten des Portals gehen damit in die Seitenholme: bei der Steifigkeitsrechnung berücksichtigen.
 - **Stromversorgung**: Netzeingang und Netzteile im Rack hinten, Schutzleiter an Rahmen und ESD-Matte (SAFETY.md).

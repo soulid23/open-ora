@@ -64,7 +64,8 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 
 ### M4: Licht und Sensorik am Tisch (Soll: offen)
 - [ ] tisch: Konflikt Lichtrahmen-Stütze mit Arm-Außenmodul lösen (offene Frage 5)
-- [ ] sensorik-ki: Höhe und Lage des Kameraportals entscheiden (offene Frage 1), Makro `light_frame.py` ins Repo
+- [x] sensorik-ki: Makro `light_frame.py` (v2) ins Repo
+- [ ] sensorik-ki: Höhe und Lage des Kameraportals entscheiden (offene Frage 1), Verbinder Stütze/Seitenholm wählen
 - [ ] sensorik-ki: Licht- und Sensorrahmen bauen, Kamera und Wärmebild aus M1 montieren
 - [ ] sensorik-ki: Auswertung aus M1 am Tisch wiederholen
 - [ ] elektronik: Raspberry Pi für Kameras, Verbindung zum Laptop am Tisch
