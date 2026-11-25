@@ -22,12 +22,14 @@ Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
 21;Netzwerk-Durchfuehrung (Cat), D-Format;(Teilenr. pruefen, etherCON-Familie);1;Stk;hinten
 22;Blindplatte/Abdeckung fuer D-Ausschnitt;(z. B. Neutrik DBA-BL pruefen);9;Stk;unbelegte D-Loecher hinten
 23;Schraube M5 + Nutenstein M5 (6-mm-Nut);(Vorschlag);12;Satz;4 je D12-Blende, 8 fuer die Schublade
-24;Siebdruckplatte 18 mm, 1000 x 1000 mm;(Vorschlag);1;Stk;als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger
-25;ESD-Matte;(Vorschlag);1;Stk;mit 1-MOhm-Widerstand an den Erdungspunkt
-26;Alux Winkelverbinder 45 Grad, Profil 40x40;4040-45;12;Stk;"2 je Eckstrebe (6 Streben a 283.6 mm aus 4040, 90-Grad-Enden); Mass des Verbinders ist Platzhalter (STEP 4040-45 einsetzen)"
-27;Linsenkopfschraube ISO 7380 M8x16;ISO 7380 M8x16;24;Stk;ANNAHME je Verbinder 2 (Variante Stirnflaeche-Nut wie bei 4080-45), Seite 4040-45 pruefen
-28;Linsenkopfschraube ISO 7380 M8x25;ISO 7380 M8x25;24;Stk;ANNAHME, siehe oben
-29;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;24;Stk;ANNAHME, siehe oben
-30;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);2;Stk;"Fuellplatte in 8-mm-Nut: Forex_Seite_links, Forex_Seite_rechts; bedruckt, Druckdaten docs/branding/forex-*.svg"
-31;Forex classic 5 mm, Zuschnitt 225.0 x 150.4 mm;(Vorschlag);2;Stk;"Fuellplatte in 8-mm-Nut: Forex_Rueck_links, Forex_Rueck_rechts; bedruckt, Druckdaten docs/branding/forex-*.svg"
-32;Einfassprofil / Abdeckprofil 8 mm, 1000 mm (Alux);8-12.40;7;Stk;"fuer Plattenstaerke 4-6 mm; ca. 5.8 m Plattenkante, davon in die Nut zu pressen; Forex nicht ausdruecklich gelistet, bei Alux nachfragen"
+24;Wechselplatte Siebdruck 18 mm, 1000 x 1000 mm;(Vorschlag);1;Stk;Plattenmodul (ADR 0009): als Scheibe fest verschrauben, mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger, oder Schnellspannsystem (Scheibenwirkung nachweisen)
+25;ESD-Matte;(Vorschlag);1;Stk;"mit 1-MOhm-Widerstand an den Erdungspunkt; Plattentyp siebdruck"
+26;Nutenstein einschwenkbar 40-Profil M8, vorab eingelegt (Modul-Schnittstelle);8-4-M8.40;16;Stk;"je oberem Seitenholm 8 in der Innennut, verschiebbar, fuer bis zu 4 Streben; vor dem Aufbau einlegen"
+27;Abnehmbarer Mittelträger (4040, Teil des Plattenmoduls);siehe Zuschnitt X_oben_mitte;1;Stk;"mit Winkel 4040 an den Vor-Nutensteinen; stuetzt Platte bei Drucker/Werkbank (ohne Traeger ca. 9 mm Durchbiegung bei 500 N, ADR 0009)"
+28;Alux Winkelverbinder 45 Grad, Profil 40x40;4040-45;12;Stk;"2 je Eckstrebe (6 Streben a 283.6 mm aus 4040, 90-Grad-Enden); Mass des Verbinders ist Platzhalter (STEP 4040-45 einsetzen)"
+29;Linsenkopfschraube ISO 7380 M8x16;ISO 7380 M8x16;24;Stk;ANNAHME je Verbinder 2 (Variante Stirnflaeche-Nut wie bei 4080-45), Seite 4040-45 pruefen
+30;Linsenkopfschraube ISO 7380 M8x25;ISO 7380 M8x25;24;Stk;ANNAHME, siehe oben
+31;Nutenstein einschwenkbar 40-Profil M8;8-4-M8.40;24;Stk;ANNAHME, siehe oben
+32;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);2;Stk;"Fuellplatte in 8-mm-Nut: Forex_Seite_links, Forex_Seite_rechts; bedruckt, Druckdaten docs/branding/forex-*.svg"
+33;Forex classic 5 mm, Zuschnitt 225.0 x 150.4 mm;(Vorschlag);2;Stk;"Fuellplatte in 8-mm-Nut: Forex_Rueck_links, Forex_Rueck_rechts; bedruckt, Druckdaten docs/branding/forex-*.svg"
+34;Einfassprofil / Abdeckprofil 8 mm, 1000 mm (Alux);8-12.40;7;Stk;"fuer Plattenstaerke 4-6 mm; ca. 5.8 m Plattenkante, davon in die Nut zu pressen; Forex nicht ausdruecklich gelistet, bei Alux nachfragen"

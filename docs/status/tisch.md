@@ -4,7 +4,13 @@
 Ein stabiler, nachbaubarer Arbeitstisch 1000 x 1000 mm in Schreibtischhöhe, an dem man sitzend arbeitet, mit Platz für
 zwei Arme, den Licht- und Sensorrahmen und ein 19"-Rack für Netz, Netzwerk und Schublade.
 
-## Aktueller Stand (2026-11-24)
+## Aktueller Stand (2026-11-26)
+- **Weiterentwicklung Tisch 8080 (ADR 0010, angenommen)**: oberer Rahmen 8080, Tischhöhe 780 mm, feste Querstrebe
+  oben 4080 hochkant und unten 4040 bei y = 620, Rackkasten aus Multiplex 15 mm mit Adam-Hall-Schienen 61535,
+  Siebdruckplatte 920 x 920 mm mit 29 Schrauben M6 in der inneren Nutreihe (Bohrplan `docs/build-guide/bohrplan_platte_8080.pdf`).
+  Makro `cad/macros/tisch_8080.py` prüft Kollisionen und Winkelkontakte (0 Kollisionen, 40 Winkel mit Kontakt) und
+  schreibt `bom/tisch_8080_bom.csv`. Einkaufsliste mit Preisen als Claude-Sheet (ca. 777 EUR netto für die Positionen mit Preis).
+- Version 1 (4040 oben, 740 mm) bleibt als Stand dokumentiert:
 - **Version 1 final**: `cad/frame/OpenORA_Frame22.FCStd` (nicht im Repo), Bild `docs/images/open-oratischV1.png`.
 - Makro `cad/macros/frame_4040.py`: 1000 x 1000 mm, Oberkante ESD-Matte 740 mm, Alux 4040, 18-mm-Siebdruckplatte mit
   ESD-Matte, Mittelträger, Eckstreben 45° (`BRACING = "knee"`), Gelenkstellfüße 80 mm, Sitzplatz vorn frei
@@ -27,8 +33,8 @@ zwei Arme, den Licht- und Sensorrahmen und ein 19"-Rack für Netz, Netzwerk und 
 - Branding mit der Druckerei klären: Druck oder Gravur, sichtbarer Rand in der Nut, Dateiformat.
 
 ## Nächste Schritte
-1. Bestellliste Alux mit Preisen und Artikelnummern füllen, BOM prüfen, bestellen.
-2. Steifigkeit mit Eckstreben, Zargen und Forex neu rechnen.
+1. Einkaufsliste Tisch 8080 prüfen: Längenpreise im Alux-Konfigurator, Winkel 4080L/8080L, Rackschiene 61535 am Teil; bestellen.
+2. Steifigkeit mit 8080-Rahmen, Eckverbindungen und Eckstreben neu rechnen.
 3. Makro auf den Stand von Frame22 bringen, falls dort von Hand geändert wurde.
 4. Rahmen montieren, Platte als Scheibe verschrauben (mind. 20 Senkkopfschrauben), Steifigkeit messen (100 N seitlich).
 

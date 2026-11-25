@@ -7,7 +7,10 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Parameter | Wert | Einheit | Quelle/Entscheidung | betrifft | Stand |
 |---|---|---|---|---|---|
 | Tischfläche | 1000 x 1000 | mm | 0006 | Tisch, Arm 1, Arm 2 | angenommen |
-| Oberkante ESD-Matte | 740 | mm über Boden | 0006 | alle | angenommen |
+| Oberkante ESD-Matte | 780 (vorher 740) | mm über Boden | 0010 | alle | angenommen |
+| Oberer Rahmen | 8080, z 680..760; innere Nutreihe (60 mm vom Rand) für die Platte, äußere (20 mm) und Außenflächen für Anbauten | mm | 0010 | Tisch, alle Module, Lichtrahmen | angenommen |
+| Feste Querstrebe | oben 4080 hochkant y 600..640, z 680..760; unten 4040 y 600..640, z 505,6..545,6 | mm | 0010 | Tisch, Rack | angenommen |
+| Rack-Raum | Rackkasten Multiplex 15 mm, Holzinnenmaß 490, 3 HE, Schienen Adam Hall 61535 an der Rückseite und bei y = 620 (Einbautiefe 380) | mm | 0010 | Tisch, Elektrik | angenommen |
 | Arm 1: J1-Achse (Fuß) | x = 920, y = 920, hinten rechts auf dem Aluframe | mm | 0007 (Vorgabe) | Tisch, Arm 2, Sensorik | angenommen |
 | Arm 1: Fuß am Rahmen | Modul von außen: 2 Wangen 10 mm an X_oben_hinten / Y_oben_rechts / Pfosten_RH, Deckplatte 12 mm 2 mm über der Matte, 7 × M8 + Nutensteine | - | 0007 Nachtrag | Tisch, Lichtrahmen | vorgeschlagen |
 | Arm 1: Eckausschnitt Platte + Matte | entfällt bei Außenmodul (nur bei `MOUNT = "innen"`: 170 x 170) | mm | 0007 Nachtrag | Tisch | vorgeschlagen |
@@ -26,7 +29,7 @@ Nur belegte Werte eintragen, alles andere als "offen" markieren.
 | Nutzlast Unterbau (1 bis 2 Regalböden, 19"-Schubladen) | offen | kg | 0009 | Tisch | offen |
 | Modul-Befestigung am Rahmen | leicht: Außennuten der Holme (Nut 8, Nutensteine M8); schwer: Pfosten oder vorab montierte Zusatzprofile; Raster und Last je Punkt offen | - | 0009, module.md | alle Module | vorgeschlagen |
 | Datenbus Tischverbund | RS485 oder CAN (Auswahl offen) über RJ45, unverwechselbar zu Ethernet; dazu Ethernet | - | 0009 | Elektronik, alle Tische | vorgeschlagen |
-| Befestigung Wechselplatte | (1) verschraubt, Senkkopf in Nutensteine; (2) Schnellspannsystem; je oberem Holm bis zu 8 vorab eingelegte Nutensteine | - | 0009 | Tisch | vorgeschlagen |
+| Befestigung Wechselplatte | (1) verschraubt: Platte 920 x 920 x 18, 29 × DIN 7991 M6x25 + Nutenstein M6 in innerer Reihe und Querstrebe (Bohrplan); (2) Schnellspannsystem offen; Vor-Nutensteine an der Innenseite der 8080-Seitenholme | - | 0009, 0010 | Tisch | angenommen (1) / offen (2) |
 | Tastkraft Prober (Auslegung Halter) | max. 2 | N | Annahme 0007 | Arm 1, Arm 2 | offen |
 | Träger-Kupplung | 3 Kugeln / 3 Nuten, Ø 60 mm, Verriegelung selbsthemmend | - | 0007 | Arm 1, Träger | vorgeschlagen |
 

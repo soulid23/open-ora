@@ -9,7 +9,7 @@ diese Datei das Soll. `_projektleitung/pm.py` vergleicht beides.
 Format für Aufgaben: `- [ ] baustelle: Text` (Baustelle = Name der Statusdatei),
 erledigt: `- [x]`. Soll-Datum im Meilenstein-Titel: `(Soll: JJJJ-MM-TT)`.
 
-Zuletzt abgeglichen: 2026-11-25.
+Zuletzt abgeglichen: 2026-11-26.
 
 ## Ziel
 Eine offene, nachbaubare und modulare Tischplattform (1000 × 1000 mm), deren erste Anwendung ein
@@ -53,15 +53,18 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 - [ ] tisch: Lastannahmen je Anwendung festlegen (Auslegung Drucker: QIDI Max4, 40 bis 46,5 kg; offene Frage 8)
 - [ ] tisch: Belegungsplan bestätigen, Konflikte lösen (offene Fragen 5 und 11)
 - [x] tisch: Grundsätze der Modul-Schnittstelle festlegen (ADR 0009)
-- [ ] tisch: Wechselplatte auslegen: verschraubte Variante, Schnellspannsystem, abnehmbarer Mittelträger (offene Frage 12)
-- [ ] tisch: Makro `frame_4040.py`: 8 vorab eingelegte Nutensteine je oberem Holm vorsehen, in Stückliste aufnehmen
+- [x] tisch: Oberer Rahmen 8080, feste Querstrebe 4080, Rackkasten, Platte 920 x 920 mit Bohrplan (ADR 0010, `tisch_8080.py`)
+- [ ] tisch: Wechselplatte: Schnellspannsystem auslegen (verschraubte Variante steht, ADR 0010; offene Frage 12)
+- [x] tisch: Makro `frame_4040.py`: 8 vorab eingelegte Nutensteine je oberem Holm vorsehen, in Stückliste aufnehmen
+- [ ] tisch: Maße und Schrauben der Winkel 4080L/8080L und der Rackschiene 61535 am Datenblatt oder Teil prüfen
+- [ ] tisch: Steifigkeit mit 8080-Rahmen und Eckverbindungen in `frame_stiffness.py` neu rechnen
 - [ ] tisch: Unterbau-Module: Regalböden und 19"-Rack-Modul für Schubladen (offene Frage 13)
 - [ ] tisch: Tischverbund klären: Pfosten-Verbinder, Strom durchschleifen, RS485 oder CAN (offene Frage 10)
 - [ ] tisch: Module im CAD gegen die Zonen prüfen (Platzhalter Drucker, Fach-Modul, Nachbartisch)
 - [ ] tisch: Unterbau-Fach als Modul vorsehen (Knieraum oder Fach), ohne den Grundrahmen zu ändern
 - [ ] tisch: Ort des Prüf-/Tastinterface festlegen (offene Frage 6)
 - [ ] tisch: Alternative Bezugsquelle für Profil und Rack-Einschübe in die Stückliste
-- [ ] tisch: Bestellliste Alux mit Artikelnummern und Preisen füllen
+- [ ] tisch: Bestellliste Alux mit Artikelnummern und Preisen füllen (Entwurf: Einkaufsliste Tisch 8080 als Claude-Sheet, `bom/tisch_8080_bom.csv`; Längenpreise im Alux-Konfigurator prüfen)
 
 ### M3: Tisch steht (Soll: offen)
 - [ ] tisch: Rahmen bestellen und montieren, Platte als Scheibe verschrauben
@@ -73,7 +76,7 @@ Erfolgskriterium (Vorschlag): Auf mindestens 5 Platinen mit bekanntem Defekt zei
 ### M4: Licht und Sensorik am Tisch (Soll: offen)
 - [ ] tisch: Konflikt Lichtrahmen-Stütze mit Arm-Außenmodul lösen (offene Frage 5)
 - [x] sensorik-ki: Makro `light_frame.py` (v2) ins Repo
-- [ ] sensorik-ki: Höhe und Lage des Kameraportals entscheiden (offene Frage 1), Verbinder Stütze/Seitenholm wählen
+- [ ] sensorik-ki: Höhe und Lage des Kameraportals entscheiden (offene Frage 1), Verbinder Stütze/Seitenholm wählen; Tisch jetzt 780 mm, Portal mind. 40 mm höher (ADR 0010)
 - [ ] sensorik-ki: Licht- und Sensorrahmen bauen, Kamera und Wärmebild aus M1 montieren
 - [ ] sensorik-ki: Auswertung aus M1 am Tisch wiederholen
 - [ ] elektronik: Raspberry Pi für Kameras, Verbindung zum Laptop am Tisch

@@ -1,4 +1,4 @@
-# open-ora | cad/macros/frame_4040.py | v6 (Branding: Wortmarke open-ora mit Zeichen als o + open-ora.de auf den Forex-Platten)
+# open-ora | cad/macros/frame_4040.py | v12 (modulare Plattform nach ADR 0008/0009: vorab eingelegte Nutensteine, abnehmbarer Mittelträger der Wechselplatte; Branding Forex)
 # Tisch 1000 x 1000 mm aus Alux Nutprofil 4040 (aluxprofil.de, Art.-Nr. 4040), vorn/hinten = Y=0 / Y=D.
 # Tischhoehe DESK_H (Oberkante ESD-Matte) ist Parameter; die Pfosten/Fuesse ergeben sich daraus.
 # Obere Ebene: lange X-Traeger nehmen die komplette Breite ein. Untere Ebene (Rack-Boden): zwischen den Pfosten.
@@ -99,6 +99,13 @@ FOOT_D       = 80.0               # Durchmesser der Gummiauflage
 FOOT_PAD_H   = 12.0               # PLATZHALTER: Hoehe der Gummiauflage
 FOOT_NECK_D  = 24.0               # PLATZHALTER: Durchmesser Gelenkkopf
 FOOT_TRAVEL  = 15.0               # Verstellweg nach oben und unten ab Mittelstellung (Gewindelaenge 50 mm, ANNAHME)
+# ----- Modulare Plattform (ADR 0008/0009, docs/interfaces/module.md) -----
+PLATE_TYPE   = "siebdruck"        # Wechselplatte: "siebdruck" (Werkbank, Drucker, Lager) | "esd" (Elektronik, Erdungsanschluss Pflicht)
+PRENUT_N     = 8                  # vorab eingelegte, verschiebbare Nutensteine je oberem Seitenholm (Innennut) fuer bis zu 4 Streben
+PRENUT_Y     = (200.0, 420.0, 620.0, 820.0)   # Mittellage der 4 Strebenpaare (y); 620 = abnehmbarer Mittelträger
+PRENUT_PITCH = 30.0               # Abstand der zwei Nutensteine je Strebe
+PRENUT_L, PRENUT_B, PRENUT_T = 14.0, 17.0, 4.0   # PLATZHALTER Nutenstein 8-4-M8.40 (Laenge in Nutrichtung, Breite im Hohlraum, Dicke)
+MID_UPPER    = True               # oberer Mittelträger (y = MID_Y) als abnehmbares Teil des Plattenmoduls (an Vor-Nutensteinen)
 ESD_MARGIN = 10                   # Matte liegt 10 mm eingerueckt auf der Platte
 # ------------------------------------------------
 
@@ -213,8 +220,26 @@ for x, side in ((P / 2, "links"), (W - P / 2, "rechts")):
     add("Y_unten_%s" % side, D - 2 * P, (x, P, zl), "Y")
 
 # Mittelträger (stuetzen die Platte und tragen die Tiefenschienen der Schublade)
-add("X_oben_mitte", W - 2 * P, (P, MID_Y, zu), "X")
+if MID_UPPER:
+    add("X_oben_mitte", W - 2 * P, (P, MID_Y, zu), "X")   # Plattenmodul: abnehmbar, Stirnseiten an Vor-Nutensteinen der Seitenholme
 add("X_unten_mitte", W - 2 * P, (P, MID_Y, zl), "X")
+
+# Vorab eingelegte Nutensteine (Modul-Schnittstelle): in der Innennut der oberen Seitenholme, Platzhalter-Klotz im Nuthohlraum
+prenuts = []
+if PRENUT_N:
+    _per = PRENUT_N
+    _ys = []
+    for c in PRENUT_Y:
+        _ys += [c - PRENUT_PITCH / 2, c + PRENUT_PITCH / 2]
+    _ys = _ys[:_per]
+    for side, xface, sgn in (("links", P, 1), ("rechts", W - P, -1)):
+        for i, y in enumerate(_ys, 1):
+            nm = "Vornutenstein_%s_%d" % (side, i)
+            o = doc.addObject("Part::Feature", nm)
+            x0 = xface - PRENUT_T - 2 if sgn == 1 else xface + 2   # im Nuthohlraum hinter der Innenflaeche
+            o.Shape = Part.makeBox(PRENUT_T, PRENUT_L, PRENUT_B * 0.6, Vector(x0, y - PRENUT_L / 2, zu - PRENUT_B * 0.3))
+            color(o, (0.8, 0.55, 0.1))
+            prenuts.append(nm)
 
 # Bodenstreben (Querstreben) hinten und seitlich; vorne bleibt frei (Beinraum)
 zf = BRACE_Z0 + P / 2
@@ -602,9 +627,13 @@ rows += [
     [n0 + 16, "Netzwerk-Durchfuehrung (Cat), D-Format", "(Teilenr. pruefen, etherCON-Familie)", 1, "Stk", "hinten"],
     [n0 + 17, "Blindplatte/Abdeckung fuer D-Ausschnitt", "(z. B. Neutrik DBA-BL pruefen)", n_blind, "Stk", "unbelegte D-Loecher hinten%s" % (" + vorn" if FRONT_RACK else "")],
     [n0 + 18, "Schraube M5 + Nutenstein M5 (6-mm-Nut)", "(Vorschlag)", 4 * N_D12 + 8, "Satz", "4 je D12-Blende, 8 fuer die Schublade"],
-    [n0 + 19, "Siebdruckplatte %d mm, %d x %d mm" % (PLATE, W, D), "(Vorschlag)", 1, "Stk", "als Scheibe fest verschrauben: mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger"],
-    [n0 + 20, "ESD-Matte", "(Vorschlag)", 1, "Stk", "mit 1-MOhm-Widerstand an den Erdungspunkt"],
+    [n0 + 19, "Wechselplatte Siebdruck %d mm, %d x %d mm" % (PLATE, W, D), "(Vorschlag)", 1, "Stk", "Plattenmodul (ADR 0009): als Scheibe fest verschrauben, mind. 20 Senkkopfschrauben mit Nutenstein in obere Traeger, oder Schnellspannsystem (Scheibenwirkung nachweisen)"],
+    [n0 + 20, "ESD-Matte", "(Vorschlag)", 1, "Stk", "mit 1-MOhm-Widerstand an den Erdungspunkt; Plattentyp %s" % PLATE_TYPE],
 ]
+if PRENUT_N:
+    rows.append([n0 + 28, "Nutenstein einschwenkbar 40-Profil M8, vorab eingelegt (Modul-Schnittstelle)", "8-4-M8.40", PRENUT_N * 2, "Stk", "je oberem Seitenholm %d in der Innennut, verschiebbar, fuer bis zu %d Streben; vor dem Aufbau einlegen" % (PRENUT_N, PRENUT_N // 2)])
+if MID_UPPER:
+    rows.append([n0 + 29, "Abnehmbarer Mittelträger (4040, Teil des Plattenmoduls)", "siehe Zuschnitt X_oben_mitte", 1, "Stk", "mit Winkel 4040 an den Vor-Nutensteinen; stuetzt Platte bei Drucker/Werkbank (ohne Traeger ca. 9 mm Durchbiegung bei 500 N, ADR 0009)"])
 if BRACING == "diag":
     rows += [
         [n0 + 6,  "Nutprofil 2020 (Nut 6) Zuschnitt %.1f mm" % diags[0], "(Alux 2020 T-Nut pruefen)", 3, "Stk", "Diagonalen hinten, links, rechts; Laengen je Feld leicht unterschiedlich: %s" % ", ".join("%.1f" % d for d in diags)],
@@ -637,6 +666,7 @@ print("Profil 4040 gesamt: %.2f m, ca. %.1f kg" % (total_m, total_m * KG_PER_M))
 print("Rack-Raum lichte Hoehe: %.2f mm (%d HE + %.2f), Rahmen-Oberkante: %.2f mm, Platte oben: %.2f mm"
       % (RACK_CLEAR, RACK_U, RACK_EXTRA, H, H + PLATE + ESD_T))
 print("Verbindungen: %d, Winkel 4040: %d" % (JOINTS, angles))
+print("Plattenmodul: %s | Vor-Nutensteine: %d je Holm, %d Stk | abnehmbarer Mittelträger: %s" % (PLATE_TYPE, PRENUT_N, len(prenuts), "ja" if MID_UPPER else "nein"))
 print("Tischhoehe (Oberkante ESD): %.1f mm (Soll %d) | Pfostenlaenge %.1f | Beinlaenge unter dem Rack-Boden %.1f mm" % (H + PLATE + ESD_T, DESK_H, Z_UP0, FOOT_H))
 print("Schubladen-Einbautiefe (Aussenflaeche hinten bis Tiefenschiene): %.0f mm (Hersteller: 360-480)" % TRAY_MOUNT_D)
 print("Rack-Zargen: %d x %.1f mm | Forex %.0f mm in der Nut: %s, Plattenhoehe %.1f mm | Logo: %s, Schriftart: %s" % (N_ZARGE, ZARGE_L, FOREX_T, "an" if CLAD else "aus", CLAD_H, LOGO_MODE, logo_state["font"]))
