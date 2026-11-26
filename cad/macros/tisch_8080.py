@@ -222,9 +222,10 @@ for end, xx, sx, leg_ in (("links", P, +1, "LH"), ("rechts", W - P, -1, "RH")):
             joins=("X_unten_hinten", "Bein_" + leg_))
     cv.append(("X_unten_hinten", end, 1, "Bein_" + leg_))
     side = "links" if end == "links" else "rechts"
-    for zz, zt, nm in ((Z_LOW0, -1, "unten"), (Z_LOW1, +1, "oben")):
-        bracket("W4040_Qu_%s_%s" % (end, nm), (xx, MID_Y, zz), (sx, 0, 0), (0, 0, zt), (0, 1, 0),
-                joins=("Querstrebe_unten_4040", "Y_unten_" + side))
+    # Winkel auf Stirn- und Rueckseite der Querstrebe (Flaechen y = 600 / 640), Schraube in die Innenflaeche des Y_unten
+    for face, y0, sy in (("vorn", MID_Y - P / 2, -1), ("hinten", MID_Y + P / 2, +1)):
+        bracket("W4040_Qu_%s_%s" % (end, face), (xx, y0, Z_LOW0 + P / 2), (sx, 0, 0), (0, sy, 0), (0, 0, 1),
+                leg=36.0, width=36.0, t=5.0, joins=("Querstrebe_unten_4040", "Y_unten_" + side))
     cv.append(("Querstrebe_unten_4040", end, 1, "Y_unten_" + side))
 # Bodenstreben: Zentralverbinder + Winkel oben
 for side, x, xs in (("links", 0, "LV"), ("rechts", W - P, "RV")):

@@ -1,0 +1,29 @@
+Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
+1;Nutprofil 4080 Zuschnitt 1000.0 mm;Alux 4080;2;Stk;Toleranz -1/+1 mm
+2;Nutprofil 4080 Zuschnitt 840.0 mm;Alux 4080;2;Stk;Toleranz -1/+1 mm
+3;Nutprofil 4040 Zuschnitt 920.0 mm;Alux 4040;7;Stk;Toleranz -1/+1 mm
+4;Nutprofil 4040 Zuschnitt 840.0 mm;Alux 4040;1;Stk;Toleranz -1/+1 mm
+5;Nutprofil 4040 Zuschnitt 670.0 mm;Alux 4040;4;Stk;Toleranz -1/+1 mm
+6;Nutprofil 4040 Zuschnitt 283.6 mm;Alux 4040;6;Stk;Toleranz -1/+1 mm
+7;Option Profilende: Bearbeitung + Zentralverbinder 90 Grad (4040);Alux 4040, Option je Ende;20;Ende;Beine oben, unterer Rahmen, Bodenstreben
+8;Option Profilende: 2x Bearbeitung + Zentralverbinder 90 Grad (4080);Alux 4080, Option je Ende;4;Ende;Seitenholme 4080 an vorn/hinten
+9;Option Profilende: Gewinde M8 (4040);Alux 4040, Option je Ende;4;Ende;Beine unten fuer die Stellfuesse
+10;Winkel 4040;4040L;40;Stk;Rahmen 32 (davon Ecken oben 4, Querstrebe 4), Rackkasten 8 (Kasten-Seite: Zentrierstege abbrechen)
+11;Linsenkopfschraube ISO 7380 M8x16;ISO 7380 M8x16;72;Stk;2 je Winkel 4040, 1 je Kastenwinkel
+12;Nutenstein einschwenkbar 40-Serie M8;8-4-M8.40;72;Stk;zu den Winkelschrauben
+13;Nutenstein einschwenkbar 40-Serie M8, vorab eingelegt;8-4-M8.40;6;Stk;Innenseite der 4080-Seitenholme, fuer 3 weitere Streben
+14;Winkelverbinder 45 Grad 4040;4040-45;12;Stk;Eckstreben (wie v12, Schrauben laut Produktseite)
+15;Gelenkstellfuss 80 mm M8x50;80-M8x50;4;Stk;wie v12
+16;Siebdruckplatte 18 mm, Zuschnitt 920 x 920 mm;Baumarkt/Holzhandel;1;Stk;Bohrbild wie 8080-Tisch (Platte 920 x 920): docs/build-guide/bohrplan_platte_8080.pdf
+17;Senkschraube DIN 7991 / ISO 10642 M6x25;DIN 7991 M6x25;29;Stk;"Platte an die innere Nutreihe; Laenge an der ersten Bohrung pruefen"
+18;Nutenstein einschwenkbar 40-Serie M6;8-4-M6.40;29;Stk;zu den Plattenschrauben
+19;ESD-Matte 900 x 900 mm;(Vorschlag);1;Stk;mit 1-MOhm-Erdungsleitung
+20;Multiplex Birke 15 mm, Zuschnitt 400 x 134 mm;Baumarkt/Holzhandel;2;Stk;Rackkasten-Waende, Holzinnenmass 490 mm
+21;"Adam Hall 19"" Heavy Duty Rackschiene 3 HE";61535 B 3;4;Stk;2 hinten (Bedienseite Rack), 2 innen bei y = 620 (Einbautiefe 380 mm)
+22;Senk-Holzschraube 4 x 12;-;16;Stk;4 je Schiene in die Wand
+23;Linsen-Holzschraube 5 x 12;-;8;Stk;Kastenwinkel an die Wand
+24;Kaefigmutter M6 + Schraube M6;Adam Hall 5653;16;Satz;4 je HE-Geraet, Reserve
+25;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_links, obere Ecken 52 x 52 ausklinken
+26;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_rechts, obere Ecken 52 x 52 ausklinken
+27;Forex classic 5 mm, Zuschnitt 168.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_links, obere Ecken 52 x 52 ausklinken
+28;Forex classic 5 mm, Zuschnitt 168.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_rechts, obere Ecken 52 x 52 ausklinken
