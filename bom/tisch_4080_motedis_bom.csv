@@ -8,9 +8,9 @@ Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
 7;Profilende-Option I-SSV 90 Grad (I-Typ), montiert;Motedis, Option am 40x40L;20;Ende;"Beine oben, unterer Rahmen, Querstreben, Bodenstreben; ob eine Zugangsbohrung im Gegenprofil noetig ist, vor Bestellung klaeren"
 8;Profilende-Option I-SSV 90 Grad (I-Typ), montiert, 2 je Ende;Motedis, Option am 40x80L;4;Ende;Seitenholme 40x80L an vorn/hinten
 9;Profilende-Option M8;Motedis, Option am 40x40L;4;Ende;Beine unten fuer die Fuesse
-10;Winkel 40 I-Typ Nut 8;S8IBR40;40;Stk;"Rahmen 32, Rackkasten 8; Zentrierstege abbrechen an den 8 Kastenwinkeln (Holzseite) und am waagerechten Schenkel der 4 Bein-Winkel _y (quer zur Nut); 10er-Packungen"
-11;Zylinderschraube DIN 912 M8x16;DIN 912 M8x16;84;Stk;2 je Winkel, 1 je Kastenwinkel, 1 je 45-Grad-Verbinder (Nut)
-12;Nutenstein mit Steg I-Typ Nut 8 M8;S8ISMONM8;90;Stk;"Winkel, 45-Grad-Verbinder und 6 vorab in die Seitenholme; 100er-Pack"
+10;Winkel 40 I-Typ Nut 8;S8IBR40;32;Stk;"Rahmen 32, Rackkasten 0; Zentrierstege abbrechen an den 0 Kastenwinkeln (Holzseite) und am waagerechten Schenkel der 4 Bein-Winkel _y (quer zur Nut); 10er-Packungen"
+11;Zylinderschraube DIN 912 M8x16;DIN 912 M8x16;76;Stk;2 je Winkel, 1 je Kastenwinkel, 1 je 45-Grad-Verbinder (Nut)
+12;Nutenstein mit Steg I-Typ Nut 8 M8;S8ISMONM8;82;Stk;"Winkel, 45-Grad-Verbinder und 6 vorab in die Seitenholme; 100er-Pack"
 13;Winkelverbinder 45 Grad 40 I-Typ Nut 8;S8IALUCON45;12;Stk;"Eckstreben; ohne Schrauben. Eckstrebenlaenge mit dem STEP pruefen (Makro nimmt Alux-Mass an)"
 14;Zylinderschraube DIN 912 M8x30;DIN 912 M8x30;12;Stk;Kernbefestigung 45-Grad-Verbinder
 15;Justierfuss D80 M8 L80;Justierfuesse D80 M8 L80 WH;4;Stk;"4er-Pack; Gelenk und Traglast laut Datenblatt pruefen"
@@ -18,12 +18,10 @@ Pos;Artikel;Artikelnr;Menge;Einheit;Bemerkung
 17;Senkschraube DIN 7991 M6x25;DIN 7991 M6x25;29;Stk;Laenge an der ersten Bohrung pruefen
 18;Nutenstein mit Steg I-Typ Nut 8 M6;S8ISMONM6;29;Stk;"zu den Plattenschrauben; 100er-Pack"
 19;ESD-Matte 900 x 900 mm;(Vorschlag);1;Stk;mit 1-MOhm-Erdungsleitung
-20;Multiplex Birke 15 mm, Zuschnitt 400 x 134 mm;Baumarkt/Holzhandel;2;Stk;Rackkasten-Waende, Holzinnenmass 490 mm
-21;"Adam Hall 19"" Heavy Duty Rackschiene 3 HE";61535 B 3;4;Stk;2 hinten, 2 innen bei y = 620
-22;Senk-Holzschraube 4 x 12;-;16;Stk;4 je Schiene
-23;Linsen-Holzschraube 5 x 12;-;8;Stk;Kastenwinkel an die Wand
-24;Kaefigmutter M6 + Schraube M6;Adam Hall 5653;16;Satz;4 je HE-Geraet, Reserve
-25;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_links, obere Ecken 52 x 52 ausklinken
-26;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_rechts, obere Ecken 52 x 52 ausklinken
-27;Forex classic 5 mm, Zuschnitt 168.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_links, obere Ecken 52 x 52 ausklinken
-28;Forex classic 5 mm, Zuschnitt 168.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_rechts, obere Ecken 52 x 52 ausklinken
+20;Aluprofil 20x40 (Nut 6?), Zuschnitt 134.4 mm;Motedis, Typ und Nutbreite klaeren;4;Stk;"Rackschienen: Flaeche 20 mm mit der Nut zur Geraeteseite, Nutmitte auf x = 267,5 / 732,5; 2 hinten (y = 1000), 2 innen (Flaeche bei y = 640)"
+21;Winkel fuer 20er Profil (Nut 6?);Motedis, passend zu 20x40 klaeren;16;Stk;"4 je Schiene (2 oben, 2 unten) an die Traeger; Typ, Lage und Schrauben noch festlegen (Platzhalter, nicht im CAD)"
+22;Nutenstein M5 (Nut 6?) + Schraube M5 fuer Rackohren;Motedis, Nutbreite klaeren;16;Satz;"4 je HE-Geraet, Reserve; M5 im 6,5-mm-Ohrloch mit Spiel, M6 nur bei 8-mm-Nut; Federnutenstein bevorzugen (Position halten)"
+23;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_links, obere Ecken 52 x 52 ausklinken
+24;Forex classic 5 mm, Zuschnitt 936.0 x 150.4 mm;(Vorschlag);1;Stk;Forex_Seite_rechts, obere Ecken 52 x 52 ausklinken
+25;Forex classic 5 mm, Zuschnitt 224.4 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_links, obere Ecken 52 x 52 ausklinken
+26;Forex classic 5 mm, Zuschnitt 224.5 x 150.4 mm;(Vorschlag);1;Stk;Forex_Rueck_rechts, obere Ecken 52 x 52 ausklinken

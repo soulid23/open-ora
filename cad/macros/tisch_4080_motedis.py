@@ -1,4 +1,4 @@
-# open-ora | cad/macros/tisch_4080_motedis.py | v1 (Leichttisch 4080 mit Motedis-Teilen, abgeleitet von tisch_4080.py v2)
+# open-ora | cad/macros/tisch_4080_motedis.py | v2 (Leichttisch 4080 mit Motedis-Teilen; RACK_MODE: Rackschienen aus 2040-Profil (Standard) oder Birke-Kasten mit Adam Hall 61535)
 # Gleiche Geometrie wie tisch_4080.py (oberer Rahmen 4080 flach, Tischhoehe 780 mm), aber mit Teilen von motedis.com:
 #   Profile 40x40L und 40x80L I-Typ Nut 8 mit ECHTEM Querschnitt aus den Motedis-STEP-Dateien,
 #   Winkel 40 I-Typ Nut 8 (S8IBR40) als echtes STEP-Teil an jeder Winkelstelle (Zentrierstege in der Nut),
@@ -37,6 +37,10 @@ MID_Y = 620.0                     # feste Querstrebe (Mitte), oben 4080 hochkant
 PLATE_INSET = 40.0                # Platte endet in der Mitte des 8080 -> aeussere Nutreihe bleibt frei
 PLATE_W = W - 2 * PLATE_INSET     # 920
 ESD_MARGIN = 10.0
+# Rack: Standard sind 4 Rackschienen aus Profil 2040 (Motedis), zwischen den Traegern, ohne Holzkasten.
+RACK_MODE = "profil2040"          # "profil2040" | "birke61535" (Kasten aus Birke-Multiplex mit Adam Hall 61535 B 3)
+RACK_PITCH = 465.1                # Abstand der Lochmitten 19" (EIA-310)
+RACK_FACE, RACK_DEPTH = 20.0, 40.0   # Profil 2040: Flaeche mit der Nut 20 mm (Geraeteseite), 40 mm tief
 # Rackkasten
 BOX_T = 15.0                      # Multiplex Birke 15 mm
 BOX_IN = 490.0                    # Holzinnenmass fuer Adam Hall 61535 (19")
@@ -90,7 +94,7 @@ groups = {}
 COL = {"8080": (0.93, 0.55, 0.17), "4080": (0.95, 0.70, 0.25), "4040": (0.76, 0.78, 0.80),
        "winkel": (0.30, 0.30, 0.33), "platte": (0.55, 0.40, 0.25), "esd": (0.20, 0.45, 0.75),
        "kasten": (0.85, 0.72, 0.52), "schiene": (0.10, 0.10, 0.10), "forex": (0.09, 0.09, 0.11),
-       "fuss": (0.1, 0.1, 0.1), "nut": (0.85, 0.60, 0.10), "geraet": (0.18, 0.18, 0.20)}
+       "fuss": (0.1, 0.1, 0.1), "2040": (0.70, 0.74, 0.80), "nut": (0.85, 0.60, 0.10), "geraet": (0.18, 0.18, 0.20)}
 
 
 def grp(name):
@@ -331,36 +335,51 @@ add("Siebdruckplatte_18", plate, "platte", "Platte", transp=30)
 add("ESD_Matte", Part.makeBox(PLATE_W - 2 * ESD_MARGIN, PLATE_W - 2 * ESD_MARGIN, ESD_T,
                               V(PLATE_INSET + ESD_MARGIN, PLATE_INSET + ESD_MARGIN, Z_UP1 + PLATE)), "esd", "Platte", transp=40)
 
-# ---------------- Rackkasten ----------------
-xin0, xin1 = W / 2 - BOX_IN / 2, W / 2 + BOX_IN / 2      # 255 / 745
-for side, x0 in (("links", xin0 - BOX_T), ("rechts", xin1)):
-    add("Kasten_Wand_%s" % side, Part.makeBox(BOX_T, BOX_Y1 - BOX_Y0, RACK_CLEAR - 0.4, V(x0, BOX_Y0, Z_LOW1 + 0.2)),
-        "kasten", "Rackkasten")
-# Winkel aussen an den Waenden: oben/unten, vorn (Querstreben) und hinten (8080 / X_unten_hinten)
-for side, xw, sx in (("links", xin0 - BOX_T, -1), ("rechts", xin1 + BOX_T, +1)):
-    for end, yc in (("vorn", MID_Y), ("hinten", D - 20)):
-        top = "Querstrebe_oben_4040" if end == "vorn" else "X4080_hinten"
-        bot = "Querstrebe_unten_4040" if end == "vorn" else "X_unten_hinten"
-        bracket("WK_%s_%s_oben" % (side, end), (xw, yc, Z_UP0), (sx, 0, 0), (0, 0, -1), (0, 1, 0),
-                joins=("Kasten_Wand_" + side, top))
-        bracket("WK_%s_%s_unten" % (side, end), (xw, yc, Z_LOW1), (sx, 0, 0), (0, 0, 1), (0, 1, 0),
-                joins=("Kasten_Wand_" + side, bot))
-# 19"-Schienen Adam Hall 61535 (L-Profil): Lochflaeche 21 x 2, Schenkel 30 an der Wand (Annahme, gegen Teil pruefen)
+# ---------------- Rack ----------------
+xin0, xin1 = W / 2 - BOX_IN / 2, W / 2 + BOX_IN / 2      # 255 / 745 (nur Birke-Kasten)
 z_r = Z_LOW1 + (RACK_CLEAR - RAIL_L) / 2
-def rail(name, x_wall, sx, y_face, sy):
-    xa, xb = (x_wall, x_wall + RAIL_W) if sx > 0 else (x_wall - RAIL_W, x_wall)
-    face = Part.makeBox(RAIL_W, RAIL_T, RAIL_L, V(xa, y_face - (RAIL_T if sy > 0 else 0), z_r))
-    ya, yb = (y_face - RAIL_D, y_face) if sy > 0 else (y_face, y_face + RAIL_D)
-    xl = x_wall if sx > 0 else x_wall - RAIL_T
-    legp = Part.makeBox(RAIL_T, yb - ya, RAIL_L, V(xl, ya, z_r))
-    add(name, face.fuse(legp).removeSplitter(), "schiene", "Rackkasten")
-rail("Schiene_hinten_links", xin0, +1, D, +1)
-rail("Schiene_hinten_rechts", xin1, -1, D, +1)
-rail("Schiene_innen_links", xin0, +1, REAR_RAIL_Y, -1)
-rail("Schiene_innen_rechts", xin1, -1, REAR_RAIL_Y, -1)
+if RACK_MODE == "birke61535":
+    TRAY_Y0 = REAR_RAIL_Y
+    FX_L_END, FX_R_START = xin0 - BOX_T - 40, xin1 + BOX_T + 40      # Forex hinten endet 40 mm vor der Kastenwand (Kastenwinkel)
+    for side, x0 in (("links", xin0 - BOX_T), ("rechts", xin1)):
+        add("Kasten_Wand_%s" % side, Part.makeBox(BOX_T, BOX_Y1 - BOX_Y0, RACK_CLEAR - 0.4, V(x0, BOX_Y0, Z_LOW1 + 0.2)),
+            "kasten", "Rackkasten")
+    # Winkel aussen an den Waenden: oben/unten, vorn (Querstreben) und hinten (8080 / X_unten_hinten)
+    for side, xw, sx in (("links", xin0 - BOX_T, -1), ("rechts", xin1 + BOX_T, +1)):
+        for end, yc in (("vorn", MID_Y), ("hinten", D - 20)):
+            top = "Querstrebe_oben_4040" if end == "vorn" else "X4080_hinten"
+            bot = "Querstrebe_unten_4040" if end == "vorn" else "X_unten_hinten"
+            bracket("WK_%s_%s_oben" % (side, end), (xw, yc, Z_UP0), (sx, 0, 0), (0, 0, -1), (0, 1, 0),
+                    joins=("Kasten_Wand_" + side, top))
+            bracket("WK_%s_%s_unten" % (side, end), (xw, yc, Z_LOW1), (sx, 0, 0), (0, 0, 1), (0, 1, 0),
+                    joins=("Kasten_Wand_" + side, bot))
+    # 19"-Schienen Adam Hall 61535 (L-Profil): Lochflaeche 21 x 2, Schenkel 30 an der Wand (Annahme, gegen Teil pruefen)
+    def rail(name, x_wall, sx, y_face, sy):
+        xa, xb = (x_wall, x_wall + RAIL_W) if sx > 0 else (x_wall - RAIL_W, x_wall)
+        face = Part.makeBox(RAIL_W, RAIL_T, RAIL_L, V(xa, y_face - (RAIL_T if sy > 0 else 0), z_r))
+        ya, yb = (y_face - RAIL_D, y_face) if sy > 0 else (y_face, y_face + RAIL_D)
+        xl = x_wall if sx > 0 else x_wall - RAIL_T
+        legp = Part.makeBox(RAIL_T, yb - ya, RAIL_L, V(xl, ya, z_r))
+        add(name, face.fuse(legp).removeSplitter(), "schiene", "Rackkasten")
+    rail("Schiene_hinten_links", xin0, +1, D, +1)
+    rail("Schiene_hinten_rechts", xin1, -1, D, +1)
+    rail("Schiene_innen_links", xin0, +1, REAR_RAIL_Y, -1)
+    rail("Schiene_innen_rechts", xin1, -1, REAR_RAIL_Y, -1)
+else:
+    # 4 Rackschienen Profil 2040 (Fläche 20 mm mit Nut zur Geraeteseite, 40 mm tief), senkrecht zwischen oberem und unterem Traeger.
+    # Nutmitte auf der Lochmitte: x = 500 +- 232,55. Hinten (Frontebene y = D) und innen (Ebene y = Querstrebe-Rueckseite).
+    xl0 = W / 2 - RACK_PITCH / 2 - RACK_FACE / 2          # linke Schiene, Aussenkante
+    xr0 = W / 2 + RACK_PITCH / 2 - RACK_FACE / 2          # rechte Schiene, Aussenkante
+    for nm_, xr_, y0_ in (("Schiene_hinten_links", xl0, D - RACK_DEPTH), ("Schiene_hinten_rechts", xr0, D - RACK_DEPTH),
+                          ("Schiene_innen_links", xl0, MID_Y - P / 2), ("Schiene_innen_rechts", xr0, MID_Y - P / 2)):
+        add(nm_, Part.makeBox(RACK_FACE, RACK_DEPTH, RACK_CLEAR, V(xr_, y0_, Z_LOW1)), "2040", "Rack")
+        parts[nm_]["L"] = RACK_CLEAR
+    TRAY_Y0 = MID_Y + P / 2                                # Lochebene der inneren Schienen = Rueckseite der Querstrebe
+    FX_L_END, FX_R_START = xl0 - 1.0, xr0 + RACK_FACE + 1.0
+    z_r = Z_LOW1 + (RACK_CLEAR - RAIL_L) / 2
 # Geraete-Platzhalter: Auszugboden 1 HE (87556) unten, D12-Blende 3. HE (wie v12)
 add("Geraet_U1_Auszug_87556", Part.makeBox(484, 1.6, 44.5, V(W / 2 - 242, D, z_r)).fuse(
-    Part.makeBox(435, D - REAR_RAIL_Y, 40, V(W / 2 - 217.5, REAR_RAIL_Y, z_r + 2))), "geraet", "Rackkasten")
+    Part.makeBox(435, D - TRAY_Y0, 40, V(W / 2 - 217.5, TRAY_Y0, z_r + 2))), "geraet", "Rackkasten")
 add("Geraet_U3_D12_872215", Part.makeBox(484, 1.5, 44.5, V(W / 2 - 242, D, z_r + 2 * 44.45)), "geraet", "Rackkasten")
 
 # ---------------- Forex (in der 8-mm-Nut, wie v12, neue Ausklinkungen) ----------------
@@ -374,8 +393,8 @@ for side, xm in (("links", 20.0), ("rechts", W - 20.0)):
     s = s.cut(Part.makeBox(FOREX_T + 2, NOTCH + 4, NOTCH, V(xm - FOREX_T / 2 - 1, y1 - NOTCH - 2, zf1 - NOTCH)))
     add("Forex_Seite_%s" % side, s, "forex", "Forex"); forex.append(("Forex_Seite_%s" % side, y1 - y0, zf1 - zf0))
 ym = D - 20.0
-for side, (xa, xb) in (("links", (P - SLOT_INS, xin0 - BOX_T - 40)), ("rechts", (xin1 + BOX_T + 40, W - P + SLOT_INS))):
-    # endet 40 mm vor der Kastenwand: dort sitzen die Kastenwinkel auf den hinteren Traegern
+for side, (xa, xb) in (("links", (P - SLOT_INS, FX_L_END)), ("rechts", (FX_R_START, W - P + SLOT_INS))):
+    # endet vor der Rackschiene bzw. 40 mm vor der Kastenwand (Kastenwinkel auf den hinteren Traegern)
     s = Part.makeBox(xb - xa, FOREX_T, zf1 - zf0, V(xa, ym - FOREX_T / 2, zf0))
     cx = xa - 2 if side == "links" else xb - NOTCH - 2
     s = s.cut(Part.makeBox(NOTCH + 4, FOREX_T + 2, NOTCH, V(cx, ym - FOREX_T / 2 - 1, zf1 - NOTCH)))
@@ -447,6 +466,8 @@ print("\n=== Zuschnitt ===")
 for (k, L), n in sorted(cuts.items(), key=lambda kv: (kv[0][0], -kv[0][1])):
     print("  %s  %7.1f mm  x %d" % (k, L, n))
 print("Profilmasse ca. %.1f kg | Tischhoehe %.0f mm | Platte %d x %d mm, %d Bohrungen" % (mass, DESK_H, PLATE_W, PLATE_W, len(holes)))
+print("Rack: %s | Einbautiefe %.0f mm | lichte Weite zwischen den Schienen %.1f mm"
+      % (RACK_MODE, D - TRAY_Y0, (RACK_PITCH - RACK_FACE) if RACK_MODE != "birke61535" else BOX_IN - 2 * RAIL_W))
 print("Winkel 4040: %d (davon Rackkasten %d) | Zentralverbinder-Enden: %s"
       % (cnt("W4040_") + cnt("WK_"), cnt("WK_"), cv_by))
 
@@ -478,12 +499,21 @@ rows += [
     [0, "Senkschraube DIN 7991 M6x25", "DIN 7991 M6x25", len(holes), "Stk", "Laenge an der ersten Bohrung pruefen"],
     [0, "Nutenstein mit Steg I-Typ Nut 8 M6", "S8ISMONM6", len(holes), "Stk", "zu den Plattenschrauben; 100er-Pack"],
     [0, "ESD-Matte %d x %d mm" % (PLATE_W - 2 * ESD_MARGIN, PLATE_W - 2 * ESD_MARGIN), "(Vorschlag)", 1, "Stk", "mit 1-MOhm-Erdungsleitung"],
-    [0, "Multiplex Birke 15 mm, Zuschnitt %d x %.0f mm" % (BOX_Y1 - BOX_Y0, RACK_CLEAR - 0.4), "Baumarkt/Holzhandel", 2, "Stk", "Rackkasten-Waende, Holzinnenmass 490 mm"],
-    [0, "Adam Hall 19\" Heavy Duty Rackschiene 3 HE", "61535 B 3", 4, "Stk", "2 hinten, 2 innen bei y = %.0f" % REAR_RAIL_Y],
-    [0, "Senk-Holzschraube 4 x 12", "-", 16, "Stk", "4 je Schiene"],
-    [0, "Linsen-Holzschraube 5 x 12", "-", cnt("WK_"), "Stk", "Kastenwinkel an die Wand"],
-    [0, "Kaefigmutter M6 + Schraube M6", "Adam Hall 5653", 16, "Satz", "4 je HE-Geraet, Reserve"],
 ]
+if RACK_MODE == "birke61535":
+    rows += [
+        [0, "Multiplex Birke 15 mm, Zuschnitt %d x %.0f mm" % (BOX_Y1 - BOX_Y0, RACK_CLEAR - 0.4), "Baumarkt/Holzhandel", 2, "Stk", "Rackkasten-Waende, Holzinnenmass 490 mm"],
+        [0, "Adam Hall 19\" Heavy Duty Rackschiene 3 HE", "61535 B 3", 4, "Stk", "2 hinten, 2 innen bei y = %.0f" % REAR_RAIL_Y],
+        [0, "Senk-Holzschraube 4 x 12", "-", 16, "Stk", "4 je Schiene"],
+        [0, "Linsen-Holzschraube 5 x 12", "-", cnt("WK_"), "Stk", "Kastenwinkel an die Wand"],
+        [0, "Kaefigmutter M6 + Schraube M6", "Adam Hall 5653", 16, "Satz", "4 je HE-Geraet, Reserve"],
+    ]
+else:
+    rows += [
+        [0, "Aluprofil 20x40 (Nut 6?), Zuschnitt %.1f mm" % RACK_CLEAR, "Motedis, Typ und Nutbreite klaeren", 4, "Stk", "Rackschienen: Flaeche 20 mm mit der Nut zur Geraeteseite, Nutmitte auf x = 267,5 / 732,5; 2 hinten (y = %.0f), 2 innen (Flaeche bei y = %.0f)" % (D, MID_Y + P / 2)],
+        [0, "Winkel fuer 20er Profil (Nut 6?)", "Motedis, passend zu 20x40 klaeren", 16, "Stk", "4 je Schiene (2 oben, 2 unten) an die Traeger; Typ, Lage und Schrauben noch festlegen (Platzhalter, nicht im CAD)"],
+        [0, "Nutenstein M5 (Nut 6?) + Schraube M5 fuer Rackohren", "Motedis, Nutbreite klaeren", 16, "Satz", "4 je HE-Geraet, Reserve; M5 im 6,5-mm-Ohrloch mit Spiel, M6 nur bei 8-mm-Nut; Federnutenstein bevorzugen (Position halten)"],
+    ]
 for nm_, ln, h in forex:
     rows.append([0, "Forex classic 5 mm, Zuschnitt %.1f x %.1f mm" % (ln, h), "(Vorschlag)", 1, "Stk", "%s, obere Ecken %d x %d ausklinken" % (nm_, NOTCH, NOTCH)])
 for i, r in enumerate(rows[1:], 1):
