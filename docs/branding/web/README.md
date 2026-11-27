@@ -53,7 +53,7 @@ Auf den Server (Hetzner, Webroot) kommen:
 /.htaccess
 /open-ora-logo-hell.svg
 /open-ora-favicon.svg
-/open-ora-tisch-v1.png             (Bild Tisch V1, aus docs/images/open-oratischV1.png)
+/open-ora-tisch.png                (Bild Tisch, liegt hier in web/; alte Datei open-ora-tisch-v1.png vom Server löschen)
 /fonts/SpaceGrotesk-Medium.ttf     (aus docs/branding/fonts/)
 /fonts/SpaceGrotesk-SemiBold.ttf   (aus docs/branding/fonts/)
 ```
